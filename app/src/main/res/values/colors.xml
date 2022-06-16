@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="btn_blue">#021BF6</color>
+
+
+<!--    customized color-->
+
+    <color name="theme_color">#1A55ED</color>
+
+    <color name="theme_color_one">#4680ff</color>
+    <color name="theme_text_color">#0531A3</color>
+    <color name="green_btn_color">#4CAF50</color>
+    <color name="transparent_black">#12000000</color>
+    <color name="colorPrimaryDark">#0262AF</color>
+    <color name="app_light_color">#87C2F1</color>
+    <color name="white_cardview_bgcolor">#F1E3E2</color>
+    <color name="transparent">#00000000</color>
+
+    <color name="backgd">#727272</color>
+    <color name="backgrd">#E8EBEF</color>
+
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorRed">#FF0000</color>
+    <color name="colorBlack">#000000</color>
+    <color name="darkWhite">#F0F3F4</color>
+    <color name="darkgrey">#5A5C5C</color>
+    <color name="lightGrey">#D3D3D3</color>
+    <color name="cayon">#fff9f1</color>
+    <color name="dialogColor">#0c7cd5</color>
+
+    <color name="cardview_light_background">#FFFFFF</color>
+
+    <color name="colorLink">#0c7cd5</color>
+    <color name="sub_title">#ac3150</color>
+
+    <color name="header_lightBlue">#d0f2ff</color>1
+
+    <color name="semiTransparentColor">#20ffffff</color>
+    <color name="semiTransparentGreyColor">#99D3D3D3</color>
+    <color name="semiTransparentLightGreenColor">#99FFF9DD</color>
+
+    //Atendance by itscient developers!!
+    <color name="location_color">#EBE9E9</color>
+    <color name="colorText">#131313</color>
+    <color name="red">#ff3535</color>
+    <color name="bottom_attendance">#4657e0</color>
+    <color name="icon_tint">#02108B</color>
+    <color name="colorText2">#494949</color>
+    <color name ="light_white">#F8F8F8</color>
+
+    <color name="btn_grey">#353535</color>
+    <color name="color_edittext">#353535</color>
+    <color name="text_colorgrey">#292828</color>
+    <color name="toolbar_first">#0179F3</color>
+    <color name="toolbar_second">#22d9ef</color>
+    <color name="sky_color_code">#17C3FD</color>
+
+
+
+    <color name="color_dhani">#76A342</color>
+
+
+
+    <color name="dialog_screengreen">#A5FDEF</color>
+    <color name="dialog_screenred">#FFBBBB</color>
+    <color name="colorGray">#45525A</color>
+    <color name="bg_grid_1">#F1F1F1</color>
+    <color name="colorText1">#2d2d2d</color>
+    <color name="colorHint">#3e3e3e</color>
+    <color name="colorimageTint">#646464</color>
+    <color name="colorHint2">#808080</color>
+    <color name="colorStarNormal">#949393</color>
+    <color name="colorStarNormalcart">#dadada</color>
+    <color name="colorVeryNormal">#bfbfbf</color>
+
+    <color name="color_green">#3F9309</color>
+    <color name="color_dark_green">#2A6404</color>
+    <color name="colorYellowDark">#DBB425</color>
+    <color name="colorYellow">#f9d44d</color>
+
+    <color name="mapCircleStrokeColor">#ffff0000</color>
+    <color name="mapCircleShadeColor">#44ff0000</color>
+
+    <color name="magenta">#66029C</color>
+    <color name="tab_checked">#0179F3</color>
+    <color name="tab_unchecked">#8C8C8C</color>
+    <color name="navi_blue">#09479E</color>
+    <color name="cell_background_color">#ffffff</color>
+    <color name="google_plus_color">#FF0000</color>
+    <color name="homework_bg_color">#edf0f5</color>
+    <color name="homework_title_color">#1783f2</color>
+    <color name="homework_label_color">#54A1EF</color>
+
+    <color name="light_orange">#FF815A</color>
+    <color name="tab_selected_color">#FFC107</color>
+
+
+    <color name="master_theme_color">#00B4D8</color>
+    <color name="master_theme_TextColor">#2398AF</color>
+    <color name="master_theme_Toolbar">#088CA5</color>
+
+    <color name="jharkhand_theme_color">#004B1F</color>
+
+
+
+
+</resources>
