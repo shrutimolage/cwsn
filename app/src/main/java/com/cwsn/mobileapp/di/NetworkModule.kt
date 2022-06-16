@@ -27,6 +27,9 @@ val networkModule = module {
     single { provideOkHttpClient(androidContext(),get()) }
     single{ provideRetrofit(get(),Utils.API_BASE_URL)}
     single { provideApiService(get()) }
+    single<ApiHelper>{
+        return@single ApiHelperImpl(get())
+    }
 }
 
 private fun provideOkHttpClient(context: Context, appPref:AppPreferences) :OkHttpClient
