@@ -23,8 +23,9 @@ import java.util.concurrent.TimeUnit
 Created by  on 14,June,2022
  **/
 val networkModule = module {
-    single { AppPreferences(androidContext()) }
-    single { provideOkHttpClient(androidContext(),get()) }
+    factory { NetworkConnectionInterceptor(androidContext()) }
+    factory { AppPreferences(androidContext()) }
+    factory { provideOkHttpClient(get(),get()) }
     single{ provideRetrofit(get(),Utils.API_BASE_URL)}
     single { provideApiService(get()) }
     single<ApiHelper>{
@@ -32,7 +33,7 @@ val networkModule = module {
     }
 }
 
-private fun provideOkHttpClient(context: Context, appPref:AppPreferences) :OkHttpClient
+private fun provideOkHttpClient(appPref:AppPreferences,networkConn:NetworkConnectionInterceptor) :OkHttpClient
 {
     val loggingInterceptor = HttpLoggingInterceptor()
     if (BuildConfig.DEBUG) {
@@ -44,7 +45,16 @@ private fun provideOkHttpClient(context: Context, appPref:AppPreferences) :OkHtt
         .connectTimeout(6000, TimeUnit.MILLISECONDS)
         .readTimeout(3, TimeUnit.MINUTES)
         .writeTimeout(3, TimeUnit.MINUTES)
-        .addInterceptor(ChuckInterceptor(context).showNotification(true))
+        .addInterceptor(networkConn)
+        .addInterceptor(Interceptor{ chain->
+            val request=chain.request().newBuilder()
+                .addHeader("Content-Type","application/json")
+                .addHeader("Cache-Control", "no-cache")
+                .addHeader("Authorization","Bearer ${appPref.fetchAccessToken()}")
+                .build()
+            return@Interceptor chain.proceed(request)
+        })
+        /*.addInterceptor(ChuckInterceptor(context).showNotification(true))
         .addInterceptor(NetworkConnectionInterceptor(context))
         .addInterceptor(loggingInterceptor)
         .addInterceptor(Interceptor{ chain->
@@ -54,7 +64,7 @@ private fun provideOkHttpClient(context: Context, appPref:AppPreferences) :OkHtt
                 .addHeader("Authorization","Bearer ${appPref.fetchAccessToken()}")
                 .build()
             return@Interceptor chain.proceed(request)
-        })
+        })*/
     return okhttpBuilder.build()
 }
 

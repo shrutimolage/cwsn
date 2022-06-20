@@ -65,13 +65,11 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.9'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation "com.squareup.okhttp3:okhttp:4.9.0"
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
 
     //chuck Interceptor
     implementation 'com.readystatesoftware.chuck:library:1.1.0'
-
-    //secure shared Preference
-    implementation "androidx.security:security-crypto:1.1.0-alpha03"
 
     //testing
     testImplementation 'junit:junit:4.13.2'

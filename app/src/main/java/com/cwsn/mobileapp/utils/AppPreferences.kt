@@ -2,8 +2,6 @@ package com.cwsn.mobileapp.utils
 
 import android.content.Context
 import android.content.SharedPreferences
-import androidx.security.crypto.EncryptedSharedPreferences
-import androidx.security.crypto.MasterKey
 
 
 /**
@@ -11,17 +9,13 @@ Created by  on 16,June,2022
  **/
 class AppPreferences(private val context: Context)
 {
+    private val PREF_NAME = "CWSNPref"
     private var mInstance: SharedPreferences? = null
     private var editor: SharedPreferences.Editor? = null
     val KEY_TOKEN = "token"
 
     init {
-        val masterKeyAlias = MasterKey.Builder(context, MasterKey.DEFAULT_MASTER_KEY_ALIAS)
-            .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
-            .build()
-        mInstance=EncryptedSharedPreferences.create(
-            context,"secret_shared_prefs",masterKeyAlias,EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM)
+        mInstance=context.getSharedPreferences(PREF_NAME,Context.MODE_PRIVATE)
         editor=mInstance?.edit()
     }
 
