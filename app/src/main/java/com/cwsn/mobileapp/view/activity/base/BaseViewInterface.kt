@@ -68,9 +68,6 @@ interface BaseViewInterface
     {
 
     }
-    fun showToastMessage(message:String){
-
-    }
     fun onActStart(){
 
     }

@@ -7,6 +7,7 @@ import com.cwsn.mobileapp.network.ApiHelper
 import com.cwsn.mobileapp.network.ApiHelperImpl
 import com.cwsn.mobileapp.network.NetworkConnectionInterceptor
 import com.cwsn.mobileapp.utils.AppPreferences
+import com.cwsn.mobileapp.utils.HttpLoggingClass
 import com.cwsn.mobileapp.utils.Utils
 import com.google.gson.GsonBuilder
 import com.readystatesoftware.chuck.ChuckInterceptor
@@ -18,65 +19,42 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import kotlin.math.sin
 
 /**
 Created by  on 14,June,2022
  **/
 val networkModule = module {
-    factory { NetworkConnectionInterceptor(androidContext()) }
-    factory { AppPreferences(androidContext()) }
-    factory { provideOkHttpClient(get(),get()) }
-    single{ provideRetrofit(get(),Utils.API_BASE_URL)}
-    single { provideApiService(get()) }
+    single {AppPreferences(androidContext())}
+    single {HttpLoggingInterceptor().apply { this.level=HttpLoggingInterceptor.Level.BODY }}
+    single { NetworkConnectionInterceptor(androidContext()) }
+    single { OkHttpClient.Builder()
+        .addInterceptor(get<HttpLoggingInterceptor>())
+        .addInterceptor(get<NetworkConnectionInterceptor>())
+        .addInterceptor(Interceptor{ chain->
+            val request=chain.request().newBuilder()
+                .addHeader("Content-Type","application/json")
+                .addHeader("Cache-Control", "no-cache")
+                .addHeader("Authorization",getRequiredAuthorization(get()))
+                .build()
+            return@Interceptor chain.proceed(request)
+        })
+        .build() }
+    single { Retrofit.Builder().client(get())
+        .baseUrl(Utils.API_BASE_URL)
+        .addConverterFactory(GsonConverterFactory.create()).build()}
+    single { get<Retrofit>().create(APIService::class.java) }
     single<ApiHelper>{
         return@single ApiHelperImpl(get())
     }
 }
 
-private fun provideOkHttpClient(appPref:AppPreferences,networkConn:NetworkConnectionInterceptor) :OkHttpClient
-{
-    val loggingInterceptor = HttpLoggingInterceptor()
-    if (BuildConfig.DEBUG) {
-        loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-    } else {
-        loggingInterceptor.level = HttpLoggingInterceptor.Level.BASIC
+fun getRequiredAuthorization(appPref: AppPreferences): String {
+    var result =""
+    appPref.getUserLoginStatus()?.let { status->
+        if(status){
+            result="Bearer ${appPref.fetchAccessToken()}"
+        }
     }
-    val okhttpBuilder:OkHttpClient.Builder=OkHttpClient.Builder()
-        .connectTimeout(6000, TimeUnit.MILLISECONDS)
-        .readTimeout(3, TimeUnit.MINUTES)
-        .writeTimeout(3, TimeUnit.MINUTES)
-        .addInterceptor(networkConn)
-        .addInterceptor(Interceptor{ chain->
-            val request=chain.request().newBuilder()
-                .addHeader("Content-Type","application/json")
-                .addHeader("Cache-Control", "no-cache")
-                .addHeader("Authorization","Bearer ${appPref.fetchAccessToken()}")
-                .build()
-            return@Interceptor chain.proceed(request)
-        })
-        /*.addInterceptor(ChuckInterceptor(context).showNotification(true))
-        .addInterceptor(NetworkConnectionInterceptor(context))
-        .addInterceptor(loggingInterceptor)
-        .addInterceptor(Interceptor{ chain->
-            val request=chain.request().newBuilder()
-                .addHeader("Content-Type","application/json")
-                .addHeader("Cache-Control", "no-cache")
-                .addHeader("Authorization","Bearer ${appPref.fetchAccessToken()}")
-                .build()
-            return@Interceptor chain.proceed(request)
-        })*/
-    return okhttpBuilder.build()
+    return result
 }
-
-private fun provideRetrofit(okHttpClient: OkHttpClient,BASE_URL: String): Retrofit {
-    val gson = GsonBuilder()
-        .setLenient()
-        .create()
-    return Retrofit.Builder()
-        .baseUrl(BASE_URL)
-        .client(okHttpClient)
-        .addConverterFactory(GsonConverterFactory.create(gson))
-        .build()
-}
-
-private fun provideApiService(retrofit: Retrofit): APIService = retrofit.create(APIService::class.java)

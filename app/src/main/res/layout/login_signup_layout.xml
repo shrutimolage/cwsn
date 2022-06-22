@@ -37,6 +37,7 @@
             android:padding="5dp"
             android:layout_margin="5dp"
             android:textSize="15sp"
+            android:visibility="gone"
             android:textColor="@color/white"
             android:gravity="right"
             android:text="SIGN UP" />
@@ -102,6 +103,7 @@
                        android:textColorHint="@color/darkgrey"
                        android:layout_marginLeft="16dp"
                        android:layout_marginRight="16dp"
+                       android:visibility="gone"
                        android:layout_marginTop="10dp"
                        app:boxBackgroundColor="@color/white"
                        app:errorEnabled="true"
@@ -161,7 +163,7 @@
                            android:gravity="center"
                            android:textColor="@color/white"
                            android:textSize="@dimen/text_size_18"
-                           android:text="SIGN UP" />
+                           android:text="LOGIN" />
                    </LinearLayout>
                    <TextView
                        android:id="@+id/tv_signUpLoginBtn"
@@ -172,7 +174,7 @@
                        android:textSize="@dimen/text_size_15"
                        android:padding="5dp"
                        android:gravity="center"
-                       android:text="Already have an account? Log In" />
+                       android:text="@string/forgot_password_click_here" />
                </LinearLayout>
            </ScrollView>
 

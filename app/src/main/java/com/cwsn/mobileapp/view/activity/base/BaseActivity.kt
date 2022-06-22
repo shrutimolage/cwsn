@@ -18,6 +18,7 @@ import com.cwsn.mobileapp.R
 /**
 Created by  on 20,June,2022
  **/
+@Suppress("DEPRECATION")
 abstract class BaseActivity<VB:ViewBinding> : AppCompatActivity(),BaseViewInterface
 {
     lateinit var binding : VB
@@ -43,6 +44,7 @@ abstract class BaseActivity<VB:ViewBinding> : AppCompatActivity(),BaseViewInterf
             }
         }
         binding=inflateLayout(layoutInflater)
+
         setContentView(binding.root)
         if (isToolBarEnable()) {
             setSupportActionBar(getToolBar())
@@ -99,9 +101,6 @@ abstract class BaseActivity<VB:ViewBinding> : AppCompatActivity(),BaseViewInterf
        }
     }
 
-    override fun showToastMessage(message: String) {
-        Toast.makeText(getContext(),message,Toast.LENGTH_LONG).show()
-    }
 
      fun setUpProgressDialog(context: Context): Dialog? {
          val progressDialog = Dialog(context)
