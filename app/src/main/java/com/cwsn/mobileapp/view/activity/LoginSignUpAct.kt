@@ -2,9 +2,14 @@ package com.cwsn.mobileapp.view.activity
 
 import android.content.Context
 import android.content.Intent
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
+import com.cwsn.mobileapp.R
 import com.cwsn.mobileapp.databinding.LoginSignupLayoutBinding
 import com.cwsn.mobileapp.network.Status
 import com.cwsn.mobileapp.utils.AppPreferences
@@ -40,11 +45,18 @@ class LoginSignUpAct : BaseActivity<LoginSignupLayoutBinding>()
     }
 
     override fun onActCreate() {
-        binding.tvBackBtn.visibility= View.INVISIBLE
         binding.llActionBtn.setOnClickListener {
             gotoDashboard()
             //userLogin()
         }
+    }
+
+    override fun onActResume() {
+        val textLen=binding.tvForgotPwd.text.length
+        val spannable =SpannableString(binding.tvForgotPwd.text)
+        spannable.setSpan(ForegroundColorSpan(ContextCompat.getColor(getContext(),R.color.light_orange)),18,textLen,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        binding.tvForgotPwd.text=spannable
     }
 
     private fun gotoDashboard() {

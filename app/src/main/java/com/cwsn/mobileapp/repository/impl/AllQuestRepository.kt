@@ -4,23 +4,18 @@ import android.content.Context
 import com.cwsn.mobileapp.local.dao.QuestionDao
 import com.cwsn.mobileapp.local.database.QuestionDatabase
 import com.cwsn.mobileapp.local.table.AllQuestion
+import com.cwsn.mobileapp.repository.IAllQuestRepository
 
 /**
 Created by  on 22,June,2022
  **/
-class AllQuestRepository(context: Context) {
-    private var questDao: QuestionDao? = null
+class AllQuestRepository(private val questDao: QuestionDao):IAllQuestRepository {
 
-    init {
-        val dbInstance = QuestionDatabase.getInstance(context)
-        questDao = dbInstance.questionDao()
+    override suspend fun saveAllQuestion(questions: List<AllQuestion>) {
+        questDao.insertAllQuestions(questions)
     }
 
-    suspend fun saveAllQuestion(questionList: List<AllQuestion>) {
-        questDao?.insertAllQuestions(questionList)
-    }
-
-    suspend fun getAllLocalQuestionData(): List<AllQuestion> {
-        return questDao?.getAllQuestions()!!
+    override suspend fun getAllLocalQuestionData(): List<AllQuestion> {
+      return questDao.getAllQuestions()
     }
 }

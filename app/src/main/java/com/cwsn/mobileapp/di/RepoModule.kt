@@ -13,7 +13,4 @@ val repoModule = module {
     single {
         LoginRepository(get())
     }
-    single{
-        AllQuestRepository(androidContext())
-    }
 }

@@ -9,11 +9,12 @@ import androidx.room.RoomDatabase
 import com.cwsn.mobileapp.local.dao.QuestionDao
 import com.cwsn.mobileapp.local.table.AllQuestion
 import com.cwsn.mobileapp.local.table.MCQOptions
+import com.cwsn.mobileapp.local.table.UserAnswer
 
 /**
 Created by  on 22,June,2022
  **/
-@Database(entities = [AllQuestion::class, MCQOptions::class], version = 1, exportSchema = false)
+@Database(entities = [AllQuestion::class, MCQOptions::class,UserAnswer::class], version = 1, exportSchema = false)
 abstract class QuestionDatabase:RoomDatabase()
 {
     abstract fun questionDao():QuestionDao
@@ -29,7 +30,7 @@ abstract class QuestionDatabase:RoomDatabase()
             synchronized(this) {
                 var instance = INSTANCE
                 if (instance == null) {
-                    instance= Room.databaseBuilder(context.applicationContext,QuestionDatabase::class.java,"question_database")
+                    instance= Room.databaseBuilder(context,QuestionDatabase::class.java,"question_database")
                         .fallbackToDestructiveMigration().build()
                     INSTANCE = instance
                 }

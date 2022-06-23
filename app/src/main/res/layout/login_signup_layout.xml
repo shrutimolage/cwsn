@@ -17,37 +17,14 @@
         app:layout_constraintRight_toRightOf="parent"
         android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tv_backBtn"
-            android:layout_width="0dp"
-            android:padding="5dp"
-            android:layout_margin="5dp"
-            android:textSize="15sp"
-            android:textColor="@color/white"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:gravity="left"
-            android:text="Back"
-            app:drawableLeftCompat="@drawable/ic_white_arrow_back" />
-        <TextView
-            android:id="@+id/tv_actionLabel"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:padding="5dp"
-            android:layout_margin="5dp"
-            android:textSize="15sp"
-            android:visibility="gone"
-            android:textColor="@color/white"
-            android:gravity="right"
-            android:text="SIGN UP" />
+
     </LinearLayout>
         <FrameLayout
             android:layout_width="match_parent"
             android:background="#27AAE1"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="270dp"
             app:layout_constraintTop_toBottomOf="@+id/ll_topSectionLayout"
             android:layout_height="match_parent">
            <ScrollView
@@ -68,10 +45,7 @@
                        android:textColor="@color/black"
                        android:gravity="center"
                        android:textStyle="bold"
-                       android:text="WELCOME TO CWSN" />
-
-
-
+                       android:text="Welcome TO CWSN" />
                    <com.google.android.material.textfield.TextInputLayout
                        android:layout_width="match_parent"
                        android:layout_height="wrap_content"
@@ -92,32 +66,7 @@
                            android:drawablePadding="5dp"
                            android:drawableEnd="@drawable/ic_person_black"
                            android:maxLines="1"
-                           android:textColor="@color/colorBlack"
-                           android:textSize="@dimen/text_size_14" />
-
-                   </com.google.android.material.textfield.TextInputLayout>
-                   <com.google.android.material.textfield.TextInputLayout
-                       android:layout_width="match_parent"
-                       android:layout_height="wrap_content"
-                       android:hint="@string/email_address_label"
-                       android:textColorHint="@color/darkgrey"
-                       android:layout_marginLeft="16dp"
-                       android:layout_marginRight="16dp"
-                       android:visibility="gone"
-                       android:layout_marginTop="10dp"
-                       app:boxBackgroundColor="@color/white"
-                       app:errorEnabled="true"
-                       >
-
-                       <EditText
-                           android:id="@+id/et_email"
-                           android:layout_width="match_parent"
-                           android:layout_height="wrap_content"
-                           android:inputType="textEmailAddress"
-                           android:drawablePadding="5dp"
-                           android:drawableEnd="@drawable/ic_person_black"
-                           android:maxLines="1"
-                           android:textColor="@color/colorBlack"
+                           android:textColor="@color/black_light"
                            android:textSize="@dimen/text_size_14" />
 
                    </com.google.android.material.textfield.TextInputLayout>
@@ -132,7 +81,7 @@
                        android:layout_marginRight="16dp"
                        android:layout_marginTop="10dp"
                        app:boxBackgroundColor="@color/white"
-                       app:passwordToggleTint="@color/black"
+                       app:passwordToggleTint="@color/black_light"
                        >
                        <EditText
                            android:id="@+id/et_password"
@@ -141,18 +90,47 @@
                            android:maxLines="1"
                            android:drawablePadding="15dp"
                            android:inputType="textPassword"
-                           android:textColor="@color/colorBlack"
+                           android:textColor="@color/black_light"
                            android:textSize="@dimen/text_size_14" />
 
                    </com.google.android.material.textfield.TextInputLayout>
+                   <LinearLayout
+                       android:layout_width="match_parent"
+                       android:layout_marginLeft="16dp"
+                       android:layout_marginRight="16dp"
+                       android:layout_marginTop="5dp"
+                       android:weightSum="1"
+                       android:layout_height="wrap_content">
+
+                       <CheckBox
+                           android:id="@+id/cb_savePwd"
+                           android:layout_width="0dp"
+                           android:layout_weight="0.35"
+                           android:layout_height="wrap_content"
+                           android:textSize="@dimen/text_size_13"
+                           android:textColor="@color/black"
+                           android:text="Remember me" />
+
+                       <TextView
+                           android:id="@+id/tv_forgotPwd"
+                           android:layout_width="0dp"
+                           android:layout_weight="0.65"
+                           android:layout_height="wrap_content"
+                           android:textColor="@color/black"
+                           android:textSize="@dimen/text_size_13"
+                           android:layout_gravity="right|top"
+                           android:padding="5dp"
+                           android:gravity="right"
+                           android:text="@string/forgot_password_click_here" />
+                   </LinearLayout>
                    <LinearLayout
                        android:id="@+id/ll_actionBtn"
                        android:layout_width="match_parent"
                        android:orientation="vertical"
                        android:layout_marginLeft="16dp"
                        android:layout_marginRight="16dp"
-                       android:layout_marginTop="60dp"
-                        android:background="#1C75BC"
+                       android:layout_marginTop="30dp"
+                        android:background="@drawable/app_textview_selector"
                        android:layout_height="wrap_content">
 
                        <TextView
@@ -165,16 +143,7 @@
                            android:textSize="@dimen/text_size_18"
                            android:text="LOGIN" />
                    </LinearLayout>
-                   <TextView
-                       android:id="@+id/tv_signUpLoginBtn"
-                       android:layout_width="match_parent"
-                       android:layout_height="wrap_content"
-                       android:layout_marginTop="30dp"
-                       android:textColor="@color/black"
-                       android:textSize="@dimen/text_size_15"
-                       android:padding="5dp"
-                       android:gravity="center"
-                       android:text="@string/forgot_password_click_here" />
+
                </LinearLayout>
            </ScrollView>
 

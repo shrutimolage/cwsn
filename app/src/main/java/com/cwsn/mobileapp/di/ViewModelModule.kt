@@ -12,7 +12,4 @@ val viewModelModule= module {
     single {
         LoginViewModel(get())
     }
-    single {
-        DbViewModel(get())
-    }
 }

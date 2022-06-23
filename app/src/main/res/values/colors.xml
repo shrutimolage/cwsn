@@ -103,7 +103,7 @@
 
     <color name="light_orange">#FF815A</color>
     <color name="tab_selected_color">#FFC107</color>
-
+    <color name="maroon_color">#BE1E2D</color>
 
     <color name="master_theme_color">#00B4D8</color>
     <color name="master_theme_TextColor">#2398AF</color>

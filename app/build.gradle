@@ -36,7 +36,7 @@ android {
 
 dependencies {
     def koin_version= "3.2.0"
-    def roomVersion = "2.4.2"
+    def roomVersion = "2.5.0-alpha02"
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.appcompat:appcompat:1.4.2'
     implementation 'com.google.android.material:material:1.6.1'
@@ -74,10 +74,9 @@ dependencies {
 
     //room database
     implementation("androidx.room:room-runtime:$roomVersion")
-    annotationProcessor("androidx.room:room-compiler:$roomVersion")
-
-    // optional - Kotlin Extensions and Coroutines support for Room
-    implementation("androidx.room:room-ktx:$roomVersion")
+    implementation "androidx.room:room-ktx:$roomVersion"
+    // To use Kotlin annotation processing tool (kapt)
+    kapt("androidx.room:room-compiler:$roomVersion")
 
     //circular imageview
     implementation 'de.hdodenhof:circleimageview:3.1.0'

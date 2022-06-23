@@ -4,13 +4,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import com.cwsn.mobileapp.local.table.AllQuestion
 import com.cwsn.mobileapp.network.Resource
+import com.cwsn.mobileapp.repository.IAllQuestRepository
 import com.cwsn.mobileapp.repository.impl.AllQuestRepository
 import kotlinx.coroutines.Dispatchers
 
 /**
 Created by  on 22,June,2022
  **/
-class DbViewModel(private val questRepository: AllQuestRepository):ViewModel()
+class DbViewModel(private val questRepository: IAllQuestRepository):ViewModel()
 {
     fun performSavingQuestions(questionList:List<AllQuestion>) = liveData(Dispatchers.IO){
         emit(Resource.loading(data = null))
