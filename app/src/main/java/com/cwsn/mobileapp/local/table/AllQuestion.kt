@@ -10,6 +10,7 @@ Created by  on 22,June,2022
 @Entity
 data class AllQuestion(
     @PrimaryKey(autoGenerate = true) val id: Int,
+    @ColumnInfo val schoolId:Int,
     @ColumnInfo val question: String?,
     @ColumnInfo val questionFormat: String?,
     @ColumnInfo val questionType: String?,

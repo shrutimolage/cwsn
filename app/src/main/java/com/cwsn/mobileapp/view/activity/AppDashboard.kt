@@ -14,6 +14,7 @@ import com.cwsn.mobileapp.utils.toast
 import com.cwsn.mobileapp.view.activity.base.BaseActivity
 import com.cwsn.mobileapp.viewmodel.localdb.DbVMFactory
 import com.cwsn.mobileapp.viewmodel.localdb.DbViewModel
+import nl.joery.animatedbottombar.AnimatedBottomBar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 @Suppress("MoveLambdaOutsideParentheses")
@@ -38,6 +39,27 @@ class AppDashboard : BaseActivity<ActivityAppDashboardBinding>()
         repos=AllQuestRepository(questionDao)
         factory= DbVMFactory(repos)
         viewModel= ViewModelProvider(this,factory)[DbViewModel::class.java]
+        binding.layoutDashboard.bottomNavBar.animatedBottomBar.setOnTabSelectListener(object:AnimatedBottomBar.OnTabSelectListener{
+            override fun onTabSelected(
+                lastIndex: Int,
+                lastTab: AnimatedBottomBar.Tab?,
+                newIndex: Int,
+                newTab: AnimatedBottomBar.Tab
+            ) {
+                when(newIndex){
+                    0->{
+                        toast("home")
+                    }
+                    1->{
+                        toast("summary")
+                    }
+                    2->{
+                        toast("grievance")
+                    }
+                }
+            }
+
+        })
     }
 
     override fun onActResume() {

@@ -7,10 +7,11 @@
     android:layout_width="match_parent"
     android:layout_height="50dp"
     android:background="@drawable/toolbar_background">
-        <androidx.appcompat.widget.AppCompatImageView
+       <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/navigationBar"
             android:layout_width="40dp"
             android:layout_height="30dp"
+            android:visibility="gone"
             android:contentDescription="Navigation Bar"
             android:src="@drawable/ic_navigation_bar_black" />
 
@@ -18,17 +19,23 @@
             android:id="@+id/toolbar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text=""
+            android:layout_gravity="left"
+            android:text="Welcome,Teacher Name"
             android:textColor="#000"
             android:textSize="14sp" />
-
+        <ImageView
+            android:layout_width="wrap_content"
+            android:src="@drawable/ic_logout_icon"
+            android:layout_gravity="right"
+            android:layout_marginEnd="10dp"
+            android:layout_height="wrap_content"/>
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/cimg_profileIcon"
             android:layout_width="40dp"
             android:layout_height="match_parent"
             android:layout_gravity="right"
             android:layout_marginTop="0dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
             android:src="@drawable/profile_logo" />
+
 </androidx.appcompat.widget.Toolbar>

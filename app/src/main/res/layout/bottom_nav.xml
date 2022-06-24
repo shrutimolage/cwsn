@@ -28,6 +28,6 @@
         android:layout_alignParentBottom="true"
         app:abb_tabAnimation="slide"
         app:abb_indicatorLocation="bottom"
-        app:abb_tabs="@menu/menu" />
+        app:abb_tabs="@menu/bottom_menu" />
 
 </RelativeLayout>

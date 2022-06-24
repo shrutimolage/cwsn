@@ -1,11 +1,13 @@
 <resources>
     <string name="app_name">CWSNs</string>
-    <string name="username_label_nocolon">Username</string>
+    <string name="usernameorEmail_label_nocolon">Username/Email</string>
     <string name="password_label">Password</string>
     <string name="email_address_label">Email Address</string>
     <string name="forgot_password_click_here"><u>Forgot password ? Click Here</u></string>
     <string name="home_label">Home</string>
     <string name="messages_text">Summary</string>
     <string name="setting_label">Settings</string>
+    <string name="grievance_label">Grievance</string>
     <string name="created_by_it_scient_label">Created By IT-SCIENT</string>
+
 </resources>
