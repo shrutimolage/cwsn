@@ -15,6 +15,6 @@
     </style>
     <style name="BottomTabTextStyle">
         <item name="android:textSize">14sp</item>
-        <item name="android:fontFamily">montserrat</item>
+        <item name="android:textColor">#FFFFFF</item>
     </style>
 </resources>
