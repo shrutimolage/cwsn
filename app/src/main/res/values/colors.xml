@@ -74,6 +74,7 @@
     <color name="dialog_screengreen">#A5FDEF</color>
     <color name="dialog_screenred">#FFBBBB</color>
     <color name="colorGray">#45525A</color>
+    <color name="grey_shadow_bg_color">#25000000</color>
     <color name="bg_grid_1">#F1F1F1</color>
     <color name="colorText1">#2d2d2d</color>
     <color name="colorHint">#3e3e3e</color>

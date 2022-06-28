@@ -37,6 +37,8 @@ class HomeFragment : Fragment() {
     }
 
     companion object {
+        val TAG: String="HomeFragment"
+
         /**
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.

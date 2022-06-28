@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.cwsn.mobileapp.R
 import com.cwsn.mobileapp.databinding.ActivityAppDashboardBinding
 import com.cwsn.mobileapp.local.dao.QuestionDao
 import com.cwsn.mobileapp.local.database.QuestionDatabase
@@ -12,6 +13,7 @@ import com.cwsn.mobileapp.repository.IAllQuestRepository
 import com.cwsn.mobileapp.repository.impl.AllQuestRepository
 import com.cwsn.mobileapp.utils.toast
 import com.cwsn.mobileapp.view.activity.base.BaseActivity
+import com.cwsn.mobileapp.view.fragment.HomeFragment
 import com.cwsn.mobileapp.viewmodel.localdb.DbVMFactory
 import com.cwsn.mobileapp.viewmodel.localdb.DbViewModel
 import nl.joery.animatedbottombar.AnimatedBottomBar
@@ -48,7 +50,7 @@ class AppDashboard : BaseActivity<ActivityAppDashboardBinding>()
             ) {
                 when(newIndex){
                     0->{
-                        toast("home")
+                        loadHomeFragment()
                     }
                     1->{
                         toast("summary")
@@ -60,6 +62,14 @@ class AppDashboard : BaseActivity<ActivityAppDashboardBinding>()
             }
 
         })
+        loadHomeFragment()
+    }
+
+    private fun loadHomeFragment() {
+        val fragmentTransaction=supportFragmentManager.beginTransaction()
+        val homeFragment = HomeFragment.newInstance("", "")
+        fragmentTransaction.replace(R.id.ll_fragContainer,homeFragment,HomeFragment.TAG)
+        fragmentTransaction.commit()
     }
 
     override fun onActResume() {

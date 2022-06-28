@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:weightSum="1"
+    android:layout_margin="5dp"
+    android:background="@drawable/card_drop_shadow_white_bg"
+    android:layout_height="100dp">
+
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.2"
+        android:layout_gravity="center"
+        android:layout_margin="5dp"
+        app:srcCompat="@drawable/ic_total_school" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="2.9dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="#e9ecf3"
+         />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="0.8"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView2"
+            style="@style/BigSizeBlackAppTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/green_btn_color"
+            android:text="363" />
+
+        <TextView
+            android:id="@+id/textView4"
+            style="@style/NormalSizeBlackAppTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Schools" />
+    </LinearLayout>
+
+</LinearLayout>

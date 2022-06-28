@@ -17,7 +17,7 @@ class DbViewModel(private val questRepository: IAllQuestRepository):ViewModel()
         emit(Resource.loading(data = null))
         try {
              questRepository.saveAllQuestion(questionList)
-             emit(Resource.success(data = null))
+             emit(Resource.success(data = null, message = "Done"))
         }
         catch (ex:Exception){
             emit(Resource.error(data = null, message = "Error while saving question"))
@@ -29,7 +29,7 @@ class DbViewModel(private val questRepository: IAllQuestRepository):ViewModel()
         try {
             val allLocalQuestionData = questRepository.getAllLocalQuestionData()
             if(allLocalQuestionData.isNotEmpty()){
-                emit(Resource.success(data = allLocalQuestionData))
+                emit(Resource.success(data = allLocalQuestionData,message="All Question"))
             }else{
                 emit(Resource.error(data = null, message = "No question found"))
             }

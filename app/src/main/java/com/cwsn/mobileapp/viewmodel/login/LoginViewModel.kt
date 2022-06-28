@@ -2,8 +2,10 @@ package com.cwsn.mobileapp.viewmodel.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
+import com.cwsn.mobileapp.model.login.LoginInput
 import com.cwsn.mobileapp.network.Resource
 import com.cwsn.mobileapp.repository.impl.LoginRepository
+import com.cwsn.mobileapp.utils.Utils
 import kotlinx.coroutines.Dispatchers
 
 /**
@@ -14,9 +16,12 @@ class LoginViewModel(private val loginRepos:LoginRepository):ViewModel()
     fun performUserLogin(email:String,password:String) = liveData(Dispatchers.IO){
         emit(Resource.loading(data = null))
         try {
-            val loginResponse=loginRepos.appUserLogin(email,password)
+            val loginResponse=loginRepos.appUserLogin(LoginInput(email,password))
             if(loginResponse.isSuccessful){
-                emit(Resource.success(data = loginResponse))
+                loginResponse.body()?.data?.token?.let {
+                    loginRepos.savedUserSession(it)
+                }
+                emit(Resource.success(data = loginResponse, message = Utils.API_SUCCESS))
             }
             else{
                 emit(Resource.error(data = null, message = "Server Error"))

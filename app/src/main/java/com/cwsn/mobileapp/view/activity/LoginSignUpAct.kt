@@ -6,9 +6,7 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
-import android.view.View
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.Observer
 import com.cwsn.mobileapp.R
 import com.cwsn.mobileapp.databinding.LoginSignupLayoutBinding
 import com.cwsn.mobileapp.network.Status
@@ -19,10 +17,8 @@ import com.cwsn.mobileapp.viewmodel.login.LoginViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 @Suppress("MoveLambdaOutsideParentheses")
-class LoginSignUpAct : BaseActivity<LoginSignupLayoutBinding>()
-{
+class LoginSignUpAct : BaseActivity<LoginSignupLayoutBinding>() {
     private val loginViewModel by viewModel<LoginViewModel>()
-    private val appPreferences by lazy { AppPreferences(this) }
 
     override fun inflateLayout(layoutInflater: LayoutInflater): LoginSignupLayoutBinding {
         return LoginSignupLayoutBinding.inflate(layoutInflater)
@@ -46,32 +42,52 @@ class LoginSignUpAct : BaseActivity<LoginSignupLayoutBinding>()
 
     override fun onActCreate() {
         binding.llActionBtn.setOnClickListener {
-            gotoDashboard()
-            //userLogin()
+            if (validateField()) {
+                userLogin()
+            }
+        }
+    }
+
+    private fun validateField(): Boolean {
+        if(binding.etUsername.text.toString().isEmpty()){
+            toast("Please enter email address")
+            return false
+        }
+        else if(binding.etPassword.text.toString().isEmpty()){
+            toast("Please enter password")
+            return false
+        }
+        else{
+            return true
         }
     }
 
     override fun onActResume() {
-        val textLen=binding.tvForgotPwd.text.length
-        val spannable =SpannableString(binding.tvForgotPwd.text)
-        spannable.setSpan(ForegroundColorSpan(ContextCompat.getColor(getContext(),R.color.light_orange)),18,textLen,
-            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        binding.tvForgotPwd.text=spannable
+        val textLen = binding.tvForgotPwd.text.length
+        val spannable = SpannableString(binding.tvForgotPwd.text)
+        spannable.setSpan(
+            ForegroundColorSpan(ContextCompat.getColor(getContext(), R.color.light_orange)),
+            18,
+            textLen,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        binding.tvForgotPwd.text = spannable
     }
 
     private fun gotoDashboard() {
-        val dashboardIntent= Intent(getContext(),AppDashboard::class.java)
+        val dashboardIntent = Intent(getContext(), AppDashboard::class.java)
         startActivity(dashboardIntent)
     }
 
     private fun userLogin() {
-        loginViewModel.performUserLogin("test_teacher_1", "paatham").observe(this, {
+        loginViewModel.performUserLogin(binding.etUsername.text.toString(), binding.etPassword.text.toString()).observe(this, {
             when (it.status) {
                 Status.SUCCESS -> {
                     hideProgressDialog()
                     it.data?.body()?.let { loginData ->
-                        loginData.msg?.let {
+                        loginData.message?.let {
                             toast(it)
+                            gotoDashboard()
                         }
                     }
                 }
