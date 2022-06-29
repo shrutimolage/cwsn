@@ -13,7 +13,7 @@
     <color name="black_light">#808285</color>
 
 <!--    customized color-->
-
+    <color name="status_bar_color">#5842AD</color>
     <color name="theme_color">#1C75BC</color>
     <color name="theme_color_light">#50B7E3</color>
     <color name="theme_color_dark">#06375E</color>
@@ -70,7 +70,7 @@
     <color name="color_dhani">#76A342</color>
 
 
-
+    <color name="dashboard_toolbar_color">#003A84</color>
     <color name="dialog_screengreen">#A5FDEF</color>
     <color name="dialog_screenred">#FFBBBB</color>
     <color name="colorGray">#45525A</color>

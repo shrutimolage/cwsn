@@ -10,4 +10,6 @@ interface IAllQuestRepository
     suspend fun saveAllQuestion(questions:List<AllQuestion>)
 
     suspend fun getAllLocalQuestionData():List<AllQuestion>
+
+    suspend fun performAppLogout():Boolean
 }

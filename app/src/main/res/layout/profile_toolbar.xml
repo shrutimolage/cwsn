@@ -9,34 +9,21 @@
     android:background="@color/dashboard_toolbar_color">
        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/navigationBar"
-            android:layout_width="40dp"
-            android:layout_height="30dp"
-            android:visibility="gone"
+            android:layout_width="35dp"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:padding="8dp"
             android:contentDescription="Navigation Bar"
-            android:src="@drawable/ic_navigation_bar_black" />
+            android:src="@drawable/ic_white_arrow_back" />
 
         <TextView
             android:id="@+id/toolbar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:text="Welcome,Teacher Name"
+            android:text="Profile"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_14" />
-        <ImageView
-            android:id="@+id/img_logoutApp"
-            android:layout_width="wrap_content"
-            android:src="@drawable/ic_logout_icon"
-            android:layout_gravity="right"
-            android:layout_marginEnd="15dp"
-            android:layout_marginStart="10dp"
-            android:layout_height="wrap_content"/>
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/cimg_profileIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="right"
-            android:layout_marginEnd="10dp"
-            android:src="@drawable/ic_user_profile_icon" />
+
 
 </androidx.appcompat.widget.Toolbar>

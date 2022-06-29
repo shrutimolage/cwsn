@@ -13,10 +13,10 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [GreivanceFragment.newInstance] factory method to
+ * Use the [GrievanceFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class GreivanceFragment : Fragment() {
+class GrievanceFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
@@ -37,6 +37,8 @@ class GreivanceFragment : Fragment() {
     }
 
     companion object {
+        val TAG: String="GrievanceFragment"
+
         /**
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
@@ -47,7 +49,7 @@ class GreivanceFragment : Fragment() {
          */
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            GreivanceFragment().apply {
+            GrievanceFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

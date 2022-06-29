@@ -29,7 +29,7 @@ class SplashAct : BaseActivity<ActivitySplashBinding>() {
         Handler(Looper.getMainLooper()).postDelayed({
             appPreferences.getUserLoginStatus()?.let { loginStatus->
                 if(loginStatus){
-                    gotoLoginScreen()
+                    gotoDashboard()
                 }
                 else{
                     gotoLoginScreen()
@@ -41,12 +41,16 @@ class SplashAct : BaseActivity<ActivitySplashBinding>() {
 
     private fun gotoDashboard() {
         val dashboard= Intent(getContext(),AppDashboard::class.java)
+        dashboard.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(dashboard)
+        finish()
     }
 
     private fun gotoLoginScreen(){
         val loginScreen=Intent(getContext(),LoginSignUpAct::class.java)
+        loginScreen.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(loginScreen)
+        finish()
     }
 
     override fun onActResume() {

@@ -38,4 +38,15 @@ class DbViewModel(private val questRepository: IAllQuestRepository):ViewModel()
             emit(Resource.error(data = null, message = "Error while getting questions"))
         }
     }
+
+    fun performAppLogout() = liveData(Dispatchers.IO)
+    {
+        emit(Resource.loading(data = null))
+        try{
+            emit(Resource.success(data = questRepository.performAppLogout(), message = "Logout Done"))
+        }
+        catch (ex:Exception){
+            emit(Resource.error(data = null, message = "Error while app logout"))
+        }
+    }
 }
