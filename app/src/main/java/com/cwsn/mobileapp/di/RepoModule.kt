@@ -1,6 +1,6 @@
 package com.cwsn.mobileapp.di
 
-import com.cwsn.mobileapp.repository.impl.AllQuestRepository
+import com.cwsn.mobileapp.repository.impl.HomeRepository
 import com.cwsn.mobileapp.repository.impl.LoginRepository
 import com.cwsn.mobileapp.repository.impl.ProfileRepository
 import com.cwsn.mobileapp.utils.AppPreferences
@@ -18,5 +18,8 @@ val repoModule = module {
     }
     single {
         ProfileRepository(get())
+    }
+    single {
+        HomeRepository(get())
     }
 }

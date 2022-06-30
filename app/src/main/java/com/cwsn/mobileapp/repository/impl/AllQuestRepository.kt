@@ -1,8 +1,6 @@
 package com.cwsn.mobileapp.repository.impl
 
-import android.content.Context
 import com.cwsn.mobileapp.local.dao.QuestionDao
-import com.cwsn.mobileapp.local.database.QuestionDatabase
 import com.cwsn.mobileapp.local.table.AllQuestion
 import com.cwsn.mobileapp.repository.IAllQuestRepository
 import com.cwsn.mobileapp.utils.AppPreferences
@@ -24,6 +22,7 @@ class AllQuestRepository(private val questDao: QuestionDao,private val appPref:A
         appPref.performAppLogout()
         return true
     }
+
 
 
 }

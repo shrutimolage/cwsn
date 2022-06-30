@@ -1,16 +1,11 @@
 package com.cwsn.mobileapp.di
 
-import android.content.Context
-import com.cwsn.mobileapp.BuildConfig
 import com.cwsn.mobileapp.network.APIService
 import com.cwsn.mobileapp.network.ApiHelper
 import com.cwsn.mobileapp.network.ApiHelperImpl
 import com.cwsn.mobileapp.network.NetworkConnectionInterceptor
 import com.cwsn.mobileapp.utils.AppPreferences
-import com.cwsn.mobileapp.utils.HttpLoggingClass
 import com.cwsn.mobileapp.utils.Utils
-import com.google.gson.GsonBuilder
-import com.readystatesoftware.chuck.ChuckInterceptor
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -18,8 +13,6 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.TimeUnit
-import kotlin.math.sin
 
 /**
 Created by  on 14,June,2022

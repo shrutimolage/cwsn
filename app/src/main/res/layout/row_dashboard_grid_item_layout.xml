@@ -13,7 +13,7 @@
         android:id="@+id/imageView3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="0.2"
+        android:layout_weight="0.4"
         android:layout_gravity="center"
         android:layout_margin="5dp"
         app:srcCompat="@drawable/ic_total_school" />
@@ -29,13 +29,13 @@
 
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_weight="0.8"
+        android:layout_weight="0.6"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/tv_fieldCount"
             style="@style/BigSizeBlackAppTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -44,7 +44,7 @@
             android:text="363" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/tv_fieldName"
             style="@style/NormalSizeBlackAppTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

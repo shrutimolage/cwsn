@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:background="@drawable/grey_border_bg"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <LinearLayout
+        android:id="@+id/ll_mcqQuestion"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView6"
+                style="@style/SmallSizeBlackAppTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.04"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:text="(Q1)" />
+
+            <TextView
+                android:id="@+id/textView7"
+                style="@style/NormalSizeBlackAppTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.72"
+                android:gravity="left"
+                android:layout_gravity="center"
+                android:text="What teaching method do you adopt?" />
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.12"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:padding="3dp"
+                android:layout_margin="3dp"
+                app:srcCompat="@drawable/ic_grey_edit_icon" />
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.12"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:padding="3dp"
+                android:layout_margin="3dp"
+                app:srcCompat="@drawable/ic_delete_grey__icon" />
+        </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_margin="10dp"
+            tools:listitem="@layout/row_mcq_survey_preview_layout"
+            android:layout_height="200dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_textQuestion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="1"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/SmallSizeBlackAppTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.04"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:text="(Q1)" />
+
+            <TextView
+                style="@style/NormalSizeBlackAppTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.72"
+                android:gravity="left"
+                android:layout_gravity="center"
+                android:text="What teaching method do you adopt?" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.12"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:padding="3dp"
+                android:layout_margin="3dp"
+                app:srcCompat="@drawable/ic_grey_edit_icon" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.12"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:padding="3dp"
+                android:layout_margin="3dp"
+                app:srcCompat="@drawable/ic_delete_grey__icon" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView9"
+            style="@style/NormalSizeBlackAppTextView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="5dp"
+            android:ellipsize="end"
+            android:background="@drawable/shadow_white_layer_list"
+            android:text="Text type answer here" />
+
+    </LinearLayout>
+</FrameLayout>

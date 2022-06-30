@@ -3,6 +3,7 @@ package com.cwsn.mobileapp.view.activity
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.cwsn.mobileapp.R
 import com.cwsn.mobileapp.databinding.ActivityAppDashboardBinding
@@ -14,21 +15,24 @@ import com.cwsn.mobileapp.repository.impl.AllQuestRepository
 import com.cwsn.mobileapp.utils.AppPreferences
 import com.cwsn.mobileapp.utils.toast
 import com.cwsn.mobileapp.view.activity.base.BaseActivity
+import com.cwsn.mobileapp.view.callback.HomeFragCallback
 import com.cwsn.mobileapp.view.fragment.GrievanceFragment
 import com.cwsn.mobileapp.view.fragment.HomeFragment
 import com.cwsn.mobileapp.view.fragment.SummaryFragment
+import com.cwsn.mobileapp.viewmodel.home.HomeViewModel
 import com.cwsn.mobileapp.viewmodel.localdb.DbVMFactory
 import com.cwsn.mobileapp.viewmodel.localdb.DbViewModel
 import nl.joery.animatedbottombar.AnimatedBottomBar
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 @Suppress("MoveLambdaOutsideParentheses")
-class AppDashboard : BaseActivity<ActivityAppDashboardBinding>()
+class AppDashboard : BaseActivity<ActivityAppDashboardBinding>(),HomeFragCallback
 {
     private lateinit var appPreferences: AppPreferences
     private lateinit var questionDao: QuestionDao
     private lateinit var repos:IAllQuestRepository
     private lateinit var factory:DbVMFactory
-    private lateinit var viewModel: DbViewModel
+    private lateinit var dbViewModel: DbViewModel
 
     override fun inflateLayout(layoutInflater: LayoutInflater): ActivityAppDashboardBinding {
         return ActivityAppDashboardBinding.inflate(layoutInflater)
@@ -38,13 +42,17 @@ class AppDashboard : BaseActivity<ActivityAppDashboardBinding>()
         return this@AppDashboard
     }
 
+    override fun isSetUpProgressDialog(): Boolean {
+        return true
+    }
+
     override fun onActCreate() {
         appPreferences= AppPreferences(getContext())
         val appDatabase=QuestionDatabase.getInstance(getContext())
         questionDao=appDatabase.questionDao()
         repos=AllQuestRepository(questionDao,appPreferences)
         factory= DbVMFactory(repos)
-        viewModel= ViewModelProvider(this,factory)[DbViewModel::class.java]
+        dbViewModel= ViewModelProvider(this,factory)[DbViewModel::class.java]
         binding.layoutDashboard.bottomNavBar.animatedBottomBar.setOnTabSelectListener(object:AnimatedBottomBar.OnTabSelectListener{
             override fun onTabSelected(
                 lastIndex: Int,
@@ -69,7 +77,7 @@ class AppDashboard : BaseActivity<ActivityAppDashboardBinding>()
             gotoUserProfileScreen()
         }
         binding.toolbar.imgLogoutApp.setOnClickListener {
-            viewModel.performAppLogout().observe(this, { sessionStatus->
+            dbViewModel.performAppLogout().observe(this, { sessionStatus->
                 when(sessionStatus.status){
                    Status.LOADING->{
 
@@ -120,20 +128,34 @@ class AppDashboard : BaseActivity<ActivityAppDashboardBinding>()
     }
 
     override fun onActResume() {
-        viewModel.getAllQuestions().observe(this, { questions->
-            when(questions.status){
-                Status.SUCCESS->{
+        //getLocalQuestions()
+    }
+
+
+
+    private fun getLocalQuestions() {
+        dbViewModel.getAllQuestions().observe(this, { questions ->
+            when (questions.status) {
+                Status.SUCCESS -> {
                     toast("Success")
                 }
-                Status.ERROR->{
+                Status.ERROR -> {
                     questions.message?.let {
                         toast(it)
                     }
                 }
-                Status.LOADING->{
+                Status.LOADING -> {
                     toast("loading")
                 }
             }
         })
+    }
+
+    override fun showProgress() {
+        showProgressDialog()
+    }
+
+    override fun hideProgress() {
+        hideProgressDialog()
     }
 }

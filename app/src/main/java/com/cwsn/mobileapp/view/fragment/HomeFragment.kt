@@ -1,11 +1,29 @@
 package com.cwsn.mobileapp.view.fragment
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.cwsn.mobileapp.R
+import com.cwsn.mobileapp.adapter.home.ItemCountAdapter
+import com.cwsn.mobileapp.adapter.home.SchoolListAdapter
+import com.cwsn.mobileapp.databinding.FragmentHomeBinding
+import com.cwsn.mobileapp.model.home.ClusterData
+import com.cwsn.mobileapp.model.home.ItemCount
+import com.cwsn.mobileapp.model.school.SchoolListInput
+import com.cwsn.mobileapp.network.Status
+import com.cwsn.mobileapp.utils.toast
+import com.cwsn.mobileapp.view.activity.base.BaseFragment
+import com.cwsn.mobileapp.view.callback.HomeFragCallback
+import com.cwsn.mobileapp.viewmodel.home.HomeViewModel
+import com.skydoves.powerspinner.OnSpinnerItemSelectedListener
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
@@ -16,9 +34,15 @@ private const val ARG_PARAM2 = "param2"
  * Use the [HomeFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class HomeFragment : Fragment() {
+@Suppress("MoveLambdaOutsideParentheses")
+class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
+    private lateinit var allClusters: List<ClusterData>
     private var param1: String? = null
     private var param2: String? = null
+    private val homeViewModel by viewModel<HomeViewModel>()
+    private var clusterNames:MutableList<String> = mutableListOf()
+    private var listener: HomeFragCallback?=null
+    private var itemCountList:MutableList<ItemCount> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,12 +52,138 @@ class HomeFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        try{
+            if(context is HomeFragCallback){
+                listener= context
+            }
+        }
+        catch (ex:ClassCastException){
+            throw ClassCastException(context.toString()
+                    + " must implement HomeFragCallback")
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        getClusterList()
+        binding.spnrAllCluster.setOnSpinnerItemSelectedListener(object:OnSpinnerItemSelectedListener<String>{
+            override fun onItemSelected(
+                oldIndex: Int,
+                oldItem: String?,
+                newIndex: Int,
+                newItem: String
+            ) {
+                if(newIndex!=0){
+                    val clusterId=getSelectedClusterId(newItem)
+                    getAllSchoolList(clusterId)
+                }
+            }
+        })
+    }
+
+    private fun getAllSchoolList(clusterId: Int) {
+        val input=SchoolListInput(clusterId)
+        homeViewModel.getAllSchoolList(input).observe(this, { response->
+            when(response.status){
+                Status.LOADING->{
+                    listener?.showProgress()
+                }
+                Status.SUCCESS->{
+                    listener?.hideProgress()
+                    binding.rclySchoolList.visibility=View.VISIBLE
+                    binding.tvNoResult.visibility=View.GONE
+                    response.data?.body()?.data?.let {
+                        binding.rclySchoolList.apply {
+                            layoutManager=LinearLayoutManager(requireActivity(),RecyclerView.VERTICAL,false)
+                            adapter=SchoolListAdapter(it)
+                        }
+                    }
+                }
+                Status.ERROR->{
+                   listener?.hideProgress()
+                    response.message?.let{
+                        toast(it,requireActivity())
+                        binding.rclySchoolList.visibility=View.GONE
+                        binding.tvNoResult.visibility=View.VISIBLE
+                    }
+                }
+            }
+        })
+    }
+
+    private fun getSelectedClusterId(clusterName: String): Int {
+        var result =0
+        for(item in allClusters){
+            if(item.name==clusterName){
+                result=item.id!!
+            }
+        }
+        return result
+    }
+
+    private fun getClusterList() {
+        homeViewModel.fetchAllCluster().observe(viewLifecycleOwner, { response->
+            when(response.status){
+                Status.SUCCESS->{
+                    listener?.hideProgress()
+                    response.data?.body()?.data?.let { clusters->
+                        allClusters=clusters
+                        toast("cluster size ${clusters.size}",requireActivity())
+                        clusterNames= mutableListOf()
+                        for(cluster in clusters){
+                            cluster.name?.let { clusterNames.add(it) }
+                        }
+                        clusterNames.add(0,"Select Cluster")
+                        binding.spnrAllCluster.setItems(clusterNames)
+                        getAllSchoolCount()
+                    }
+                }
+                Status.ERROR->{
+                    listener?.hideProgress()
+                    response.message?.let{
+                        toast(it,requireActivity())
+                    }
+                }
+                Status.LOADING->{
+                    listener?.showProgress()
+                }
+            }
+        })
+    }
+
+    private fun getAllSchoolCount() {
+        homeViewModel.getAllDashboardCount().observe(viewLifecycleOwner, { response->
+            when(response.status){
+                Status.LOADING->{
+                    listener?.showProgress()
+                }
+                Status.SUCCESS->{
+                    listener?.hideProgress()
+                    itemCountList = mutableListOf()
+                    response.data?.body()?.data?.let { countData->
+                        itemCountList.add(ItemCount("Total School",countData.totalSchool.toString(),R.drawable.ic_total_school))
+                        itemCountList.add(ItemCount("Visited School",countData.totalVerifiedSchool.toString(),R.drawable.ic_total_school_visted))
+                        itemCountList.add(ItemCount("Pending School",countData.totalPendingSchool.toString(),R.drawable.ic_pending_school))
+                        showSchoolCountDetails(itemCountList)
+                    }
+                }
+                Status.ERROR->{
+                    listener?.hideProgress()
+                    response.message?.let {
+                        toast(it,requireActivity())
+                    }
+                }
+            }
+        })
+    }
+
+    private fun showSchoolCountDetails(itemCountList: MutableList<ItemCount>) {
+        binding.rclyDashboardItem.apply {
+            layoutManager=GridLayoutManager(requireActivity(),2)
+            adapter=ItemCountAdapter(itemCountList)
+        }
     }
 
     companion object {
