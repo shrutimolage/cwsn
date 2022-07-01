@@ -16,7 +16,7 @@ class SchoolListAdapter(private val data:List<SchoolData>):RecyclerView.Adapter<
         fun bindItems(schoolData: SchoolData) {
             binding.tvSchoolName.text=schoolData.name
             binding.tvSchoolAddress.text=schoolData.address
-            binding.tvTotalStudentCount.text="0"
+            binding.tvTotalStudentCount.text=schoolData.studentCount.toString()
         }
 
     }

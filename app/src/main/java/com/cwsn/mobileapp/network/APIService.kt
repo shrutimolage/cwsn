@@ -5,6 +5,7 @@ import com.cwsn.mobileapp.model.home.DashboardCount
 import com.cwsn.mobileapp.model.login.LoginInput
 import com.cwsn.mobileapp.model.login.LoginModel
 import com.cwsn.mobileapp.model.profile.UserProfile
+import com.cwsn.mobileapp.model.questions.Questions
 import com.cwsn.mobileapp.model.school.SchoolList
 import com.cwsn.mobileapp.model.school.SchoolListInput
 import retrofit2.Response
@@ -29,5 +30,8 @@ interface APIService
 
     @POST("api/cluster_wise_school")
     suspend fun getSchoolClusterWise(@Body input:SchoolListInput):Response<SchoolList>
+
+    @GET("api/question_list")
+    suspend fun getAllSurveyServerQuestion():Response<Questions>
 
 }

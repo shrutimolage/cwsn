@@ -13,6 +13,7 @@ import com.cwsn.mobileapp.network.Status
 import com.cwsn.mobileapp.utils.AppPreferences
 import com.cwsn.mobileapp.utils.toast
 import com.cwsn.mobileapp.view.activity.base.BaseActivity
+import com.cwsn.mobileapp.view.dialog.ForgotPwdDialog
 import com.cwsn.mobileapp.viewmodel.login.LoginViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -46,6 +47,14 @@ class LoginSignUpAct : BaseActivity<LoginSignupLayoutBinding>() {
                 userLogin()
             }
         }
+        binding.tvForgotPwd.setOnClickListener{
+            showForgotPwdDialog()
+        }
+    }
+
+    private fun showForgotPwdDialog() {
+        val forgotPwdDialog=ForgotPwdDialog.newInstance()
+        forgotPwdDialog.show(supportFragmentManager,ForgotPwdDialog.TAG)
     }
 
     private fun validateField(): Boolean {

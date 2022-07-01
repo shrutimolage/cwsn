@@ -10,4 +10,6 @@ data class SchoolData(@Expose @SerializedName("id"       ) var id       : Int?  
                       @Expose @SerializedName("division" ) var division : String? = null,
                       @Expose @SerializedName("district" ) var district : String? = null,
                       @Expose @SerializedName("block"    ) var block    : String? = null,
-                      @Expose @SerializedName("cluster"  ) var cluster  : String? = null)
+                      @Expose @SerializedName("cluster"  ) var cluster  : String? = null,
+                      @Expose @SerializedName("studentcount" ) var studentCount  : Int? = null
+)

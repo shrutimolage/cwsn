@@ -19,5 +19,7 @@
     <string name="cityName">City</string>
     <string name="state_label">State/Province</string>
     <string name="pincode_label">Pincode</string>
+    <string name="enter_email_address_or_username_label">Enter Email Address</string>
+    <string name="submit_label">Submit</string>
 
 </resources>

@@ -5,13 +5,18 @@ import android.content.Intent
 import android.os.Handler
 import android.os.Looper
 import android.view.LayoutInflater
+import androidx.lifecycle.Observer
 import com.cwsn.mobileapp.databinding.ActivitySplashBinding
+import com.cwsn.mobileapp.local.table.AllQuestion
 import com.cwsn.mobileapp.utils.AppPreferences
 import com.cwsn.mobileapp.view.activity.base.BaseActivity
+import com.cwsn.mobileapp.viewmodel.localdb.DbViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SplashAct : BaseActivity<ActivitySplashBinding>() {
 
     private val appPreferences by lazy { AppPreferences(this) }
+    private val dbViewModel by viewModel<DbViewModel>()
 
     override fun getContext(): Context {
         return this@SplashAct
@@ -26,17 +31,20 @@ class SplashAct : BaseActivity<ActivitySplashBinding>() {
     }
 
     override fun onActCreate() {
+        //checkLoginStatus()
+
+    }
+
+    private fun checkLoginStatus() {
         Handler(Looper.getMainLooper()).postDelayed({
-            appPreferences.getUserLoginStatus()?.let { loginStatus->
-                if(loginStatus){
+            appPreferences.getUserLoginStatus()?.let { loginStatus ->
+                if (loginStatus) {
                     gotoDashboard()
-                }
-                else{
+                } else {
                     gotoLoginScreen()
                 }
             }
-        },3000)
-
+        }, 1000)
     }
 
     private fun gotoDashboard() {
@@ -54,7 +62,12 @@ class SplashAct : BaseActivity<ActivitySplashBinding>() {
     }
 
     override fun onActResume() {
-
+        val survery=AllQuestion(345,"hello world","testing","text",true,"")
+        val questList:MutableList<AllQuestion> = mutableListOf()
+        questList.add(survery)
+        dbViewModel.performSavingQuestions(questList).observe(this, Observer {
+            checkLoginStatus()
+        })
     }
 
     override fun onActPause() {

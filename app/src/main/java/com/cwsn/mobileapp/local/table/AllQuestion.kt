@@ -1,5 +1,6 @@
 package com.cwsn.mobileapp.local.table
 
+import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -8,12 +9,15 @@ import androidx.room.PrimaryKey
 Created by  on 22,June,2022
  **/
 @Entity
-data class AllQuestion(
-    @PrimaryKey(autoGenerate = true) val id: Int,
-    @ColumnInfo val schoolId:Int,
-    @ColumnInfo val question: String?,
-    @ColumnInfo val questionFormat: String?,
-    @ColumnInfo val questionType: String?,
-    @ColumnInfo val isRequired: Boolean,
-    @ColumnInfo val questionFilePath: String?
-)
+data class AllQuestion (
+
+    @NonNull @ColumnInfo var schoolId:Int,
+    @NonNull @ColumnInfo var question: String?,
+    @NonNull @ColumnInfo var questionFormat: String?,
+    @NonNull @ColumnInfo var questionType: String?,
+    @NonNull @ColumnInfo var fieldRequired: Boolean,
+    @NonNull @ColumnInfo var questionFilePath: String?
+){
+    @PrimaryKey(autoGenerate = true)
+    var id: Long = 0
+}

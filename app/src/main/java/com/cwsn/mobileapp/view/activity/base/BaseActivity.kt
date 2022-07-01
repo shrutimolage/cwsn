@@ -92,12 +92,20 @@ abstract class BaseActivity<VB:ViewBinding> : AppCompatActivity(),BaseViewInterf
     }
 
     override fun showProgressDialog() {
-        progressDialog?.show()
+        if(!progressDialog?.isShowing!!){
+            progressDialog?.show()
+        }
+    }
+
+    override fun getProgressDialog(): Dialog? {
+        return progressDialog
     }
 
     override fun hideProgressDialog() {
        progressDialog?.isShowing?.let {
-           progressDialog?.hide()
+           if(it){
+               progressDialog?.hide()
+           }
        }
     }
 

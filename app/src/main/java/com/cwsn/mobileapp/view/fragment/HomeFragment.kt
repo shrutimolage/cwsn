@@ -67,6 +67,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        getAllSchoolCount()
         getClusterList()
         binding.spnrAllCluster.setOnSpinnerItemSelectedListener(object:OnSpinnerItemSelectedListener<String>{
             override fun onItemSelected(
@@ -137,7 +138,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                         }
                         clusterNames.add(0,"Select Cluster")
                         binding.spnrAllCluster.setItems(clusterNames)
-                        getAllSchoolCount()
                     }
                 }
                 Status.ERROR->{
@@ -166,7 +166,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                         itemCountList.add(ItemCount("Total School",countData.totalSchool.toString(),R.drawable.ic_total_school))
                         itemCountList.add(ItemCount("Visited School",countData.totalVerifiedSchool.toString(),R.drawable.ic_total_school_visted))
                         itemCountList.add(ItemCount("Pending School",countData.totalPendingSchool.toString(),R.drawable.ic_pending_school))
-                        showSchoolCountDetails(itemCountList)
+                       showSchoolCountDetails(itemCountList)
                     }
                 }
                 Status.ERROR->{

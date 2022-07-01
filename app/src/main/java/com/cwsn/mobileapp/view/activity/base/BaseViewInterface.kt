@@ -1,5 +1,6 @@
 package com.cwsn.mobileapp.view.activity.base
 
+import android.app.Dialog
 import android.content.Context
 import android.widget.ImageView
 import android.widget.TextView
@@ -59,6 +60,9 @@ interface BaseViewInterface
     }
     fun setProgressDialogTitle():String?
     {
+        return null
+    }
+    fun getProgressDialog(): Dialog?{
         return null
     }
     fun showProgressDialog() {

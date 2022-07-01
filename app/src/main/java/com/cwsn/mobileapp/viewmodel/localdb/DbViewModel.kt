@@ -35,6 +35,7 @@ class DbViewModel(private val questRepository: IAllQuestRepository):ViewModel()
             }
         }
         catch (ex:Exception){
+            ex.printStackTrace()
             emit(Resource.error(data = null, message = "Error while getting questions"))
         }
     }

@@ -15,7 +15,7 @@ class CwsnAppl : Application()
         super.onCreate()
         startKoin {
             androidContext(this@CwsnAppl)
-            modules(networkModule, repoModule, viewModelModule)
+            modules(databaseModule,networkModule, repoModule, viewModelModule)
         }
     }
 }

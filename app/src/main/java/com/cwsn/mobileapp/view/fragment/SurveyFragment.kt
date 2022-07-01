@@ -13,10 +13,10 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [SummaryFragment.newInstance] factory method to
+ * Use the [SurveyFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class SummaryFragment : Fragment() {
+class SurveyFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
@@ -49,7 +49,7 @@ class SummaryFragment : Fragment() {
          */
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            SummaryFragment().apply {
+            SurveyFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
