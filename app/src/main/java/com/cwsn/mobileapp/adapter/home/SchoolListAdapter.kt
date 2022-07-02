@@ -5,18 +5,21 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.cwsn.mobileapp.databinding.RowClusterSchoolItemLayoutBinding
 import com.cwsn.mobileapp.model.school.SchoolData
-import com.cwsn.mobileapp.model.school.SchoolList
+import com.cwsn.mobileapp.view.callback.ISchoolListCallback
 
 /**
 Created by  on 30,June,2022
  **/
-class SchoolListAdapter(private val data:List<SchoolData>):RecyclerView.Adapter<SchoolListAdapter.SchoolViewHolder>()
+class SchoolListAdapter(private val data:List<SchoolData>,private val listener: ISchoolListCallback):RecyclerView.Adapter<SchoolListAdapter.SchoolViewHolder>()
 {
     inner class SchoolViewHolder(private val binding:RowClusterSchoolItemLayoutBinding):RecyclerView.ViewHolder(binding.root){
         fun bindItems(schoolData: SchoolData) {
             binding.tvSchoolName.text=schoolData.name
             binding.tvSchoolAddress.text=schoolData.address
             binding.tvTotalStudentCount.text=schoolData.studentCount.toString()
+            binding.imgStartSurvey.setOnClickListener {
+                listener.startSchoolSurvey(schoolData.id)
+            }
         }
 
     }

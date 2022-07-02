@@ -11,7 +11,7 @@ Created by  on 01,July,2022
  **/
 class SurveyViewModel(private val repos:SurveyRepository):ViewModel()
 {
-    fun getAllQuestions() = liveData(Dispatchers.IO){
+    fun getAllServerQuestions() = liveData(Dispatchers.IO){
         emit(Resource.loading(data = null))
         try {
             val allSurveyServerQuestion = repos.getAllSurveyServerQuestion()
@@ -25,6 +25,23 @@ class SurveyViewModel(private val repos:SurveyRepository):ViewModel()
         catch (ex:Exception){
             ex.printStackTrace()
             emit(Resource.error(data = null, message = "Error while API call ${ex.message}"))
+        }
+    }
+
+    fun getAllLocalDBQuestions() = liveData(Dispatchers.IO){
+        emit(Resource.loading(data = null))
+        try{
+            val allLocalDBQuestion = repos.getAllLocalDBQuestion()
+            if(allLocalDBQuestion.isNotEmpty()){
+                emit(Resource.success(data = allLocalDBQuestion, message = "Success"))
+            }
+            else{
+                emit(Resource.error(data = null, message = "No local DB questions found"))
+            }
+        }
+        catch (ex:Exception){
+            ex.printStackTrace()
+            emit(Resource.error(data = null, message = "Error while DB fetch ${ex.message}"))
         }
     }
 }

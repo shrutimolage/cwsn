@@ -15,8 +15,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
         <activity
-            android:name=".SurveySaveAct"
-            android:exported="false" />
+            android:name=".view.activity.SurveyStartActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"
+            android:exported="true" />
         <activity
             android:name=".view.activity.UserProfileActivity"
             android:exported="true"

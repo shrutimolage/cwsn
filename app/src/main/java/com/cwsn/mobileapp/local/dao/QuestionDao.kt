@@ -17,5 +17,8 @@ interface QuestionDao
     suspend fun insertAllQuestions(questions:List<AllQuestion>)
 
     @Query("SELECT * FROM AllQuestion")
-    fun getAllQuestions():List<AllQuestion>
+    suspend fun getAllQuestions():List<AllQuestion>
+
+    @Query("DELETE FROM AllQuestion")
+    suspend fun deleteSurveyQuestions()
 }

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context=".view.fragment.SurveySaveFragment">
+
+    <include
+        layout="@layout/survey_save_toolbar" />
+    <TextView
+        android:id="@+id/tv_schoolName"
+        style="@style/BigSizeBlackAppTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="School Name here"
+        />
+
+    <TextView
+        android:id="@+id/tv_schoolAddress"
+        style="@style/NormalSizeBlackAppTextView"
+        android:layout_margin="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="School Address here"
+        />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/ll_fragContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="visible"
+            android:layout_marginBottom="45dp"/>
+        <LinearLayout
+            android:id="@+id/ll_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:orientation="vertical"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1"
+                >
+
+                <TextView
+                    android:id="@+id/txt_prev"
+                    style="@style/AppSelectorTextViewStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Previous"
+                    android:layout_weight="0.4"
+                    android:gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="15sp"
+                    android:padding="4dp"
+                    android:layout_marginBottom="5dp"
+                    app:drawableStartCompat="@drawable/ic_left_white" />
+
+                <TextView
+                    android:id="@+id/txt_questCounter"
+                    style="@style/UrlTypeLinkTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:text="2/10"
+                    android:textSize="17sp"
+                    android:layout_gravity="center|bottom"
+                    android:layout_marginBottom="5dp"
+                    android:textColor="@color/black"
+                    android:gravity="center" />
+
+                <TextView
+                    android:id="@+id/txt_next"
+                    style="@style/AppSelectorTextViewStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/save_amp_next"
+                    android:layout_weight="0.4"
+                    android:gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="15sp"
+                    android:padding="4dp"
+                    android:layout_marginBottom="5dp"
+                    app:drawableEndCompat="@drawable/ic_right_white" />
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+</LinearLayout>

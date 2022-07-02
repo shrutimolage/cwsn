@@ -1,6 +1,7 @@
 package com.cwsn.mobileapp.view.fragment
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -21,6 +22,7 @@ import com.cwsn.mobileapp.network.Status
 import com.cwsn.mobileapp.utils.toast
 import com.cwsn.mobileapp.view.activity.base.BaseFragment
 import com.cwsn.mobileapp.view.callback.HomeFragCallback
+import com.cwsn.mobileapp.view.callback.ISchoolListCallback
 import com.cwsn.mobileapp.viewmodel.home.HomeViewModel
 import com.skydoves.powerspinner.OnSpinnerItemSelectedListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -97,8 +99,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                     binding.tvNoResult.visibility=View.GONE
                     response.data?.body()?.data?.let {
                         binding.rclySchoolList.apply {
+                            val schoolListAdapter=SchoolListAdapter(it,object:ISchoolListCallback{
+                                override fun startSchoolSurvey(schoolId: Int?) {
+                                    listener?.gotoSchoolSurvey(schoolId)
+                                }
+                            })
                             layoutManager=LinearLayoutManager(requireActivity(),RecyclerView.VERTICAL,false)
-                            adapter=SchoolListAdapter(it)
+                            adapter=schoolListAdapter
                         }
                     }
                 }
@@ -113,6 +120,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             }
         })
     }
+
+
 
     private fun getSelectedClusterId(clusterName: String): Int {
         var result =0

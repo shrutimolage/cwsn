@@ -4,6 +4,7 @@ import com.cwsn.mobileapp.viewmodel.home.HomeViewModel
 import com.cwsn.mobileapp.viewmodel.localdb.DbViewModel
 import com.cwsn.mobileapp.viewmodel.login.LoginViewModel
 import com.cwsn.mobileapp.viewmodel.profile.ProfileViewModel
+import com.cwsn.mobileapp.viewmodel.survey.SurveyViewModel
 import org.koin.dsl.module
 
 /**
@@ -22,5 +23,8 @@ val viewModelModule= module {
     }
     single{
         HomeViewModel(get())
+    }
+    single{
+        SurveyViewModel(get())
     }
 }

@@ -3,10 +3,7 @@ package com.cwsn.mobileapp.di
 import com.cwsn.mobileapp.local.dao.QuestionDao
 import com.cwsn.mobileapp.local.database.QuestionDatabase
 import com.cwsn.mobileapp.repository.IAllQuestRepository
-import com.cwsn.mobileapp.repository.impl.AllQuestRepository
-import com.cwsn.mobileapp.repository.impl.HomeRepository
-import com.cwsn.mobileapp.repository.impl.LoginRepository
-import com.cwsn.mobileapp.repository.impl.ProfileRepository
+import com.cwsn.mobileapp.repository.impl.*
 import com.cwsn.mobileapp.utils.AppPreferences
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
@@ -22,7 +19,7 @@ val repoModule = module {
     }
     single { AppPreferences(androidContext()) }
     single<IAllQuestRepository> {
-        AllQuestRepository(get(),get())
+        AllQuestRepository(get(),get(),get())
     }
     single {
         LoginRepository(get(),get())
@@ -32,5 +29,8 @@ val repoModule = module {
     }
     single {
         HomeRepository(get())
+    }
+    single {
+        SurveyRepository(get(),get())
     }
 }

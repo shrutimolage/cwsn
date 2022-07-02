@@ -31,7 +31,7 @@ class SplashAct : BaseActivity<ActivitySplashBinding>() {
     }
 
     override fun onActCreate() {
-        //checkLoginStatus()
+        checkLoginStatus()
 
     }
 
@@ -62,12 +62,12 @@ class SplashAct : BaseActivity<ActivitySplashBinding>() {
     }
 
     override fun onActResume() {
-        val survery=AllQuestion(345,"hello world","testing","text",true,"")
+        /*val survery=AllQuestion(345,"hello world","testing","text",true,"")
         val questList:MutableList<AllQuestion> = mutableListOf()
         questList.add(survery)
         dbViewModel.performSavingQuestions(questList).observe(this, Observer {
             checkLoginStatus()
-        })
+        })*/
     }
 
     override fun onActPause() {

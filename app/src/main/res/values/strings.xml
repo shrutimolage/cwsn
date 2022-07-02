@@ -21,5 +21,7 @@
     <string name="pincode_label">Pincode</string>
     <string name="enter_email_address_or_username_label">Enter Email Address</string>
     <string name="submit_label">Submit</string>
-
+    <string name="save_amp_next"><![CDATA[Save & Next]]></string>
+    <string name="enter_old_password_label">Enter old password</string>
+    <string name="enter_new_password_label">Enter new password</string>
 </resources>

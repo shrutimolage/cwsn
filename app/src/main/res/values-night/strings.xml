@@ -14,4 +14,6 @@
     <string name="state_label">State/Province</string>
     <string name="pincode_label">Pincode</string>
     <string name="submit_label">Submit</string>
+    <string name="enter_old_password_label">Enter old password</string>
+    <string name="enter_new_password_label">Enter new password</string>
 </resources>

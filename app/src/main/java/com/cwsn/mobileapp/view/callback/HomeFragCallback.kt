@@ -7,4 +7,6 @@ interface HomeFragCallback
 {
     fun showProgress()
     fun hideProgress()
+    fun gotoSchoolSurvey(schoolId: Int?) {
+    }
 }

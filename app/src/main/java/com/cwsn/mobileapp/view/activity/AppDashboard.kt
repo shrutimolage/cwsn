@@ -7,6 +7,7 @@ import com.cwsn.mobileapp.R
 import com.cwsn.mobileapp.databinding.ActivityAppDashboardBinding
 import com.cwsn.mobileapp.network.Status
 import com.cwsn.mobileapp.utils.AppPreferences
+import com.cwsn.mobileapp.utils.Utils
 import com.cwsn.mobileapp.utils.toast
 import com.cwsn.mobileapp.view.activity.base.BaseActivity
 import com.cwsn.mobileapp.view.callback.HomeFragCallback
@@ -112,6 +113,28 @@ class AppDashboard : BaseActivity<ActivityAppDashboardBinding>(), HomeFragCallba
     private fun gotoUserProfileScreen() {
         val profileIntent = Intent(getContext(), UserProfileActivity::class.java)
         startActivity(profileIntent)
+    }
+
+    override fun gotoSchoolSurvey(schoolId: Int?) {
+        dbViewModel.getAllSurveyQuestions(schoolId).observe(this, { response->
+            when(response.status){
+                Status.SUCCESS->{
+                    hideProgressDialog()
+                    val surveyIntent=Intent(getContext(),SurveyStartActivity::class.java)
+                    surveyIntent.putExtra(Utils.SCHOOL_ID,schoolId)
+                    startActivity(surveyIntent)
+                }
+                Status.ERROR->{
+                    hideProgressDialog()
+                    response.message?.let{
+                        toast(it)
+                    }
+                }
+                Status.LOADING->{
+                    showProgressDialog()
+                }
+            }
+        })
     }
 
     private fun loadHomeFragment() {

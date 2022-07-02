@@ -10,8 +10,8 @@ Created by  on 22,June,2022
  **/
 @Entity
 data class AllQuestion (
-
     @NonNull @ColumnInfo var schoolId:Int,
+    @NonNull @ColumnInfo var serverQuestId:Int,
     @NonNull @ColumnInfo var question: String?,
     @NonNull @ColumnInfo var questionFormat: String?,
     @NonNull @ColumnInfo var questionType: String?,
