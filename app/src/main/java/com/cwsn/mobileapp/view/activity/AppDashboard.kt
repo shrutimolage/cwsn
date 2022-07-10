@@ -115,13 +115,15 @@ class AppDashboard : BaseActivity<ActivityAppDashboardBinding>(), HomeFragCallba
         startActivity(profileIntent)
     }
 
-    override fun gotoSchoolSurvey(schoolId: Int?) {
+    override fun gotoSchoolSurvey(schoolId: Int?, name: String?, address: String?) {
         dbViewModel.getAllSurveyQuestions(schoolId).observe(this, { response->
             when(response.status){
                 Status.SUCCESS->{
                     hideProgressDialog()
                     val surveyIntent=Intent(getContext(),SurveyStartActivity::class.java)
                     surveyIntent.putExtra(Utils.SCHOOL_ID,schoolId)
+                    surveyIntent.putExtra(Utils.SCHOOL_NAME,name)
+                    surveyIntent.putExtra(Utils.SCHOOL_ADDRS,address)
                     startActivity(surveyIntent)
                 }
                 Status.ERROR->{

@@ -44,4 +44,21 @@ class SurveyViewModel(private val repos:SurveyRepository):ViewModel()
             emit(Resource.error(data = null, message = "Error while DB fetch ${ex.message}"))
         }
     }
+
+    fun getAllMCQOptions(questId:Int) = liveData(Dispatchers.IO){
+        emit(Resource.loading(data = null))
+        try{
+            val allMCQOptions = repos.getAllMCQOptions(questId)
+            if(allMCQOptions.isNotEmpty()){
+                emit(Resource.success(data = allMCQOptions, message = "Success"))
+            }
+            else{
+                emit(Resource.error(data = null, message = "No mcq option found"))
+            }
+        }
+        catch (ex:Exception){
+            ex.printStackTrace()
+            emit(Resource.error(data = null, message = "Error while DB fetch ${ex.message}"))
+        }
+    }
 }

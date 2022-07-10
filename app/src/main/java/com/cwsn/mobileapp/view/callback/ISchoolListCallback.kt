@@ -5,5 +5,5 @@ Created by  on 02,July,2022
  **/
 interface ISchoolListCallback
 {
-    fun startSchoolSurvey(schoolId: Int?)
+    fun startSchoolSurvey(schoolId: Int?, name: String?, address: String?)
 }

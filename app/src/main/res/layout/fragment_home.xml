@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/grey_border_bg"
             android:gravity="left|center"
-            android:hint="Select Cluster"
+            android:hint="Loading cluster...please wait"
             android:padding="10dp"
             android:textColor="@color/black"
             android:textColorHint="@color/black"

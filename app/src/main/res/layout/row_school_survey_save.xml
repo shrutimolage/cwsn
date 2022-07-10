@@ -43,6 +43,7 @@
 
         </LinearLayout>
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcly_mcqOptions"
             android:layout_width="match_parent"
             android:layout_margin="10dp"
             tools:listitem="@layout/row_mcq_survey_save_layout"
@@ -80,6 +81,7 @@
                 android:text="What teaching method do you adopt?" />
 
             <ImageView
+                android:id="@+id/img_addSaveAnswer"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.12"
@@ -87,21 +89,30 @@
                 android:layout_gravity="center"
                 android:padding="3dp"
                 android:layout_margin="3dp"
-                app:srcCompat="@drawable/ic_delete_grey__icon" />
+                app:srcCompat="@drawable/ic_add_icon" />
         </LinearLayout>
-
-        <EditText
-            android:id="@+id/textView9"
-            style="@style/NormalSizeEditText"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="140dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="5dp"
-            android:gravity="top"
-            android:ellipsize="end"
-            android:text="Text type answer here" />
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/edt_userTextAnswer"
+                style="@style/NormalSizeEditText"
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="5dp"
+                android:enabled="false"
+                android:gravity="top"
+                android:ellipsize="end"
+                android:text="Text type answer here" />
+
+
+        </FrameLayout>
+
 
     </LinearLayout>
+
+
 </FrameLayout>

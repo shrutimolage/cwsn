@@ -18,7 +18,7 @@ class SchoolListAdapter(private val data:List<SchoolData>,private val listener: 
             binding.tvSchoolAddress.text=schoolData.address
             binding.tvTotalStudentCount.text=schoolData.studentCount.toString()
             binding.imgStartSurvey.setOnClickListener {
-                listener.startSchoolSurvey(schoolData.id)
+                listener.startSchoolSurvey(schoolData.id,schoolData.name,schoolData.address)
             }
         }
 

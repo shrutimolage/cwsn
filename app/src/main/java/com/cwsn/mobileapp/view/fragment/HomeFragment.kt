@@ -1,13 +1,9 @@
 package com.cwsn.mobileapp.view.fragment
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -100,8 +96,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                     response.data?.body()?.data?.let {
                         binding.rclySchoolList.apply {
                             val schoolListAdapter=SchoolListAdapter(it,object:ISchoolListCallback{
-                                override fun startSchoolSurvey(schoolId: Int?) {
-                                    listener?.gotoSchoolSurvey(schoolId)
+                                override fun startSchoolSurvey(
+                                    schoolId: Int?,
+                                    name: String?,
+                                    address: String?
+                                ) {
+                                    listener?.gotoSchoolSurvey(schoolId,name,address)
                                 }
                             })
                             layoutManager=LinearLayoutManager(requireActivity(),RecyclerView.VERTICAL,false)
@@ -140,12 +140,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                     listener?.hideProgress()
                     response.data?.body()?.data?.let { clusters->
                         allClusters=clusters
-                        toast("cluster size ${clusters.size}",requireActivity())
+                        //toast("cluster size ${clusters.size}",requireActivity())
                         clusterNames= mutableListOf()
                         for(cluster in clusters){
                             cluster.name?.let { clusterNames.add(it) }
                         }
                         clusterNames.add(0,"Select Cluster")
+                        binding.spnrAllCluster.hint = "Select Cluster"
                         binding.spnrAllCluster.setItems(clusterNames)
                     }
                 }

@@ -20,16 +20,16 @@
 
         >
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/img_selectOption"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.1"
             android:layout_gravity="center"
             android:padding="2dp"
             android:layout_margin="1dp"
-            app:srcCompat="@drawable/blue_badge_circle" />
+            app:srcCompat="@drawable/grey_badge_circle" />
         <TextView
-            android:id="@+id/textView8"
+            android:id="@+id/tv_answerOption"
             style="@style/NormalSizeBlackAppTextView"
             android:layout_width="0dp"
             android:layout_weight="0.9"

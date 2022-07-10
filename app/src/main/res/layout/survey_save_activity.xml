@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/white"
-    tools:context=".view.fragment.SurveySaveFragment">
+    tools:context=".view.activity.SurveyStartActivity">
 
     <include
         layout="@layout/survey_save_toolbar" />
@@ -28,20 +28,36 @@
         />
     <FrameLayout
         android:layout_width="match_parent"
+        android:visibility="visible"
         android:layout_height="match_parent">
-
-        <LinearLayout
-            android:id="@+id/ll_fragContainer"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcly_allQuestion"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:visibility="visible"
-            android:layout_marginBottom="45dp"/>
-        <LinearLayout
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="50dp"
+            android:layout_marginTop="5dp"
+            tools:listitem="@layout/row_school_survey_save"
+            android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/txt_submitAnswer"
+            style="@style/AppSelectorTextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="SUBMIT ANSWER"
+            android:gravity="center"
+            android:layout_gravity="bottom"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_size_13"
+            android:padding="2dp"
+            android:layout_marginBottom="2dp"
+             />
+       <!-- <LinearLayout
             android:id="@+id/ll_bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
+            android:visibility="gone"
             android:orientation="vertical"
             >
             <LinearLayout
@@ -96,6 +112,8 @@
                     android:layout_marginBottom="5dp"
                     app:drawableEndCompat="@drawable/ic_right_white" />
             </LinearLayout>
-        </LinearLayout>
+        </LinearLayout>-->
     </FrameLayout>
+
+
 </LinearLayout>

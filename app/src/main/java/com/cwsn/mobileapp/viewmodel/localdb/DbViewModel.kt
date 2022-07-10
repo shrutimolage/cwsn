@@ -3,6 +3,7 @@ package com.cwsn.mobileapp.viewmodel.localdb
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import com.cwsn.mobileapp.local.table.AllQuestion
+import com.cwsn.mobileapp.local.table.MCQOptions
 import com.cwsn.mobileapp.model.questions.SurveyQuestion
 import com.cwsn.mobileapp.network.Resource
 import com.cwsn.mobileapp.repository.IAllQuestRepository
@@ -13,17 +14,6 @@ Created by  on 22,June,2022
  **/
 class DbViewModel(private val questRepository: IAllQuestRepository):ViewModel()
 {
-    fun performSavingQuestions(questionList:List<AllQuestion>) = liveData(Dispatchers.IO){
-        emit(Resource.loading(data = null))
-        try {
-             questRepository.saveAllQuestion(questionList)
-             emit(Resource.success(data = null, message = "Done"))
-        }
-        catch (ex:Exception){
-            emit(Resource.error(data = null, message = "Error while saving question"))
-        }
-    }
-
     fun getAllQuestions() = liveData(Dispatchers.IO) {
         emit(Resource.loading(data = null))
         try {
@@ -55,12 +45,15 @@ class DbViewModel(private val questRepository: IAllQuestRepository):ViewModel()
         emit(Resource.loading(data = null))
         try{
             questRepository.deleteSurveyQuestions()
+            questRepository.deleteMCQOptions()
             val allSurveyServerQuestion = questRepository.getAllSurveyServerQuestion()
             if(allSurveyServerQuestion.isSuccessful){
                 allSurveyServerQuestion.body()?.data?.let { surveyQuest->
                     if(surveyQuest.isNotEmpty()){
                         val allQuestions=generateQuestions(surveyQuest,schoolId)
+                        val allMCQOptions = generateMCQOptions(surveyQuest)
                         questRepository.saveAllQuestion(allQuestions)
+                        questRepository.saveAllMCQOptions(allMCQOptions)
                         emit(Resource.success(data = allSurveyServerQuestion, message = "Success"))
                     }
                     else{
@@ -77,12 +70,26 @@ class DbViewModel(private val questRepository: IAllQuestRepository):ViewModel()
         }
     }
 
+    private fun generateMCQOptions(surveyQuest: List<SurveyQuestion>) :List<MCQOptions>{
+        var mcqOptions:MutableList<MCQOptions> = mutableListOf()
+        for(surveyQuest in surveyQuest){
+            if(surveyQuest.type.equals("radio")){
+                surveyQuest.options?.forEachIndexed { index, data ->
+                    val mcqOption = MCQOptions(surveyQuest.id?.toInt()!!,0,data)
+                    mcqOptions.add(mcqOption)
+                }
+            }
+        }
+        return mcqOptions
+    }
+
     private fun generateQuestions(surveyQuest: List<SurveyQuestion>, schoolId: Int?): List<AllQuestion>
     {
         var surveyQuestions:MutableList<AllQuestion> = mutableListOf()
         for(surveyQuest in surveyQuest){
             var allQuestion=AllQuestion(schoolId!!,surveyQuest.id?.toInt()!!,surveyQuest.question,
             surveyQuest.name,surveyQuest.type,getRequiredStatus(surveyQuest.isRequired),"")
+
             surveyQuestions.add(allQuestion)
         }
         return surveyQuestions
