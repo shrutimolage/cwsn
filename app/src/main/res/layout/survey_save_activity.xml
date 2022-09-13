@@ -9,13 +9,14 @@
     tools:context=".view.activity.SurveyStartActivity">
 
     <include
+        android:id="@+id/survey_toolbar"
         layout="@layout/survey_save_toolbar" />
     <TextView
         android:id="@+id/tv_schoolName"
         style="@style/BigSizeBlackAppTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="School Name here"
+        android:text=""
         />
 
     <TextView
@@ -24,7 +25,7 @@
         android:layout_margin="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="School Address here"
+        android:text=""
         />
     <FrameLayout
         android:layout_width="match_parent"

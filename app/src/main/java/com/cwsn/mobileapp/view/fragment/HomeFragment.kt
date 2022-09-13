@@ -65,21 +65,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        getAllSchoolCount()
-        getClusterList()
-        binding.spnrAllCluster.setOnSpinnerItemSelectedListener(object:OnSpinnerItemSelectedListener<String>{
-            override fun onItemSelected(
-                oldIndex: Int,
-                oldItem: String?,
-                newIndex: Int,
-                newItem: String
-            ) {
-                if(newIndex!=0){
-                    val clusterId=getSelectedClusterId(newItem)
-                    getAllSchoolList(clusterId)
-                }
-            }
-        })
+        /*getAllSchoolCount()
+        getClusterList()*/
+
     }
 
     private fun getAllSchoolList(clusterId: Int) {

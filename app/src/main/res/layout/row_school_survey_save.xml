@@ -39,7 +39,7 @@
                 android:layout_weight="0.95"
                 android:gravity="left"
                 android:layout_gravity="center"
-                android:text="What teaching method do you adopt?" />
+                android:text="" />
 
         </LinearLayout>
         <androidx.recyclerview.widget.RecyclerView
@@ -78,7 +78,7 @@
                 android:layout_weight="0.84"
                 android:gravity="left"
                 android:layout_gravity="center"
-                android:text="What teaching method do you adopt?" />
+                android:text="" />
 
             <ImageView
                 android:id="@+id/img_addSaveAnswer"

@@ -9,26 +9,7 @@
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/animatedBottomBar" />
+        />
 
-    <nl.joery.animatedbottombar.AnimatedBottomBar
-        android:id="@+id/animatedBottomBar"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@drawable/one_side_botton_color"
-        app:abb_animationDuration="600"
-        app:abb_animationInterpolator="@android:anim/overshoot_interpolator"
-        app:abb_indicatorAppearance="round"
-        app:abb_indicatorColor="@color/theme_color_light"
-        app:abb_indicatorHeight="4dp"
-        app:abb_indicatorMargin="16dp"
-        app:abb_selectedIndex="0"
-        app:abb_selectedTabType="text"
-        app:abb_tabColorSelected="@color/white"
-        app:abb_textAppearance="@style/BottomTabTextStyle"
-        android:layout_alignParentBottom="true"
-        app:abb_tabAnimation="slide"
-        app:abb_indicatorLocation="bottom"
-        app:abb_tabs="@menu/bottom_menu" />
 
 </RelativeLayout>

@@ -21,11 +21,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 @Suppress("MoveLambdaOutsideParentheses")
 class AppDashboard : BaseActivity<ActivityAppDashboardBinding>(), HomeFragCallback {
     private lateinit var appPreferences: AppPreferences
-
-    /*private lateinit var questionDao: QuestionDao
-    private lateinit var repos:IAllQuestRepository
-    private lateinit var factory:DbVMFactory
-    private lateinit var dbViewModel: DbViewModel*/
     private val dbViewModel by viewModel<DbViewModel>()
 
     override fun inflateLayout(layoutInflater: LayoutInflater): ActivityAppDashboardBinding {
@@ -42,32 +37,6 @@ class AppDashboard : BaseActivity<ActivityAppDashboardBinding>(), HomeFragCallba
 
     override fun onActCreate() {
         appPreferences = AppPreferences(getContext())
-        // val appDatabase=QuestionDatabase.getInstance(getContext())
-        /*questionDao=appDatabase.questionDao()
-        repos=AllQuestRepository(questionDao,appPreferences)
-        factory= DbVMFactory(repos)
-        dbViewModel= ViewModelProvider(this,factory)[DbViewModel::class.java]*/
-        binding.layoutDashboard.bottomNavBar.animatedBottomBar.setOnTabSelectListener(object :
-            AnimatedBottomBar.OnTabSelectListener {
-            override fun onTabSelected(
-                lastIndex: Int,
-                lastTab: AnimatedBottomBar.Tab?,
-                newIndex: Int,
-                newTab: AnimatedBottomBar.Tab
-            ) {
-                when (newIndex) {
-                    0 -> {
-                        loadHomeFragment()
-                    }
-                    1 -> {
-                        loadSummaryFragment()
-                    }
-                    2 -> {
-                        //loadGrievanceFragment()
-                    }
-                }
-            }
-        })
         binding.toolbar.cimgProfileIcon.setOnClickListener {
             gotoUserProfileScreen()
         }
@@ -93,21 +62,21 @@ class AppDashboard : BaseActivity<ActivityAppDashboardBinding>(), HomeFragCallba
                 }
             })
         }
-        loadHomeFragment()
+
     }
 
     private fun loadGrievanceFragment() {
-        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        /*val fragmentTransaction = supportFragmentManager.beginTransaction()
         val grievanceFragment = GrievanceFragment.newInstance("", "")
         fragmentTransaction.replace(R.id.ll_fragContainer, grievanceFragment, GrievanceFragment.TAG)
-        fragmentTransaction.commit()
+        fragmentTransaction.commit()*/
     }
 
     private fun loadSummaryFragment() {
-        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        /*val fragmentTransaction = supportFragmentManager.beginTransaction()
         val summaryFragment = SurveyFragment.newInstance("", "")
         fragmentTransaction.replace(R.id.ll_fragContainer, summaryFragment, SurveyFragment.TAG)
-        fragmentTransaction.commit()
+        fragmentTransaction.commit()*/
     }
     
     private fun gotoUserProfileScreen() {
@@ -140,10 +109,10 @@ class AppDashboard : BaseActivity<ActivityAppDashboardBinding>(), HomeFragCallba
     }
 
     private fun loadHomeFragment() {
-        val fragmentTransaction = supportFragmentManager.beginTransaction()
+      /*  val fragmentTransaction = supportFragmentManager.beginTransaction()
         val homeFragment = HomeFragment.newInstance("", "")
         fragmentTransaction.replace(R.id.ll_fragContainer, homeFragment, HomeFragment.TAG)
-        fragmentTransaction.commit()
+        fragmentTransaction.commit()*/
     }
 
     override fun onActResume() {

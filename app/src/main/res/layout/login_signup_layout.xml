@@ -32,12 +32,12 @@
                    <TextView
                        android:layout_width="match_parent"
                        android:layout_height="wrap_content"
-                       android:layout_marginTop="60dp"
-                       android:textSize="@dimen/text_size_22"
+                       android:layout_marginTop="45dp"
+                       android:textSize="@dimen/text_size_18"
                        android:textColor="@color/black"
                        android:gravity="center"
                        android:textStyle="bold"
-                       android:text="Welcome To CWSN" />
+                       android:text="@string/welcome_to_cwsn_label" />
                    <com.google.android.material.textfield.TextInputLayout
                        android:layout_width="match_parent"
                        android:layout_height="wrap_content"
@@ -59,7 +59,7 @@
                            android:drawableEnd="@drawable/ic_person_black"
                            android:maxLines="1"
                            android:textColor="@color/black"
-                           android:textSize="@dimen/text_size_14" />
+                           android:textSize="@dimen/text_size_13" />
 
                    </com.google.android.material.textfield.TextInputLayout>
                    <com.google.android.material.textfield.TextInputLayout
@@ -83,7 +83,7 @@
                            android:drawablePadding="15dp"
                            android:inputType="textPassword"
                            android:textColor="@color/colorGray"
-                           android:textSize="@dimen/text_size_14" />
+                           android:textSize="@dimen/text_size_13" />
 
                    </com.google.android.material.textfield.TextInputLayout>
                    <LinearLayout
@@ -99,7 +99,7 @@
                            android:layout_height="wrap_content"
                            android:textSize="@dimen/text_size_13"
                            android:textColor="@color/black"
-                           android:text="Remember me" />
+                           android:text="@string/remember_me_label" />
                    </LinearLayout>
                    <LinearLayout
                        android:id="@+id/ll_actionBtn"
@@ -118,8 +118,8 @@
                            android:layout_margin="5dp"
                            android:gravity="center"
                            android:textColor="@color/white"
-                           android:textSize="@dimen/text_size_18"
-                           android:text="LOGIN" />
+                           android:textSize="@dimen/text_size_15"
+                           android:text="@string/login_label" />
 
                    </LinearLayout>
                    <TextView
@@ -127,7 +127,7 @@
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
                        android:textColor="@color/black"
-                       android:textSize="@dimen/text_size_15"
+                       android:textSize="@dimen/text_size_14"
                        android:layout_gravity="center|top"
                        android:padding="5dp"
                        android:layout_marginTop="20dp"

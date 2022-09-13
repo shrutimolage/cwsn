@@ -42,11 +42,18 @@ class SurveyStartActivity : BaseActivity<SurveySaveActivityBinding>() {
         return true
     }
 
+    override fun onUserBackPressed() {
+        finish()
+    }
+
     override fun onActCreate() {
         getDataFromIntent()
         teacherId = appPreferences.getUserLoginData()[appPreferences.KEY_TEACHER_ID]
         binding.tvSchoolName.text=schoolName
         binding.tvSchoolAddress.text=schoolAddrs
+        binding.surveyToolbar.imgGoBack.setOnClickListener {
+            onUserBackPressed()
+        }
     }
 
     private fun getDataFromIntent() {
