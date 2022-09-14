@@ -3,28 +3,31 @@ package com.cwsn.mobileapp.view.activity
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
+import android.view.MenuItem
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.get
+import androidx.navigation.ui.NavigationUI
 import com.cwsn.mobileapp.R
-import com.cwsn.mobileapp.databinding.ActivityAppDashboardBinding
+import com.cwsn.mobileapp.databinding.AppDashboardLayoutBinding
 import com.cwsn.mobileapp.network.Status
 import com.cwsn.mobileapp.utils.AppPreferences
 import com.cwsn.mobileapp.utils.Utils
 import com.cwsn.mobileapp.utils.toast
-import com.cwsn.mobileapp.view.activity.base.BaseActivity
+import com.cwsn.mobileapp.view.base.BaseActivity
 import com.cwsn.mobileapp.view.callback.HomeFragCallback
-import com.cwsn.mobileapp.view.fragment.GrievanceFragment
-import com.cwsn.mobileapp.view.fragment.HomeFragment
-import com.cwsn.mobileapp.view.fragment.SurveyFragment
 import com.cwsn.mobileapp.viewmodel.localdb.DbViewModel
-import nl.joery.animatedbottombar.AnimatedBottomBar
+import com.google.android.material.navigation.NavigationBarView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 @Suppress("MoveLambdaOutsideParentheses")
-class AppDashboard : BaseActivity<ActivityAppDashboardBinding>(), HomeFragCallback {
+class AppDashboard : BaseActivity<AppDashboardLayoutBinding>(), HomeFragCallback {
     private lateinit var appPreferences: AppPreferences
     private val dbViewModel by viewModel<DbViewModel>()
+    private lateinit var navController: NavController
 
-    override fun inflateLayout(layoutInflater: LayoutInflater): ActivityAppDashboardBinding {
-        return ActivityAppDashboardBinding.inflate(layoutInflater)
+    override fun inflateLayout(layoutInflater: LayoutInflater): AppDashboardLayoutBinding {
+        return AppDashboardLayoutBinding.inflate(layoutInflater)
     }
 
     override fun getContext(): Context {
@@ -36,7 +39,30 @@ class AppDashboard : BaseActivity<ActivityAppDashboardBinding>(), HomeFragCallba
     }
 
     override fun onActCreate() {
-        appPreferences = AppPreferences(getContext())
+        navController = Navigation.findNavController(this, R.id.app_nav_host_fragment)
+        NavigationUI.setupWithNavController(binding.bottomNav,navController)
+        binding.bottomNav.setOnItemSelectedListener(object:NavigationBarView.OnItemSelectedListener{
+            override fun onNavigationItemSelected(item: MenuItem): Boolean {
+                when (item.itemId) {
+                    R.id.school->{
+                        if (!isHomeFragment()) {
+                            navController.popBackStack(R.id.homeFragment,true)
+                            navController.navigate(R.id.homeFragment)
+                        }
+                    }
+                    R.id.resourceRoom->
+                    {
+                        navController.navigate(R.id.resourceRoomFrag)
+                    }
+                    R.id.grievance->{
+                        navController.navigate(R.id.monitoringFragment)
+                    }
+                }
+                return true
+            }
+
+        })
+        /*appPreferences = AppPreferences(getContext())
         binding.toolbar.cimgProfileIcon.setOnClickListener {
             gotoUserProfileScreen()
         }
@@ -61,8 +87,14 @@ class AppDashboard : BaseActivity<ActivityAppDashboardBinding>(), HomeFragCallba
                     }
                 }
             })
-        }
+        }*/
 
+    }
+
+    private fun isHomeFragment(): Boolean {
+        return with(navController) {
+            currentDestination == graph[R.id.homeFragment]
+        }
     }
 
     private fun loadGrievanceFragment() {

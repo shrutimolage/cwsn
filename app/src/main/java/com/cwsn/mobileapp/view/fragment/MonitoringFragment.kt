@@ -13,10 +13,10 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [GrievanceFragment.newInstance] factory method to
+ * Use the [MonitoringFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class GrievanceFragment : Fragment() {
+class MonitoringFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
@@ -33,11 +33,11 @@ class GrievanceFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_greivance, container, false)
+        return inflater.inflate(R.layout.fragment_monitoring, container, false)
     }
 
     companion object {
-        val TAG: String="GrievanceFragment"
+        val TAG: String="SummaryFragment"
 
         /**
          * Use this factory method to create a new instance of
@@ -45,11 +45,11 @@ class GrievanceFragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment GreivanceFragment.
+         * @return A new instance of fragment SummaryFragment.
          */
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            GrievanceFragment().apply {
+            MonitoringFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

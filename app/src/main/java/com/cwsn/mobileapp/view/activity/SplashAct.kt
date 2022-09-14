@@ -5,11 +5,9 @@ import android.content.Intent
 import android.os.Handler
 import android.os.Looper
 import android.view.LayoutInflater
-import androidx.lifecycle.Observer
 import com.cwsn.mobileapp.databinding.ActivitySplashBinding
-import com.cwsn.mobileapp.local.table.AllQuestion
 import com.cwsn.mobileapp.utils.AppPreferences
-import com.cwsn.mobileapp.view.activity.base.BaseActivity
+import com.cwsn.mobileapp.view.base.BaseActivity
 import com.cwsn.mobileapp.viewmodel.localdb.DbViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

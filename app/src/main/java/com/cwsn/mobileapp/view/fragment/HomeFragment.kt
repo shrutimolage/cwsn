@@ -16,11 +16,10 @@ import com.cwsn.mobileapp.model.home.ItemCount
 import com.cwsn.mobileapp.model.school.SchoolListInput
 import com.cwsn.mobileapp.network.Status
 import com.cwsn.mobileapp.utils.toast
-import com.cwsn.mobileapp.view.activity.base.BaseFragment
+import com.cwsn.mobileapp.view.base.BaseFragment
 import com.cwsn.mobileapp.view.callback.HomeFragCallback
 import com.cwsn.mobileapp.view.callback.ISchoolListCallback
 import com.cwsn.mobileapp.viewmodel.home.HomeViewModel
-import com.skydoves.powerspinner.OnSpinnerItemSelectedListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

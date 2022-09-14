@@ -14,7 +14,7 @@ import com.cwsn.mobileapp.network.Status
 import com.cwsn.mobileapp.utils.AppPreferences
 import com.cwsn.mobileapp.utils.Utils
 import com.cwsn.mobileapp.utils.toast
-import com.cwsn.mobileapp.view.activity.base.BaseActivity
+import com.cwsn.mobileapp.view.base.BaseActivity
 import com.cwsn.mobileapp.view.callback.IQuestListInterface
 import com.cwsn.mobileapp.viewmodel.survey.SurveyViewModel
 import org.koin.android.ext.android.inject

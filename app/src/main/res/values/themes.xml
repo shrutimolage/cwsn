@@ -133,4 +133,7 @@
         <item name="android:textSize">@dimen/text_size_14</item>
         <item name="android:textColor">@color/colorBlack</item>
     </style>
+    <style name="BottomNavigationFontStyle" parent="Widget.Design.BottomNavigationView">
+        <item name="fontFamily">@font/poppins_light</item>
+    </style>
 </resources>

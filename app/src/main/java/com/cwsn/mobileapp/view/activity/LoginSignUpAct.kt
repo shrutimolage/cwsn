@@ -10,9 +10,8 @@ import androidx.core.content.ContextCompat
 import com.cwsn.mobileapp.R
 import com.cwsn.mobileapp.databinding.LoginSignupLayoutBinding
 import com.cwsn.mobileapp.network.Status
-import com.cwsn.mobileapp.utils.AppPreferences
 import com.cwsn.mobileapp.utils.toast
-import com.cwsn.mobileapp.view.activity.base.BaseActivity
+import com.cwsn.mobileapp.view.base.BaseActivity
 import com.cwsn.mobileapp.view.dialog.ForgotPwdDialog
 import com.cwsn.mobileapp.viewmodel.login.LoginViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel

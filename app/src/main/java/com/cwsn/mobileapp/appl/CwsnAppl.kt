@@ -1,6 +1,7 @@
 package com.cwsn.mobileapp.appl
 
 import android.app.Application
+import androidx.multidex.MultiDexApplication
 import com.cwsn.mobileapp.di.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -9,7 +10,7 @@ import org.koin.core.context.startKoin
 Created by  on 14,June,2022
  **/
 
-class CwsnAppl : Application()
+class CwsnAppl : MultiDexApplication()
 {
     override fun onCreate() {
         super.onCreate()

@@ -1,7 +1,9 @@
-package com.cwsn.mobileapp.view.activity.base
+package com.cwsn.mobileapp.view.base
 
 import android.app.Dialog
 import android.content.Context
+import android.view.View
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
@@ -85,6 +87,14 @@ interface BaseViewInterface
 
     }
     fun onActStop(){
+
+    }
+    fun closeSoftKeyboard(view: View)
+    {
+
+    }
+
+    fun showSoftKeyboard(edtView: EditText){
 
     }
 }

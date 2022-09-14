@@ -5,12 +5,11 @@ import android.view.LayoutInflater
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
-import androidx.lifecycle.Observer
 import com.cwsn.mobileapp.R
 import com.cwsn.mobileapp.databinding.ActivityUserProfileBinding
 import com.cwsn.mobileapp.network.Status
 import com.cwsn.mobileapp.utils.toast
-import com.cwsn.mobileapp.view.activity.base.BaseActivity
+import com.cwsn.mobileapp.view.base.BaseActivity
 import com.cwsn.mobileapp.viewmodel.profile.ProfileViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

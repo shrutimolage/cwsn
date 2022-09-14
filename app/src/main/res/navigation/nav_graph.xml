@@ -10,4 +10,14 @@
         android:name="com.cwsn.mobileapp.view.fragment.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/resourceRoomFrag"
+        android:name="com.cwsn.mobileapp.view.fragment.ResourceRoomFrag"
+        android:label="fragment_resource_room"
+        tools:layout="@layout/fragment_resource_room" />
+    <fragment
+        android:id="@+id/monitoringFragment"
+        android:name="com.cwsn.mobileapp.view.fragment.MonitoringFragment"
+        android:label="fragment_monitoring"
+        tools:layout="@layout/fragment_monitoring" />
 </navigation>

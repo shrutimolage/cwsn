@@ -3,17 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/home"
-        android:icon="@drawable/home_icon_unselect"
-        android:title="@string/home_label" />
+        android:id="@+id/school"
+        android:icon="@drawable/ic_school_dashboard"
+        android:title="@string/school_label" />
 
     <item
-        android:id="@+id/survey"
-        android:icon="@drawable/ic_survey_icon_unselect"
-        android:title="@string/survey_text" />
+        android:id="@+id/resourceRoom"
+        android:icon="@drawable/ic_resource_room"
+        android:title="@string/resource_room_text" />
 
     <item
         android:id="@+id/grievance"
-        android:icon="@drawable/ic_grievances_icon_unselect"
-        android:title="@string/grievance_label" />
+        android:icon="@drawable/ic_monitoring_dashboard"
+        android:title="@string/monitoring_label" />
 </menu>
