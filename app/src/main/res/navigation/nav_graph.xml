@@ -9,7 +9,14 @@
         android:id="@+id/homeFragment"
         android:name="com.cwsn.mobileapp.view.fragment.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_resourceRoomFrag"
+            app:destination="@id/resourceRoomFrag" />
+        <action
+            android:id="@+id/action_homeFragment_to_monitoringFragment"
+            app:destination="@id/monitoringFragment" />
+    </fragment>
     <fragment
         android:id="@+id/resourceRoomFrag"
         android:name="com.cwsn.mobileapp.view.fragment.ResourceRoomFrag"

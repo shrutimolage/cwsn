@@ -16,7 +16,7 @@ class CwsnAppl : MultiDexApplication()
         super.onCreate()
         startKoin {
             androidContext(this@CwsnAppl)
-            modules(databaseModule,networkModule, repoModule, viewModelModule)
+            modules(appModule,databaseModule,networkModule, repoModule, viewModelModule)
         }
     }
 }

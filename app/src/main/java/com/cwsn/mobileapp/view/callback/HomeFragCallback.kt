@@ -9,4 +9,8 @@ interface HomeFragCallback
     fun hideProgress()
     fun gotoSchoolSurvey(schoolId: Int?, name: String?, address: String?) {
     }
+
+    fun toggleAppTopBar() {
+
+    }
 }

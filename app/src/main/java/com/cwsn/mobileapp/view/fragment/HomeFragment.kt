@@ -64,12 +64,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.toolbar.navigationBar.setOnClickListener {
+            listener?.toggleAppTopBar()
+        }
         /*getAllSchoolCount()
         getClusterList()*/
 
     }
 
-    private fun getAllSchoolList(clusterId: Int) {
+   /* private fun getAllSchoolList(clusterId: Int) {
         val input=SchoolListInput(clusterId)
         homeViewModel.getAllSchoolList(input).observe(this, { response->
             when(response.status){
@@ -106,7 +109,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 }
             }
         })
-    }
+    }*/
 
 
 
@@ -133,8 +136,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                             cluster.name?.let { clusterNames.add(it) }
                         }
                         clusterNames.add(0,"Select Cluster")
-                        binding.spnrAllCluster.hint = "Select Cluster"
-                        binding.spnrAllCluster.setItems(clusterNames)
+                        //binding.spnrAllCluster.hint = "Select Cluster"
+                        //binding.spnrAllCluster.setItems(clusterNames)
                     }
                 }
                 Status.ERROR->{

@@ -4,18 +4,27 @@ import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.MenuItem
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.view.GravityCompat
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.get
+import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.cwsn.mobileapp.R
 import com.cwsn.mobileapp.databinding.AppDashboardLayoutBinding
+import com.cwsn.mobileapp.model.home.SlideModel
 import com.cwsn.mobileapp.network.Status
 import com.cwsn.mobileapp.utils.AppPreferences
 import com.cwsn.mobileapp.utils.Utils
+import com.cwsn.mobileapp.utils.navigateSafe
 import com.cwsn.mobileapp.utils.toast
+import com.cwsn.mobileapp.view.adapter.SlidePanelAdapter
 import com.cwsn.mobileapp.view.base.BaseActivity
 import com.cwsn.mobileapp.view.callback.HomeFragCallback
+import com.cwsn.mobileapp.view.callback.IDrawerItemCallback
 import com.cwsn.mobileapp.viewmodel.localdb.DbViewModel
 import com.google.android.material.navigation.NavigationBarView
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -25,6 +34,11 @@ class AppDashboard : BaseActivity<AppDashboardLayoutBinding>(), HomeFragCallback
     private lateinit var appPreferences: AppPreferences
     private val dbViewModel by viewModel<DbViewModel>()
     private lateinit var navController: NavController
+    private var mDrawerToggle: ActionBarDrawerToggle? = null
+    private lateinit var drawerList: MutableList<SlideModel>
+    private lateinit var drawerAdapter: SlidePanelAdapter
+
+
 
     override fun inflateLayout(layoutInflater: LayoutInflater): AppDashboardLayoutBinding {
         return AppDashboardLayoutBinding.inflate(layoutInflater)
@@ -40,8 +54,9 @@ class AppDashboard : BaseActivity<AppDashboardLayoutBinding>(), HomeFragCallback
 
     override fun onActCreate() {
         navController = Navigation.findNavController(this, R.id.app_nav_host_fragment)
-        NavigationUI.setupWithNavController(binding.bottomNav,navController)
-        binding.bottomNav.setOnItemSelectedListener(object:NavigationBarView.OnItemSelectedListener{
+        NavigationUI.setupWithNavController(binding.navTopView,navController)
+        setUpNavigationDrawer()
+        /*binding.bottomNav.setOnItemSelectedListener(object:NavigationBarView.OnItemSelectedListener{
             override fun onNavigationItemSelected(item: MenuItem): Boolean {
                 when (item.itemId) {
                     R.id.school->{
@@ -61,7 +76,7 @@ class AppDashboard : BaseActivity<AppDashboardLayoutBinding>(), HomeFragCallback
                 return true
             }
 
-        })
+        })*/
         /*appPreferences = AppPreferences(getContext())
         binding.toolbar.cimgProfileIcon.setOnClickListener {
             gotoUserProfileScreen()
@@ -89,6 +104,22 @@ class AppDashboard : BaseActivity<AppDashboardLayoutBinding>(), HomeFragCallback
             })
         }*/
 
+    }
+
+    override fun toggleAppTopBar() {
+        toggleDrawer()
+    }
+    private fun toggleDrawer() {
+        binding.drawerLayout.openDrawer(binding.navTopView,true)
+    }
+
+    private fun setUpNavigationDrawer() {
+        mDrawerToggle= ActionBarDrawerToggle(this,binding.drawerLayout,
+            R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+        mDrawerToggle?.syncState()
+        mDrawerToggle?.let {
+            binding.drawerLayout.addDrawerListener(it)
+        }
     }
 
     private fun isHomeFragment(): Boolean {
@@ -149,6 +180,34 @@ class AppDashboard : BaseActivity<AppDashboardLayoutBinding>(), HomeFragCallback
 
     override fun onActResume() {
         //getLocalQuestions()
+        drawerList= Utils.generateSlidePanelItems()
+        binding.navigationView.rclvSideDrawer.apply {
+            layoutManager= LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+            drawerAdapter= SlidePanelAdapter(drawerList,object:IDrawerItemCallback{
+                override fun onItemClicked(itemName: String) {
+                    drawerNavigation(itemName)
+                }
+            })
+            adapter = drawerAdapter
+        }
+    }
+
+    private fun drawerNavigation(itemName: String) {
+        binding.drawerLayout.closeDrawer(GravityCompat.START)
+        when (itemName) {
+            "Home"->{
+                if (!isHomeFragment()) {
+                    navController.popBackStack(R.id.homeFragment,true)
+                    navController.navigate(R.id.homeFragment)
+                }
+            }
+            "Resource Room"->{
+                navController.navigateSafe(R.id.action_homeFragment_to_resourceRoomFrag,null,null,null)
+            }
+            "Monitoring"->{
+                navController.navigateSafe(R.id.action_homeFragment_to_monitoringFragment,null,null,null)
+            }
+        }
     }
 
 

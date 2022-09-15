@@ -1,63 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.fragment.MonitoringFragment">
-
+    <include
+        android:id="@+id/toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/monitoring_toolbar" />
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="5dp"
         android:orientation="vertical"
-        android:layout_height="match_parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        android:layout_height="0dp">
         <TextView
             android:id="@+id/tv_schoolName"
             style="@style/BigSizeBlackAppTextView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="School Name" />
-
-        <TextView
-            android:id="@+id/tv_schoolAddress"
-            style="@style/SmallSizeBlackAppTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="School Address" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
             android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginBottom="5dp"
+            android:layout_height="wrap_content"
+            android:text="@string/block_name_label" />
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginLeft="5dp"
             android:layout_marginTop="5dp"
-            tools:listitem="@layout/row_school_survey_preview"
-            android:layout_height="match_parent" />
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
+            app:layout_constraintTop_toBottomOf="@+id/cnst_clusterItem"
+            android:layout_height="wrap_content">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcly_schoolList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                tools:listitem="@layout/row_cluster_school_item_layout"
+                tools:itemCount="5"
+                />
+            <TextView
+                android:id="@+id/tv_noResult"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:textColor="@color/black"
+                android:visibility="gone"
+                android:textSize="@dimen/text_size_15"
+                android:text="@string/no_school_found_label" />
+        </FrameLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="@color/white"
-        android:weightSum="1"
-        android:padding="8dp"
-        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tv_totalQuestion"
-            style="@style/NormalSizeBlackAppTextView"
-            android:layout_width="0dp"
-            android:layout_weight="0.5"
-            android:layout_height="wrap_content"
-            android:text="Total Question 12" />
-
-        <TextView
-            android:id="@+id/tv_totalAnswer"
-            style="@style/NormalSizeBlackAppTextView"
-            android:layout_width="0dp"
-            android:layout_weight="0.5"
-            android:gravity="end"
-            android:layout_height="wrap_content"
-            android:text="Answered 5" />
-    </LinearLayout>
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,8 @@
 package com.cwsn.mobileapp.utils
 
+import com.cwsn.mobileapp.R
+import com.cwsn.mobileapp.model.home.SlideModel
+
 /**
 Created by  on 16,June,2022
  **/
@@ -13,4 +16,13 @@ object Utils
     val API_SUCCESS: String="Success"
     val NO_NETWORK_FOUND_ERROR_MESG="Make sure you have an active data connection"
     val API_BASE_URL="https://paatham.us/cwsn/"
+
+    fun generateSlidePanelItems(): MutableList<SlideModel> {
+        val itemList:MutableList<SlideModel> = mutableListOf()
+
+        itemList.add(SlideModel(false,"Home", R.drawable.home_icon_new))
+        itemList.add(SlideModel(false,"Resource Room",R.drawable.ic_resource_room_slide))
+        itemList.add(SlideModel(false,"Monitoring",R.drawable.ic_monitoring_slide))
+        return itemList
+    }
 }
