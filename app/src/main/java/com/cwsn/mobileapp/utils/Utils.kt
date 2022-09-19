@@ -1,6 +1,7 @@
 package com.cwsn.mobileapp.utils
 
 import com.cwsn.mobileapp.R
+import com.cwsn.mobileapp.model.dashboard.DashboardItem
 import com.cwsn.mobileapp.model.home.SlideModel
 
 /**
@@ -23,6 +24,15 @@ object Utils
         itemList.add(SlideModel(false,"Home", R.drawable.home_icon_new))
         itemList.add(SlideModel(false,"Resource Room",R.drawable.ic_resource_room_slide))
         itemList.add(SlideModel(false,"Monitoring",R.drawable.ic_monitoring_slide))
+        return itemList
+    }
+
+    fun generateDashboardItem():MutableList<DashboardItem>{
+        val itemList:MutableList<DashboardItem> = mutableListOf()
+
+        itemList.add(DashboardItem("School",R.drawable.ic_school_dashboard))
+        itemList.add(DashboardItem("Resource Room",R.drawable.ic_resource_room))
+        itemList.add(DashboardItem("Monitoring",R.drawable.ic_monitoring_dashboard))
         return itemList
     }
 }

@@ -10,7 +10,7 @@
 
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/img_gridItemImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -18,11 +18,11 @@
         app:srcCompat="@drawable/ic_school_dashboard" />
 
     <TextView
-        android:id="@+id/tv_fieldName"
+        android:id="@+id/tv_gridItemName"
         style="@style/NormalSizeBoldBlackAppTextView"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Schools" />
+        android:text="Monitoring" />
 
 </LinearLayout>

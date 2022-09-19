@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cwsn.mobileapp.R
+import com.cwsn.mobileapp.adapter.home.DashboardItemAdapter
 import com.cwsn.mobileapp.adapter.home.ItemCountAdapter
 import com.cwsn.mobileapp.adapter.home.SchoolListAdapter
 import com.cwsn.mobileapp.databinding.FragmentHomeBinding
@@ -15,6 +16,7 @@ import com.cwsn.mobileapp.model.home.ClusterData
 import com.cwsn.mobileapp.model.home.ItemCount
 import com.cwsn.mobileapp.model.school.SchoolListInput
 import com.cwsn.mobileapp.network.Status
+import com.cwsn.mobileapp.utils.Utils
 import com.cwsn.mobileapp.utils.toast
 import com.cwsn.mobileapp.view.base.BaseFragment
 import com.cwsn.mobileapp.view.callback.HomeFragCallback
@@ -67,61 +69,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         binding.toolbar.navigationBar.setOnClickListener {
             listener?.toggleAppTopBar()
         }
-        /*getAllSchoolCount()
-        getClusterList()*/
-
-    }
-
-   /* private fun getAllSchoolList(clusterId: Int) {
-        val input=SchoolListInput(clusterId)
-        homeViewModel.getAllSchoolList(input).observe(this, { response->
-            when(response.status){
-                Status.LOADING->{
-                    listener?.showProgress()
-                }
-                Status.SUCCESS->{
-                    listener?.hideProgress()
-                    binding.rclySchoolList.visibility=View.VISIBLE
-                    binding.tvNoResult.visibility=View.GONE
-                    response.data?.body()?.data?.let {
-                        binding.rclySchoolList.apply {
-                            val schoolListAdapter=SchoolListAdapter(it,object:ISchoolListCallback{
-                                override fun startSchoolSurvey(
-                                    schoolId: Int?,
-                                    name: String?,
-                                    address: String?
-                                ) {
-                                    listener?.gotoSchoolSurvey(schoolId,name,address)
-                                }
-                            })
-                            layoutManager=LinearLayoutManager(requireActivity(),RecyclerView.VERTICAL,false)
-                            adapter=schoolListAdapter
-                        }
-                    }
-                }
-                Status.ERROR->{
-                   listener?.hideProgress()
-                    response.message?.let{
-                        toast(it,requireActivity())
-                        binding.rclySchoolList.visibility=View.GONE
-                        binding.tvNoResult.visibility=View.VISIBLE
-                    }
-                }
-            }
-        })
-    }*/
-
-
-
-    private fun getSelectedClusterId(clusterName: String): Int {
-        var result =0
-        for(item in allClusters){
-            if(item.name==clusterName){
-                result=item.id!!
-            }
+        val dashboardItem = Utils.generateDashboardItem()
+        binding.rclyDashboardItem.apply {
+            layoutManager=GridLayoutManager(requireActivity(),3)
+            adapter=DashboardItemAdapter(dashboardItem)
         }
-        return result
+
     }
+
 
     private fun getClusterList() {
         homeViewModel.fetchAllCluster().observe(viewLifecycleOwner, { response->
