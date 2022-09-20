@@ -5,14 +5,19 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.cwsn.mobileapp.databinding.RowDashboardGridOptionLayoutBinding
 import com.cwsn.mobileapp.model.dashboard.DashboardItem
+import com.cwsn.mobileapp.view.callback.IDashboardListCallback
 
-class DashboardItemAdapter(private val datalist:MutableList<DashboardItem>):RecyclerView.Adapter<DashboardItemAdapter.ViewHolder>()
+class DashboardItemAdapter(private val datalist:MutableList<DashboardItem>,
+private val listener:IDashboardListCallback):RecyclerView.Adapter<DashboardItemAdapter.ViewHolder>()
 {
     class ViewHolder(private val binding: RowDashboardGridOptionLayoutBinding):RecyclerView.ViewHolder(binding.root)
     {
-        fun bindItems(dashboardItem: DashboardItem) {
+        fun bindItems(dashboardItem: DashboardItem, listener: IDashboardListCallback) {
             binding.imgGridItemImage.setImageResource(dashboardItem.itemImage)
             binding.tvGridItemName.text = dashboardItem.itemName
+            binding.llDashboardItem.setOnClickListener {
+                listener.onItemClicked(dashboardItem.itemName)
+            }
         }
 
     }
@@ -23,7 +28,7 @@ class DashboardItemAdapter(private val datalist:MutableList<DashboardItem>):Recy
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bindItems(datalist[position])
+        holder.bindItems(datalist[position],listener)
     }
 
     override fun getItemCount(): Int {

@@ -37,4 +37,6 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="block_name_label">Block Name</string>
     <string name="no_school_found_label">No School Found</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

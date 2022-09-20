@@ -10,13 +10,12 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cwsn.mobileapp.R
-import com.cwsn.mobileapp.databinding.FragmentResourceRoomBinding
+import com.cwsn.mobileapp.databinding.FragmentSchoolDetailsBinding
 import com.cwsn.mobileapp.network.Status
-import com.cwsn.mobileapp.view.adapter.ResrceRoomAdapter
+import com.cwsn.mobileapp.view.adapter.SchoolAllDataAdapter
 import com.cwsn.mobileapp.view.base.BaseFragment
-import com.cwsn.mobileapp.view.callback.IResourceRoomCallback
 import com.cwsn.mobileapp.view.callback.ISchoolListCallback
-import com.cwsn.mobileapp.viewmodel.resourceroom.ResRoomViewModel
+import com.cwsn.mobileapp.viewmodel.home.HomeViewModel
 import org.koin.android.ext.android.inject
 import java.lang.Exception
 
@@ -26,14 +25,15 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [ResourceRoomFrag.newInstance] factory method to
+ * Use the [SchoolDetailsFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class ResourceRoomFrag : BaseFragment<FragmentResourceRoomBinding>(FragmentResourceRoomBinding::inflate) {
+@Suppress("MoveLambdaOutsideParentheses")
+class SchoolDetailsFragment : BaseFragment<FragmentSchoolDetailsBinding>(FragmentSchoolDetailsBinding::inflate) {
     private var param1: String? = null
     private var param2: String? = null
-    private var listener:IResourceRoomCallback?=null
-    private val resRoomViewModel by inject<ResRoomViewModel>()
+    private var listener:ISchoolListCallback?=null
+    private val homeViewModel by inject<HomeViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,40 +46,41 @@ class ResourceRoomFrag : BaseFragment<FragmentResourceRoomBinding>(FragmentResou
     override fun onAttach(context: Context) {
         super.onAttach(context)
         try {
-            if(context is IResourceRoomCallback){
+            if(context is ISchoolListCallback){
                 listener=context
             }
         }
         catch (ex: Exception){
             ex.printStackTrace()
             throw ClassCastException(context.toString()
-                    + " must implement IResourceRoomCallback")
+                    + " must implement ISchoolListCallback")
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.toolbar.toolbarTitle.text="Resource Room"
-        binding.toolbar.navigationBar.setOnClickListener {
+        binding.schoolToolbar.toolbarTitle.text="SCHOOL DETAILS"
+        binding.schoolToolbar.navigationBar.setOnClickListener {
             listener?.onUserBackPressed()
         }
     }
 
     override fun onResume() {
         super.onResume()
-        resRoomViewModel.getAllResourceRoomDetails(requireActivity(),R.raw.resource_room)
-            .observe(viewLifecycleOwner, Observer { response->
-                when(response.status)
-                {
+        homeViewModel.getSchoolData(requireActivity(),R.raw.school_api).observe(viewLifecycleOwner,
+            { response->
+                when(response.status){
                     Status.LOADING->{
                         listener?.showProgress()
                     }
                     Status.SUCCESS->{
                         listener?.hideProgress()
-                        response.data?.resRoomList?.let { resList->
-                            binding.rclyResourceRoom.apply {
-                                layoutManager=LinearLayoutManager(requireActivity(),RecyclerView.VERTICAL,false)
-                                adapter= ResrceRoomAdapter(resList)
+                        response.data?.details?.let { dataList->
+                            if(dataList.size>0){
+                                binding.rclySchoolDetails.apply {
+                                    layoutManager=LinearLayoutManager(requireActivity(),RecyclerView.VERTICAL, false)
+                                    adapter=SchoolAllDataAdapter(dataList)
+                                }
                             }
                         }
                     }
@@ -93,21 +94,18 @@ class ResourceRoomFrag : BaseFragment<FragmentResourceRoomBinding>(FragmentResou
             })
     }
 
-
     companion object {
-        val TAG: String="GrievanceFragment"
-
         /**
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment GreivanceFragment.
+         * @return A new instance of fragment SchoolDetailsFragment.
          */
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            ResourceRoomFrag().apply {
+            SchoolDetailsFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

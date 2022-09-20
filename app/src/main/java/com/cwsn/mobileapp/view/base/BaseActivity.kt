@@ -120,7 +120,7 @@ abstract class BaseActivity<VB:ViewBinding> : AppCompatActivity(),BaseViewInterf
         toast.view=toastView
         toast.show()
     }
-     fun setUpProgressDialog(context: Context): Dialog? {
+     fun setUpProgressDialog(context: Context): Dialog {
          val progressDialog = Dialog(context)
         val view: View = LayoutInflater.from(context).inflate(R.layout.progress_dialog_bar, null)
         val title = view.findViewById<TextView>(R.id.progress_title)

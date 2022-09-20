@@ -3,7 +3,7 @@ package com.cwsn.mobileapp.view.callback
 /**
 Created by  on 30,June,2022
  **/
-interface HomeFragCallback
+interface IHomeFragCallback
 {
     fun showProgress()
     fun hideProgress()
@@ -11,6 +11,10 @@ interface HomeFragCallback
     }
 
     fun toggleAppTopBar() {
+
+    }
+
+    fun onNavigateOptionScreen(itemName: String) {
 
     }
 }

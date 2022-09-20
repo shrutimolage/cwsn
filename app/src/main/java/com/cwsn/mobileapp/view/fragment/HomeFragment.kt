@@ -5,22 +5,18 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.cwsn.mobileapp.R
 import com.cwsn.mobileapp.adapter.home.DashboardItemAdapter
 import com.cwsn.mobileapp.adapter.home.ItemCountAdapter
-import com.cwsn.mobileapp.adapter.home.SchoolListAdapter
 import com.cwsn.mobileapp.databinding.FragmentHomeBinding
 import com.cwsn.mobileapp.model.home.ClusterData
 import com.cwsn.mobileapp.model.home.ItemCount
-import com.cwsn.mobileapp.model.school.SchoolListInput
 import com.cwsn.mobileapp.network.Status
 import com.cwsn.mobileapp.utils.Utils
 import com.cwsn.mobileapp.utils.toast
 import com.cwsn.mobileapp.view.base.BaseFragment
-import com.cwsn.mobileapp.view.callback.HomeFragCallback
-import com.cwsn.mobileapp.view.callback.ISchoolListCallback
+import com.cwsn.mobileapp.view.callback.IHomeFragCallback
+import com.cwsn.mobileapp.view.callback.IDashboardListCallback
 import com.cwsn.mobileapp.viewmodel.home.HomeViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -40,7 +36,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     private var param2: String? = null
     private val homeViewModel by viewModel<HomeViewModel>()
     private var clusterNames:MutableList<String> = mutableListOf()
-    private var listener: HomeFragCallback?=null
+    private var listener: IHomeFragCallback?=null
     private var itemCountList:MutableList<ItemCount> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,7 +50,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     override fun onAttach(context: Context) {
         super.onAttach(context)
         try{
-            if(context is HomeFragCallback){
+            if(context is IHomeFragCallback){
                 listener= context
             }
         }
@@ -72,7 +68,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         val dashboardItem = Utils.generateDashboardItem()
         binding.rclyDashboardItem.apply {
             layoutManager=GridLayoutManager(requireActivity(),3)
-            adapter=DashboardItemAdapter(dashboardItem)
+            adapter=DashboardItemAdapter(dashboardItem,object:IDashboardListCallback{
+                override fun onItemClicked(itemName: String) {
+                    listener?.onNavigateOptionScreen(itemName)
+                }
+            })
         }
 
     }
@@ -91,8 +91,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                             cluster.name?.let { clusterNames.add(it) }
                         }
                         clusterNames.add(0,"Select Cluster")
-                        //binding.spnrAllCluster.hint = "Select Cluster"
-                        //binding.spnrAllCluster.setItems(clusterNames)
                     }
                 }
                 Status.ERROR->{

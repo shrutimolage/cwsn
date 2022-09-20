@@ -33,4 +33,10 @@ val repoModule = module {
     single {
         SurveyRepository(get(),get())
     }
+    single{
+        ResRoomRepository()
+    }
+    single{
+        MonitoringRepository()
+    }
 }

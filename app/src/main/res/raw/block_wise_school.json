@@ -1,0 +1,24 @@
+{
+	"blockDetails":{
+		"id":23,
+		"name":"CHATRA BLOCK"
+	},
+  "schoolList": [
+  {
+    "name":"Test School 1",
+	"student":30
+  },
+  {
+	"name":"Test School 2",
+	"count":45
+  },
+   {
+	"name":"Test School 3",
+	"count":30
+  },
+   {
+	"name":"Test School 4",
+	"count":30
+  }
+  ]
+} 

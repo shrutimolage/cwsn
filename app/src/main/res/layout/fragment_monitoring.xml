@@ -23,7 +23,7 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         android:layout_height="0dp">
         <TextView
-            android:id="@+id/tv_schoolName"
+            android:id="@+id/tv_blockName"
             style="@style/BigSizeBlackAppTextView"
             android:layout_width="wrap_content"
             android:layout_marginLeft="5dp"

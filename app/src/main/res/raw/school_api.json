@@ -1,0 +1,20 @@
+{
+  "list": [
+  {
+    "name":"CWSN Enrollment",
+	"count":30
+  },
+  {
+	"name":"School having CWSN",
+	"count":20
+  },
+  {
+	  "name":"School having Ramps",
+	  "count":15
+  },
+  {
+	  "name":"School with CWSN Toilet",
+	  "count":20
+  }
+  ]
+} 

@@ -1,8 +1,10 @@
 package com.cwsn.mobileapp.utils
 
+import android.content.Context
 import com.cwsn.mobileapp.R
 import com.cwsn.mobileapp.model.dashboard.DashboardItem
 import com.cwsn.mobileapp.model.home.SlideModel
+import java.util.concurrent.Callable
 
 /**
 Created by  on 16,June,2022
@@ -34,5 +36,18 @@ object Utils
         itemList.add(DashboardItem("Resource Room",R.drawable.ic_resource_room))
         itemList.add(DashboardItem("Monitoring",R.drawable.ic_monitoring_dashboard))
         return itemList
+    }
+
+    fun getDataFromJsonFile(context: Context, jsonFileName:Int):String?{
+        try{
+            val inputStream = context.resources.openRawResource(jsonFileName)
+            val bytes = ByteArray(inputStream.available())
+            inputStream.read(bytes, 0, bytes.size)
+            return String(bytes)
+        }
+        catch (ex:Exception){
+            ex.printStackTrace()
+            return null
+        }
     }
 }

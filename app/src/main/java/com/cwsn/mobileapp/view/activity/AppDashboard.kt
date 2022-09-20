@@ -3,13 +3,11 @@ package com.cwsn.mobileapp.view.activity
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
-import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.get
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,14 +21,16 @@ import com.cwsn.mobileapp.utils.navigateSafe
 import com.cwsn.mobileapp.utils.toast
 import com.cwsn.mobileapp.view.adapter.SlidePanelAdapter
 import com.cwsn.mobileapp.view.base.BaseActivity
-import com.cwsn.mobileapp.view.callback.HomeFragCallback
+import com.cwsn.mobileapp.view.callback.IHomeFragCallback
 import com.cwsn.mobileapp.view.callback.IDrawerItemCallback
+import com.cwsn.mobileapp.view.callback.IResourceRoomCallback
+import com.cwsn.mobileapp.view.callback.ISchoolListCallback
 import com.cwsn.mobileapp.viewmodel.localdb.DbViewModel
-import com.google.android.material.navigation.NavigationBarView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 @Suppress("MoveLambdaOutsideParentheses")
-class AppDashboard : BaseActivity<AppDashboardLayoutBinding>(), HomeFragCallback {
+class AppDashboard : BaseActivity<AppDashboardLayoutBinding>(), IHomeFragCallback ,
+ISchoolListCallback,IResourceRoomCallback{
     private lateinit var appPreferences: AppPreferences
     private val dbViewModel by viewModel<DbViewModel>()
     private lateinit var navController: NavController
@@ -56,53 +56,6 @@ class AppDashboard : BaseActivity<AppDashboardLayoutBinding>(), HomeFragCallback
         navController = Navigation.findNavController(this, R.id.app_nav_host_fragment)
         NavigationUI.setupWithNavController(binding.navTopView,navController)
         setUpNavigationDrawer()
-        /*binding.bottomNav.setOnItemSelectedListener(object:NavigationBarView.OnItemSelectedListener{
-            override fun onNavigationItemSelected(item: MenuItem): Boolean {
-                when (item.itemId) {
-                    R.id.school->{
-                        if (!isHomeFragment()) {
-                            navController.popBackStack(R.id.homeFragment,true)
-                            navController.navigate(R.id.homeFragment)
-                        }
-                    }
-                    R.id.resourceRoom->
-                    {
-                        navController.navigate(R.id.resourceRoomFrag)
-                    }
-                    R.id.grievance->{
-                        navController.navigate(R.id.monitoringFragment)
-                    }
-                }
-                return true
-            }
-
-        })*/
-        /*appPreferences = AppPreferences(getContext())
-        binding.toolbar.cimgProfileIcon.setOnClickListener {
-            gotoUserProfileScreen()
-        }
-        binding.toolbar.imgLogoutApp.setOnClickListener {
-            dbViewModel.performAppLogout().observe(this, { sessionStatus ->
-                when (sessionStatus.status) {
-                    Status.LOADING -> {
-
-                    }
-                    Status.SUCCESS -> {
-                        sessionStatus.message?.let {
-                            val intent = Intent(getContext(), LoginSignUpAct::class.java)
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-                            startActivity(intent)
-                            finish()
-                        }
-                    }
-                    Status.ERROR -> {
-                        sessionStatus.message?.let {
-                            toast(it)
-                        }
-                    }
-                }
-            })
-        }*/
 
     }
 
@@ -202,12 +155,20 @@ class AppDashboard : BaseActivity<AppDashboardLayoutBinding>(), HomeFragCallback
                 }
             }
             "Resource Room"->{
-                navController.navigateSafe(R.id.action_homeFragment_to_resourceRoomFrag,null,null,null)
+                gotoResourceRoom()
             }
             "Monitoring"->{
-                navController.navigateSafe(R.id.action_homeFragment_to_monitoringFragment,null,null,null)
+                gotoMonitoring()
             }
         }
+    }
+
+    private fun gotoMonitoring() {
+        navController.navigateSafe(R.id.action_homeFragment_to_monitoringFragment,null,null,null)
+    }
+
+    private fun gotoResourceRoom() {
+        navController.navigateSafe(R.id.action_homeFragment_to_resourceRoomFrag,null,null,null)
     }
 
 
@@ -231,11 +192,31 @@ class AppDashboard : BaseActivity<AppDashboardLayoutBinding>(), HomeFragCallback
         })
     }
 
+    override fun onUserBackPressed() {
+        if (isHomeFragment()) {
+            finish()
+        }
+        else{
+            navController.navigateUp()
+        }
+    }
+
     override fun showProgress() {
         showProgressDialog()
     }
 
     override fun hideProgress() {
         hideProgressDialog()
+    }
+
+    override fun onNavigateOptionScreen(itemName: String) {
+        when(itemName){
+            "School"->{
+                navController.navigateSafe(R.id.action_homeFragment_to_schoolDetailsFragment,null,null,null)
+            }
+            "Resource Room"->{
+                gotoResourceRoom()
+            }
+        }
     }
 }
