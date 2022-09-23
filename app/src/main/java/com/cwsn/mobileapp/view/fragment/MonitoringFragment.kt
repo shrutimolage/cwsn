@@ -7,12 +7,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.cwsn.mobileapp.R
 import com.cwsn.mobileapp.databinding.FragmentMonitoringBinding
 import com.cwsn.mobileapp.network.Status
+import com.cwsn.mobileapp.view.adapter.SchoolListAdapter
 import com.cwsn.mobileapp.view.base.BaseFragment
 import com.cwsn.mobileapp.view.callback.IHomeFragCallback
 import com.cwsn.mobileapp.view.callback.IMonitoringFragCallback
+import com.cwsn.mobileapp.view.callback.ISchoolListItemClick
 import com.cwsn.mobileapp.viewmodel.monitoring.MonitorViewModel
 import org.koin.android.ext.android.inject
 
@@ -73,6 +77,18 @@ class MonitoringFragment : BaseFragment<FragmentMonitoringBinding>(FragmentMonit
                         listener?.hideProgress()
                         response.data?.let { blockDetails->
                             binding.tvBlockName.text=blockDetails.blockDetails?.name
+                        }
+                        response.data?.schoolList?.let { list->
+                            if(list.size>0){
+                                binding.rclySchoolList.apply {
+                                    layoutManager=LinearLayoutManager(requireActivity(),RecyclerView.VERTICAL,false)
+                                    adapter=SchoolListAdapter(list,object:ISchoolListItemClick{
+                                        override fun onStartSurvery(name: String?) {
+                                            listener?.gotoTaskActivityScreen(name)
+                                        }
+                                    })
+                                }
+                            }
                         }
                     }
                     Status.ERROR->{

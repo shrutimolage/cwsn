@@ -2,6 +2,7 @@ package com.cwsn.mobileapp.view.activity
 
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
@@ -21,16 +22,13 @@ import com.cwsn.mobileapp.utils.navigateSafe
 import com.cwsn.mobileapp.utils.toast
 import com.cwsn.mobileapp.view.adapter.SlidePanelAdapter
 import com.cwsn.mobileapp.view.base.BaseActivity
-import com.cwsn.mobileapp.view.callback.IHomeFragCallback
-import com.cwsn.mobileapp.view.callback.IDrawerItemCallback
-import com.cwsn.mobileapp.view.callback.IResourceRoomCallback
-import com.cwsn.mobileapp.view.callback.ISchoolListCallback
+import com.cwsn.mobileapp.view.callback.*
 import com.cwsn.mobileapp.viewmodel.localdb.DbViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 @Suppress("MoveLambdaOutsideParentheses")
 class AppDashboard : BaseActivity<AppDashboardLayoutBinding>(), IHomeFragCallback ,
-ISchoolListCallback,IResourceRoomCallback{
+ISchoolListCallback,IResourceRoomCallback, IMonitoringFragCallback {
     private lateinit var appPreferences: AppPreferences
     private val dbViewModel by viewModel<DbViewModel>()
     private lateinit var navController: NavController
@@ -207,6 +205,13 @@ ISchoolListCallback,IResourceRoomCallback{
 
     override fun hideProgress() {
         hideProgressDialog()
+    }
+
+    override fun gotoTaskActivityScreen(name: String?) {
+        val bundle = Bundle()
+        bundle.putString(Utils.SCHOOL_NAME,name)
+        navController.navigateSafe(R.id.action_monitoringFragment_to_taskActivityFragment,
+        bundle,null,null)
     }
 
     override fun onNavigateOptionScreen(itemName: String) {

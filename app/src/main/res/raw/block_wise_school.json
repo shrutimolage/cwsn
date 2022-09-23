@@ -6,18 +6,22 @@
   "schoolList": [
   {
     "name":"Test School 1",
+	"address":"Test School 1 address",
 	"student":30
   },
   {
 	"name":"Test School 2",
+	"address":"Test School 1 address",
 	"count":45
   },
    {
 	"name":"Test School 3",
+	"address":"Test School 1 address",
 	"count":30
   },
    {
 	"name":"Test School 4",
+	"address":"Test School 1 address",
 	"count":30
   }
   ]

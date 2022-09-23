@@ -29,10 +29,19 @@
         android:id="@+id/monitoringFragment"
         android:name="com.cwsn.mobileapp.view.fragment.MonitoringFragment"
         android:label="fragment_monitoring"
-        tools:layout="@layout/fragment_monitoring" />
+        tools:layout="@layout/fragment_monitoring" >
+        <action
+            android:id="@+id/action_monitoringFragment_to_taskActivityFragment"
+            app:destination="@id/taskActivityFragment" />
+    </fragment>
     <fragment
         android:id="@+id/schoolDetailsFragment"
         android:name="com.cwsn.mobileapp.view.fragment.SchoolDetailsFragment"
         android:label="fragment_school_details"
         tools:layout="@layout/fragment_school_details" />
+    <fragment
+        android:id="@+id/taskActivityFragment"
+        android:name="com.cwsn.mobileapp.view.fragment.TaskActivityFragment"
+        android:label="fragment_task_activity"
+        tools:layout="@layout/fragment_task_activity" />
 </navigation>

@@ -1,4 +1,8 @@
 package com.cwsn.mobileapp.view.callback
 
-interface IMonitoringFragCallback:IAppBaseCallback {
+interface IMonitoringFragCallback:IAppBaseCallback
+{
+    fun gotoTaskActivityScreen(name: String?) {
+
+    }
 }
