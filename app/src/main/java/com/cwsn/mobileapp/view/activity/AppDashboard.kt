@@ -131,6 +131,7 @@ ISchoolListCallback,IResourceRoomCallback, IMonitoringFragCallback {
 
     override fun onActResume() {
         //getLocalQuestions()
+
         drawerList= Utils.generateSlidePanelItems()
         binding.navigationView.rclvSideDrawer.apply {
             layoutManager= LinearLayoutManager(context, RecyclerView.VERTICAL, false)
