@@ -222,6 +222,9 @@ ISchoolListCallback,IResourceRoomCallback, IMonitoringFragCallback {
             "Resource Room"->{
                 gotoResourceRoom()
             }
+            "Monitoring"->{
+                gotoMonitoring()
+            }
         }
     }
 }

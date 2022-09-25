@@ -78,7 +78,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
 
-    private fun getClusterList() {
+    /*private fun getClusterList() {
         homeViewModel.fetchAllCluster().observe(viewLifecycleOwner, { response->
             when(response.status){
                 Status.SUCCESS->{
@@ -104,9 +104,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 }
             }
         })
-    }
+    }*/
 
-    private fun getAllSchoolCount() {
+    /*private fun getAllSchoolCount() {
         homeViewModel.getAllDashboardCount().observe(viewLifecycleOwner, { response->
             when(response.status){
                 Status.LOADING->{
@@ -130,7 +130,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 }
             }
         })
-    }
+    }*/
 
     private fun showSchoolCountDetails(itemCountList: MutableList<ItemCount>) {
         binding.rclyDashboardItem.apply {
