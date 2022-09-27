@@ -1,6 +1,7 @@
 package com.cwsn.mobileapp.view.fragment
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
@@ -14,6 +15,7 @@ import com.cwsn.mobileapp.model.home.ItemCount
 import com.cwsn.mobileapp.network.Status
 import com.cwsn.mobileapp.utils.Utils
 import com.cwsn.mobileapp.utils.toast
+import com.cwsn.mobileapp.view.activity.UserProfileActivity
 import com.cwsn.mobileapp.view.base.BaseFragment
 import com.cwsn.mobileapp.view.callback.IHomeFragCallback
 import com.cwsn.mobileapp.view.callback.IDashboardListCallback
@@ -73,6 +75,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                     listener?.onNavigateOptionScreen(itemName)
                 }
             })
+        }
+        binding.toolbar.cimgProfileIcon.setOnClickListener {
+            startActivity(Intent(context,UserProfileActivity::class.java))
         }
 
     }

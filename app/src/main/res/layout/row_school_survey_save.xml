@@ -22,7 +22,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView6"
+                android:id="@+id/tv_mcqQuestionNum"
                 style="@style/SmallSizeBlackAppTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -32,7 +32,7 @@
                 android:text="(Q1)" />
 
             <TextView
-                android:id="@+id/textView7"
+                android:id="@+id/tv_mcqQuestion"
                 style="@style/NormalSizeBlackAppTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -54,7 +54,7 @@
         android:id="@+id/ll_textQuestion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="visible"
+        android:visibility="gone"
         android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
@@ -63,6 +63,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/tv_textQuestNum"
                 style="@style/SmallSizeBlackAppTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -72,6 +73,7 @@
                 android:text="(Q1)" />
 
             <TextView
+                android:id="@+id/tv_textQuestion"
                 style="@style/NormalSizeBlackAppTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -118,8 +120,36 @@
     <LinearLayout
         android:id="@+id/ll_fileUploadArea"
         android:layout_width="match_parent"
-        android:visibility="gone"
+        android:visibility="visible"
+        android:orientation="vertical"
         android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_fileQuestNum"
+                style="@style/SmallSizeBlackAppTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.06"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:text="(Q1)" />
+
+            <TextView
+                android:id="@+id/tv_fileQuestion"
+                style="@style/NormalSizeBlackAppTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.84"
+                android:gravity="left"
+                android:layout_gravity="center"
+                android:text="" />
+
+        </LinearLayout>
         <LinearLayout
             android:id="@+id/ll_ans_upload"
             android:layout_width="match_parent"

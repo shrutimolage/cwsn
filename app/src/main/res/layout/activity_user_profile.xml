@@ -421,13 +421,14 @@
                     android:textColor="@color/white"
                     android:gravity="center"
                     android:padding="5dp"
+                    android:visibility="gone"
                     android:background="@drawable/app_textview_selector"
                     android:text="Edit" />
 
                 <TextView
                     android:id="@+id/textView13"
                     style="@style/NormalSizeBlackAppTextView"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
                     android:textColor="@color/white"
