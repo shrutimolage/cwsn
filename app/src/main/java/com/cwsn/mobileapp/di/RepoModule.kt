@@ -39,4 +39,7 @@ val repoModule = module {
     single{
         MonitoringRepository()
     }
+    single {
+        TaskRepository()
+    }
 }

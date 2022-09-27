@@ -6,20 +6,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cwsn.mobileapp.R
-import com.cwsn.mobileapp.databinding.FragmentTaskActivityBinding
+import com.cwsn.mobileapp.databinding.FragmentQuestionListBinding
 import com.cwsn.mobileapp.network.Status
-import com.cwsn.mobileapp.view.adapter.TaskActivityAdapter
+import com.cwsn.mobileapp.view.adapter.QuestionListAdapter
 import com.cwsn.mobileapp.view.base.BaseFragment
-import com.cwsn.mobileapp.view.callback.IMonitoringFragCallback
-import com.cwsn.mobileapp.view.callback.ITaskActivityCallback
-import com.cwsn.mobileapp.view.callback.ITaskActvtFragCallback
-import com.cwsn.mobileapp.viewmodel.task.TaskViewModel
+import com.cwsn.mobileapp.view.callback.IQuestionListCallback
+import com.cwsn.mobileapp.view.callback.IResourceRoomCallback
+import com.cwsn.mobileapp.viewmodel.survey.SurveyViewModel
 import org.koin.android.ext.android.inject
+import java.lang.Exception
 
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
@@ -27,15 +26,16 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [TaskActivityFragment.newInstance] factory method to
+ * Use the [QuestionListFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
 @Suppress("MoveLambdaOutsideParentheses")
-class TaskActivityFragment : BaseFragment<FragmentTaskActivityBinding>(FragmentTaskActivityBinding::inflate) {
+class QuestionListFragment : BaseFragment<FragmentQuestionListBinding>(FragmentQuestionListBinding::inflate)
+{
     private var param1: String? = null
     private var param2: String? = null
-    private var listener:ITaskActvtFragCallback?=null
-    private val viewModel by inject<TaskViewModel>()
+    private val viewModel by inject<SurveyViewModel>()
+    private var listener: IQuestionListCallback?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,37 +43,29 @@ class TaskActivityFragment : BaseFragment<FragmentTaskActivityBinding>(FragmentT
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
-        val callback:OnBackPressedCallback=object:OnBackPressedCallback(true){
-            override fun handleOnBackPressed() {
-                listener?.onUserBackPressed()
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(callback)
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        try{
-            if(context is ITaskActvtFragCallback){
-                listener= context
+        try {
+            if(context is IQuestionListCallback){
+                listener=context
             }
         }
-        catch (ex:ClassCastException){
+        catch (ex: Exception){
+            ex.printStackTrace()
             throw ClassCastException(context.toString()
-                    + " must implement ITaskActvtFragCallback")
+                    + " must implement IQuestionListCallback")
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.toolbar.navigationBar.setOnClickListener {
-            listener?.onUserBackPressed()
-        }
     }
 
     override fun onResume() {
         super.onResume()
-        viewModel.getAllTaskActivityList(requireActivity(),R.raw.task_activity)
+        viewModel.getAllQuestionData(requireActivity(),R.raw.questions)
             .observe(viewLifecycleOwner, { response->
                 when(response.status){
                     Status.LOADING->{
@@ -81,22 +73,16 @@ class TaskActivityFragment : BaseFragment<FragmentTaskActivityBinding>(FragmentT
                     }
                     Status.SUCCESS->{
                         listener?.hideProgress()
-                        response.data?.tasklist?.let {
-                            binding.rclyTaskActvyList.apply {
+                        response.data?.questionist?.let {
+                            binding.rclyAllQuestion.apply {
                                 layoutManager=LinearLayoutManager(requireActivity(),RecyclerView.VERTICAL,false)
-                                adapter=TaskActivityAdapter(it,object:ITaskActivityCallback{
-                                    override fun onTaskItemClicked() {
+                                adapter=QuestionListAdapter(it)
 
-                                    }
-                                })
                             }
                         }
                     }
                     Status.ERROR->{
                         listener?.hideProgress()
-                        response.message?.let {
-                            showAppAlert(requireActivity(),"Alert",it,null)
-                        }
                     }
                 }
             })
@@ -109,11 +95,11 @@ class TaskActivityFragment : BaseFragment<FragmentTaskActivityBinding>(FragmentT
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment TaskActivityFragment.
+         * @return A new instance of fragment QuestionListFragment.
          */
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            TaskActivityFragment().apply {
+            QuestionListFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

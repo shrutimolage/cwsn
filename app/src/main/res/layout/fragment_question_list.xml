@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context=".view.activity.SurveyStartActivity">
+
+    <include
+        android:id="@+id/survey_toolbar"
+        layout="@layout/survey_save_toolbar" />
+    <TextView
+        android:id="@+id/tv_schoolName"
+        style="@style/BigSizeBlackAppTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        />
+
+    <TextView
+        android:id="@+id/tv_schoolAddress"
+        style="@style/NormalSizeBlackAppTextView"
+        android:layout_margin="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:visibility="visible"
+        android:layout_height="match_parent">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcly_allQuestion"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="50dp"
+            android:layout_marginTop="5dp"
+            tools:listitem="@layout/row_school_survey_save"
+            android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/txt_submitAnswer"
+            style="@style/AppSelectorTextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="SUBMIT ANSWER"
+            android:gravity="center"
+            android:layout_gravity="bottom"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_size_13"
+            android:padding="2dp"
+            android:layout_marginBottom="2dp"
+            />
+    </FrameLayout>
+
+
+</LinearLayout>

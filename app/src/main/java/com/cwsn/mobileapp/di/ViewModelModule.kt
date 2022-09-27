@@ -7,6 +7,7 @@ import com.cwsn.mobileapp.viewmodel.monitoring.MonitorViewModel
 import com.cwsn.mobileapp.viewmodel.profile.ProfileViewModel
 import com.cwsn.mobileapp.viewmodel.resourceroom.ResRoomViewModel
 import com.cwsn.mobileapp.viewmodel.survey.SurveyViewModel
+import com.cwsn.mobileapp.viewmodel.task.TaskViewModel
 import org.koin.dsl.module
 
 /**
@@ -34,5 +35,8 @@ val viewModelModule= module {
     }
     single{
         MonitorViewModel()
+    }
+    single{
+        TaskViewModel()
     }
 }

@@ -12,7 +12,7 @@
         android:id="@+id/ll_mcqQuestion"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible"
+        android:visibility="gone"
         android:orientation="vertical">
 
         <LinearLayout
@@ -54,7 +54,7 @@
         android:id="@+id/ll_textQuestion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
+        android:visibility="visible"
         android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
@@ -88,6 +88,7 @@
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:padding="3dp"
+                android:visibility="invisible"
                 android:layout_margin="3dp"
                 app:srcCompat="@drawable/ic_add_icon" />
         </LinearLayout>
@@ -106,7 +107,7 @@
                 android:enabled="false"
                 android:gravity="top"
                 android:ellipsize="end"
-                android:text="Text type answer here" />
+                android:hint="Type answer here" />
 
 
         </FrameLayout>
@@ -114,5 +115,33 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/ll_fileUploadArea"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/ll_ans_upload"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:layout_margin="20dp"
+            android:gravity="center"
+            android:background="@drawable/round_btn_for_textview"
+            >
+
+            <TextView
+                android:id="@+id/txt_fileCaptureStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" File Upload"
+                android:textAlignment="center"
+                android:textSize="@dimen/text_size_13"
+                android:drawableLeft="@drawable/file_upload"
+                android:textColor="@color/colorWhite"
+                android:gravity="center_horizontal" />
+
+        </LinearLayout>
+    </LinearLayout>
 
 </FrameLayout>

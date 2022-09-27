@@ -1,9 +1,13 @@
 package com.cwsn.mobileapp.viewmodel.survey
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
+import com.cwsn.mobileapp.model.questions.QuestionList
 import com.cwsn.mobileapp.network.Resource
 import com.cwsn.mobileapp.repository.impl.SurveyRepository
+import com.cwsn.mobileapp.utils.Utils
+import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 
 /**
@@ -59,6 +63,21 @@ class SurveyViewModel(private val repos:SurveyRepository):ViewModel()
         catch (ex:Exception){
             ex.printStackTrace()
             emit(Resource.error(data = null, message = "Error while DB fetch ${ex.message}"))
+        }
+    }
+
+    fun getAllQuestionData(ctx:Context,fileName:Int)  = liveData(Dispatchers.IO){
+        emit(Resource.loading(data = null))
+        try{
+            val dataFromJsonFile = Utils.getDataFromJsonFile(ctx, fileName)
+            if(dataFromJsonFile!=null&&dataFromJsonFile.isNotEmpty()){
+                val questionsData = Gson().fromJson(dataFromJsonFile, QuestionList::class.java)
+                emit(Resource.success(data=questionsData, message = "Success"))
+            }
+        }
+        catch (ex:Exception){
+            ex.printStackTrace()
+            emit(Resource.error(data = null, message = "Error on question list"))
         }
     }
 }
