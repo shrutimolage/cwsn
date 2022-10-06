@@ -1,3 +1,5 @@
+@file:Suppress("MoveLambdaOutsideParentheses")
+
 package com.cwsn.mobileapp.view.fragment
 
 import android.content.Context
@@ -14,8 +16,10 @@ import com.cwsn.mobileapp.databinding.FragmentResourceRoomBinding
 import com.cwsn.mobileapp.network.Status
 import com.cwsn.mobileapp.view.adapter.ResrceRoomAdapter
 import com.cwsn.mobileapp.view.base.BaseFragment
+import com.cwsn.mobileapp.view.callback.IResRoomListCallback
 import com.cwsn.mobileapp.view.callback.IResourceRoomCallback
 import com.cwsn.mobileapp.view.callback.ISchoolListCallback
+import com.cwsn.mobileapp.view.dialog.ResourceRoomDialog
 import com.cwsn.mobileapp.viewmodel.resourceroom.ResRoomViewModel
 import org.koin.android.ext.android.inject
 import java.lang.Exception
@@ -68,7 +72,7 @@ class ResourceRoomFrag : BaseFragment<FragmentResourceRoomBinding>(FragmentResou
     override fun onResume() {
         super.onResume()
         resRoomViewModel.getAllResourceRoomDetails(requireActivity(),R.raw.resource_room)
-            .observe(viewLifecycleOwner, Observer { response->
+            .observe(viewLifecycleOwner, { response->
                 when(response.status)
                 {
                     Status.LOADING->{
@@ -79,7 +83,12 @@ class ResourceRoomFrag : BaseFragment<FragmentResourceRoomBinding>(FragmentResou
                         response.data?.resRoomList?.let { resList->
                             binding.rclyResourceRoom.apply {
                                 layoutManager=LinearLayoutManager(requireActivity(),RecyclerView.VERTICAL,false)
-                                adapter= ResrceRoomAdapter(resList)
+                                adapter= ResrceRoomAdapter(resList,object:IResRoomListCallback{
+                                    override fun onItemClick(itemName: String, itemCount: Int) {
+                                        val resRoomDialog=ResourceRoomDialog.newInstance(itemName,itemCount)
+                                        resRoomDialog.show(requireActivity().supportFragmentManager,ResourceRoomDialog.TAG)
+                                    }
+                                })
                             }
                         }
                     }

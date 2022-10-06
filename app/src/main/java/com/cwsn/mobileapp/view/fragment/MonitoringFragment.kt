@@ -11,13 +11,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cwsn.mobileapp.R
 import com.cwsn.mobileapp.databinding.FragmentMonitoringBinding
+import com.cwsn.mobileapp.model.home.ClusterData
 import com.cwsn.mobileapp.network.Status
 import com.cwsn.mobileapp.view.adapter.SchoolListAdapter
 import com.cwsn.mobileapp.view.base.BaseFragment
 import com.cwsn.mobileapp.view.callback.IHomeFragCallback
 import com.cwsn.mobileapp.view.callback.IMonitoringFragCallback
 import com.cwsn.mobileapp.view.callback.ISchoolListItemClick
+import com.cwsn.mobileapp.viewmodel.home.HomeViewModel
 import com.cwsn.mobileapp.viewmodel.monitoring.MonitorViewModel
+import com.skydoves.powerspinner.OnSpinnerItemSelectedListener
+import com.skydoves.powerspinner.PowerSpinnerView
 import org.koin.android.ext.android.inject
 
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -35,6 +39,9 @@ class MonitoringFragment : BaseFragment<FragmentMonitoringBinding>(FragmentMonit
     private var param2: String? = null
     private var listener:IMonitoringFragCallback?=null
     private val monitorViewModel by inject<MonitorViewModel>()
+    private val homeViewModel by inject<HomeViewModel>()
+    private lateinit var allClusters: List<ClusterData>
+    private var clusterNames:MutableList<String> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,38 +70,97 @@ class MonitoringFragment : BaseFragment<FragmentMonitoringBinding>(FragmentMonit
         binding.toolbar.navigationBar.setOnClickListener {
             listener?.onUserBackPressed()
         }
+        binding.spnrCluster.setOnSpinnerItemSelectedListener(object:OnSpinnerItemSelectedListener<String>{
+            override fun onItemSelected(
+                oldIndex: Int,
+                oldItem: String?,
+                newIndex: Int,
+                newItem: String
+            ) {
+                val clusterId=getSelectedClusterId(newItem)
+                fetchSchoolList()
+            }
+
+        })
+    }
+
+    private fun getSelectedClusterId(clusterName: String): Int {
+        var clusterId =0
+        allClusters.forEachIndexed { _, clusterData ->
+            if(clusterName==clusterData.name){
+                clusterData.id?.let {
+                    clusterId=it
+                }
+            }
+        }
+        return clusterId
     }
 
     override fun onResume() {
         super.onResume()
-        monitorViewModel.getBlockWiseSchoolDetails(requireActivity(),R.raw.block_wise_school)
-            .observe(viewLifecycleOwner, { response->
-                when(response.status){
-                    Status.LOADING->{
+        homeViewModel.fetchAllCluster().observe(viewLifecycleOwner, { response->
+            when(response.status){
+                Status.LOADING->{
+                    listener?.showProgress()
+                }
+                Status.SUCCESS->{
+                    listener?.hideProgress()
+                    response.data?.body()?.data?.let {
+                        allClusters=it
+                        allClusters.forEachIndexed { index, clusterData ->
+                            clusterData.name?.let {name->
+                                clusterNames.add(name)
+                            }
+                        }
+                        clusterNames.add(0,"Select Cluster")
+                        binding.spnrCluster.setItems(clusterNames)
+                    }
+                }
+                Status.ERROR->{
+                    listener?.hideProgress()
+                    response.message?.let {
+                        showAppAlert(requireActivity(),"Alert",it,null)
+                    }
+                }
+            }
+        })
+
+    }
+
+    private fun fetchSchoolList() {
+        monitorViewModel.getBlockWiseSchoolDetails(requireActivity(), R.raw.block_wise_school)
+            .observe(viewLifecycleOwner, { response ->
+                when (response.status) {
+                    Status.LOADING -> {
                         listener?.showProgress()
                     }
-                    Status.SUCCESS->{
+                    Status.SUCCESS -> {
                         listener?.hideProgress()
-                        response.data?.let { blockDetails->
-                            binding.tvBlockName.text=blockDetails.blockDetails?.name
+                        response.data?.let { blockDetails ->
+                            binding.tvBlockName.text = blockDetails.blockDetails?.name
                         }
-                        response.data?.schoolList?.let { list->
-                            if(list.size>0){
+                        response.data?.schoolList?.let { list ->
+                            if (list.size > 0) {
                                 binding.rclySchoolList.apply {
-                                    layoutManager=LinearLayoutManager(requireActivity(),RecyclerView.VERTICAL,false)
-                                    adapter=SchoolListAdapter(list,object:ISchoolListItemClick{
-                                        override fun onStartSurvery(name: String?) {
-                                            listener?.gotoTaskActivityScreen(name)
-                                        }
-                                    })
+                                    layoutManager = LinearLayoutManager(
+                                        requireActivity(),
+                                        RecyclerView.VERTICAL,
+                                        false
+                                    )
+                                    adapter =
+                                        SchoolListAdapter(list, object : ISchoolListItemClick {
+                                            override fun onStartSurvery(name: String?) {
+                                                listener?.gotoTaskActivityScreen(name)
+                                            }
+                                        })
                                 }
                             }
                         }
                     }
-                    Status.ERROR->{
+                    Status.ERROR -> {
                         listener?.hideProgress()
                         response.message?.let {
-                            showAppAlert(requireActivity(),"Alert",it,null)
+                            showAppAlert(requireActivity(), "Alert", it, null)
                         }
                     }
                 }

@@ -5,14 +5,19 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.cwsn.mobileapp.databinding.RowSchoolListItemLayoutBinding
 import com.cwsn.mobileapp.model.resourceRoom.ResRoomDetails
+import com.cwsn.mobileapp.view.callback.IResRoomListCallback
 
-class ResrceRoomAdapter(private val datalist:ArrayList<ResRoomDetails>) :RecyclerView.Adapter<ResrceRoomAdapter.ViewHolder>()
+class ResrceRoomAdapter(private val datalist:ArrayList<ResRoomDetails>,
+private val listener:IResRoomListCallback) :RecyclerView.Adapter<ResrceRoomAdapter.ViewHolder>()
 {
     inner class ViewHolder(private val binding:RowSchoolListItemLayoutBinding):
         RecyclerView.ViewHolder(binding.root){
-        fun bindItems(resRoomDetails: ResRoomDetails) {
+        fun bindItems(resRoomDetails: ResRoomDetails, listener: IResRoomListCallback) {
             binding.tvFieldName.text=resRoomDetails.itemName
             binding.tvFieldCount.text=resRoomDetails.itemCount.toString()
+            binding.llResRoomListItem.setOnClickListener {
+                listener.onItemClick(resRoomDetails.itemName!!,resRoomDetails.itemCount!!)
+            }
         }
 
     }
@@ -24,7 +29,7 @@ class ResrceRoomAdapter(private val datalist:ArrayList<ResRoomDetails>) :Recycle
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bindItems(datalist[position])
+        holder.bindItems(datalist[position],listener)
     }
 
     override fun getItemCount(): Int {

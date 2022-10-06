@@ -35,6 +35,8 @@ object Utils
         itemList.add(DashboardItem("School",R.drawable.ic_school_dashboard))
         itemList.add(DashboardItem("Resource Room",R.drawable.ic_resource_room))
         itemList.add(DashboardItem("Monitoring",R.drawable.ic_monitoring_dashboard))
+        itemList.add(DashboardItem("School Visited",R.drawable.ic_school_dashboard))
+        itemList.add(DashboardItem("School Pending",R.drawable.ic_school_dashboard))
         return itemList
     }
 

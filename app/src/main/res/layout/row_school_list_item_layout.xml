@@ -5,6 +5,7 @@
     android:layout_width="wrap_content"
     android:weightSum="1"
     android:layout_margin="5dp"
+    android:id="@+id/ll_resRoomListItem"
     android:background="@drawable/card_drop_shadow_white_bg"
     android:layout_height="100dp">
 

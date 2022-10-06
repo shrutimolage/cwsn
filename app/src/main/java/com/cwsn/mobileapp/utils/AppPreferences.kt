@@ -17,6 +17,8 @@ class AppPreferences(private val context: Context)
     val KEY_TEACHER_ID="teacher_id"
     val KEY_TEACHER_NAME="teacher_name"
     val IS_USER_LOGIN="user login status"
+    val LOCATION_LATITUDE="location_latitude"
+    val LOCATION_LONGITUDE="location_longitude"
 
     init {
         mInstance=context.getSharedPreferences(PREF_NAME,Context.MODE_PRIVATE)
@@ -32,7 +34,7 @@ class AppPreferences(private val context: Context)
     }
 
     fun getUserLoginData():Map<String,String>{
-        var userData=HashMap<String,String>()
+        val userData=HashMap<String,String>()
         userData[KEY_TOKEN] = mInstance?.getString(KEY_TOKEN,"")!!
         userData[KEY_TEACHER_NAME]=mInstance?.getString(KEY_TEACHER_NAME,"")!!
         userData[KEY_TEACHER_ID]=mInstance?.getInt(KEY_TEACHER_ID,0).toString()
@@ -45,6 +47,12 @@ class AppPreferences(private val context: Context)
     }
     fun fetchAccessToken(): String? {
         return mInstance?.getString(KEY_TOKEN,"")
+    }
+
+    fun updateLocationDetails(latitude:Double,longitude:Double){
+        editor?.putString(LOCATION_LATITUDE, latitude.toString())
+        editor?.putString(LOCATION_LONGITUDE,longitude.toString())
+        editor?.commit()
     }
 
     fun performAppLogout(){

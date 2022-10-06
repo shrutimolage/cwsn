@@ -1,11 +1,17 @@
 package com.cwsn.mobileapp.view.activity
 
-import android.content.Context
-import android.content.Intent
+import android.Manifest
+import android.app.Activity
+import android.content.*
+import android.location.LocationManager
 import android.os.Bundle
+import android.provider.Settings
 import android.view.LayoutInflater
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.GravityCompat
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.get
@@ -16,27 +22,48 @@ import com.cwsn.mobileapp.R
 import com.cwsn.mobileapp.databinding.AppDashboardLayoutBinding
 import com.cwsn.mobileapp.model.home.SlideModel
 import com.cwsn.mobileapp.network.Status
-import com.cwsn.mobileapp.utils.AppPreferences
-import com.cwsn.mobileapp.utils.Utils
-import com.cwsn.mobileapp.utils.navigateSafe
-import com.cwsn.mobileapp.utils.toast
+import com.cwsn.mobileapp.utils.*
 import com.cwsn.mobileapp.view.adapter.SlidePanelAdapter
 import com.cwsn.mobileapp.view.base.BaseActivity
 import com.cwsn.mobileapp.view.callback.*
+import com.cwsn.mobileapp.view.service.GPSTracker
 import com.cwsn.mobileapp.viewmodel.localdb.DbViewModel
+import com.gun0912.tedpermission.PermissionListener
+import com.gun0912.tedpermission.TedPermissionUtil
+import com.gun0912.tedpermission.normal.TedPermission
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 @Suppress("MoveLambdaOutsideParentheses")
 class AppDashboard : BaseActivity<AppDashboardLayoutBinding>(), IHomeFragCallback ,
 ISchoolListCallback,IResourceRoomCallback, IMonitoringFragCallback {
-    private lateinit var appPreferences: AppPreferences
+    private val appPref by inject<AppPreferences>()
     private val dbViewModel by viewModel<DbViewModel>()
     private lateinit var navController: NavController
     private var mDrawerToggle: ActionBarDrawerToggle? = null
     private lateinit var drawerList: MutableList<SlideModel>
     private lateinit var drawerAdapter: SlidePanelAdapter
+    private var locManager: LocationManager? = null
+    private var gpsEnabled = false
+    private var locIntent: Intent? = null
 
+    val gpsEnabledLauncher= registerForActivityResult(ActivityResultContracts.StartActivityForResult()){result->
+        if (result.resultCode == Activity.RESULT_OK) {
+            gpsEnabled=true
+            initializeLocManager()
+        }
+    }
 
+    private val permissionListener = object:PermissionListener{
+        override fun onPermissionGranted() {
+
+        }
+
+        override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
+            showCustomToast(getContext(), "User Denied Permission")
+        }
+
+    }
 
     override fun inflateLayout(layoutInflater: LayoutInflater): AppDashboardLayoutBinding {
         return AppDashboardLayoutBinding.inflate(layoutInflater)
@@ -122,13 +149,6 @@ ISchoolListCallback,IResourceRoomCallback, IMonitoringFragCallback {
         })
     }
 
-    private fun loadHomeFragment() {
-      /*  val fragmentTransaction = supportFragmentManager.beginTransaction()
-        val homeFragment = HomeFragment.newInstance("", "")
-        fragmentTransaction.replace(R.id.ll_fragContainer, homeFragment, HomeFragment.TAG)
-        fragmentTransaction.commit()*/
-    }
-
     override fun onActResume() {
         //getLocalQuestions()
 
@@ -142,6 +162,103 @@ ISchoolListCallback,IResourceRoomCallback, IMonitoringFragCallback {
             })
             adapter = drawerAdapter
         }
+
+        initializeLocManager()
+
+    }
+
+    private fun initializeLocManager() {
+        locManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        locManager?.isProviderEnabled(LocationManager.GPS_PROVIDER)?.let {
+            gpsEnabled=it
+            if(gpsEnabled){
+                showCustomToast(getContext(),"Fetching current location")
+                checkNFetchLocation()
+            }
+            else{
+                showGPSEnableAlert()
+            }
+        }
+    }
+
+    private fun showGPSEnableAlert() {
+        val gpsAlertDialog = AlertDialog.Builder(getContext())
+        gpsAlertDialog.setTitle("GPS Status")
+        gpsAlertDialog.setMessage(
+            "GPS is not enabled. GPS require to fetch location.\n Do you want to go to settings menu?")
+        gpsAlertDialog.setPositiveButton("Settings",object:DialogInterface.OnClickListener{
+            override fun onClick(p0: DialogInterface?, p1: Int) {
+                val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+                gpsEnabledLauncher.launch(intent, null)
+            }
+        })
+    }
+
+    private fun checkNFetchLocation() {
+        if (gpsEnabled) {
+            showProgressDialog()
+            startLocUpdate()
+            if (TedPermissionUtil.isGranted(
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION))
+            {
+                startLocationService()
+            }
+            else{
+                TedPermission.create()
+                    .setPermissionListener(permissionListener)
+                    .setPermissions(
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    )
+                    .setDeniedMessage(
+                        "If you reject permission,you can not use this service\n" +
+                                "\n" +
+                                "Please turn on permissions at [Setting] > [Permission]"
+                    ).check()
+            }
+        }
+    }
+
+    private fun startLocationService() {
+        locIntent = Intent(getContext(), GPSTracker::class.java)
+        startService(locIntent)
+    }
+
+    private fun stopLocationUpdates() {
+        if (mLocationReceiver != null) {
+            LocalBroadcastManager.getInstance(getContext())
+                .unregisterReceiver(mLocationReceiver)
+        }
+        if (locIntent != null) {
+            stopService(locIntent)
+            GPSTracker().stopRunningService()
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        stopLocationUpdates()
+    }
+
+    private fun startLocUpdate() {
+        LocalBroadcastManager.getInstance(getContext())
+            .registerReceiver(mLocationReceiver, IntentFilter(GPSTracker.BROADCAST_ACTION))
+    }
+
+    private val mLocationReceiver:BroadcastReceiver=object:BroadcastReceiver(){
+        override fun onReceive(context: Context?, intent: Intent?) {
+            intent?.let {
+                val currLat = intent.getDoubleExtra("Latitude", 0.0)
+                val currLong = intent.getDoubleExtra("Longitude", 0.0)
+                if (currLat != 0.0 && currLong != 0.0) {
+                    hideProgressDialog()
+                    LoggerUtils.error("LOCATION","currLat $currLat , currLong $currLong")
+                    appPref.updateLocationDetails(currLat,currLong)
+                }
+            }
+        }
+
     }
 
     private fun drawerNavigation(itemName: String) {

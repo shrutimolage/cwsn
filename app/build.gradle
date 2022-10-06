@@ -81,6 +81,8 @@ dependencies {
     // To use Kotlin annotation processing tool (kapt)
     kapt("androidx.room:room-compiler:$roomVersion")
 
+    implementation 'io.github.ParkSangGwon:tedpermission-normal:3.3.0'
+
     //circular imageview
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'com.mikhaellopez:circularimageview:4.3.0'
@@ -89,6 +91,7 @@ dependencies {
     //material spinner
     implementation "com.github.skydoves:powerspinner:1.2.3"
     implementation("com.android.support:multidex:1.0.3")
+
     //navigation
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
     implementation("androidx.navigation:navigation-ui-ktx:$nav_version")

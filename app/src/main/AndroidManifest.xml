@@ -5,6 +5,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:name=".appl.CwsnAppl"
@@ -14,11 +16,16 @@
         android:roundIcon="@mipmap/app_icon_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
+        <service
+            android:name=".view.service.GPSTracker"
+            android:enabled="true"
+            android:exported="true"></service>
+
         <activity
             android:name=".view.activity.SurveyStartActivity"
+            android:exported="true"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
-            android:exported="true" />
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".view.activity.UserProfileActivity"
             android:exported="true"
