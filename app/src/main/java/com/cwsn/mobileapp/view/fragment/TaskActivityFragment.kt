@@ -86,7 +86,7 @@ class TaskActivityFragment : BaseFragment<FragmentTaskActivityBinding>(FragmentT
                                 layoutManager=LinearLayoutManager(requireActivity(),RecyclerView.VERTICAL,false)
                                 adapter=TaskActivityAdapter(it,object:ITaskActivityCallback{
                                     override fun onTaskItemClicked() {
-
+                                        listener?.gotoSurveyQuestionScreen()
                                     }
                                 })
                             }

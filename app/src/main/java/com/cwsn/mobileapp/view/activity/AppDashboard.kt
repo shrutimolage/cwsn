@@ -42,8 +42,9 @@ import java.lang.StringBuilder
 
 @Suppress("MoveLambdaOutsideParentheses")
 class AppDashboard : BaseActivity<AppDashboardLayoutBinding>(), IHomeFragCallback ,
-ISchoolListCallback,IResourceRoomCallback, IMonitoringFragCallback {
+ISchoolListCallback,IResourceRoomCallback, IMonitoringFragCallback,ITaskActvtFragCallback,IQuestionListCallback  {
     private val appPref by inject<AppPreferences>()
+    private lateinit var appPreferences: AppPreferences
     private val dbViewModel by viewModel<DbViewModel>()
     private lateinit var navController: NavController
     private var mDrawerToggle: ActionBarDrawerToggle? = null
@@ -321,6 +322,13 @@ ISchoolListCallback,IResourceRoomCallback, IMonitoringFragCallback {
         }
     }
 
+    override fun gotoHomeScreen() {
+        if (!isHomeFragment()) {
+            navController.popBackStack(R.id.homeFragment,true)
+            navController.navigate(R.id.homeFragment)
+        }
+    }
+
     private fun gotoMonitoring() {
         navController.navigateSafe(R.id.action_homeFragment_to_monitoringFragment,null,null,null)
     }
@@ -329,6 +337,9 @@ ISchoolListCallback,IResourceRoomCallback, IMonitoringFragCallback {
         navController.navigateSafe(R.id.action_homeFragment_to_resourceRoomFrag,null,null,null)
     }
 
+    override fun gotoSurveyQuestionScreen() {
+        navController.navigateSafe(R.id.action_taskActivityFragment_to_questionListFragment,null,null,null)
+    }
 
     private fun getLocalQuestions() {
         dbViewModel.getAllQuestions().observe(this, { questions ->

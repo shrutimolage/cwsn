@@ -1,5 +1,6 @@
 package com.cwsn.mobileapp.view.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,29 +12,48 @@ class QuestionListAdapter(private val datalist:List<Questionist>):RecyclerView.A
 {
     inner class ViewHolder(private val binding:RowSchoolSurveySaveBinding) : RecyclerView.ViewHolder(
         binding.root){
-        fun bindItems(questionist: Questionist) {
+        @SuppressLint("SetTextI18n")
+        fun bindItems(questionist: Questionist, srlNum: Int) {
             when(questionist.type){
                 "multi_file"->{
                     binding.llMcqQuestion.visibility= View.GONE
                     binding.llTextQuestion.visibility=View.GONE
                     binding.llFileUploadArea.visibility=View.VISIBLE
+                    questionist.question?.let {
+                        binding.tvFileQuestion.text=it
+                        binding.tvFileQuestNum.text="(Q$srlNum)"
+                    }
                 }
                 "file"->{
                     binding.llMcqQuestion.visibility= View.GONE
                     binding.llTextQuestion.visibility=View.GONE
                     binding.llFileUploadArea.visibility=View.VISIBLE
+                    questionist.question?.let {
+                        binding.tvFileQuestion.text=it
+                        binding.tvFileQuestNum.text="(Q$srlNum)"
+                    }
                 }
                 "text"->{
                     binding.llMcqQuestion.visibility= View.GONE
                     binding.llTextQuestion.visibility=View.VISIBLE
                     binding.llFileUploadArea.visibility=View.GONE
+                    questionist.question?.let {
+                        binding.tvTextQuestion.text=it
+                        binding.tvTextQuestNum.text="(Q$srlNum)"
+                    }
                 }
                 "mcq"->{
                     binding.llMcqQuestion.visibility= View.VISIBLE
                     binding.llTextQuestion.visibility=View.GONE
                     binding.llFileUploadArea.visibility=View.GONE
+                    questionist.question?.let {
+                        binding.tvMcqQuestion.text=it
+                        binding.tvMcqQuestionNum.text="(Q$srlNum)"
+                    }
                 }
             }
+
+
         }
 
     }
@@ -45,7 +65,8 @@ class QuestionListAdapter(private val datalist:List<Questionist>):RecyclerView.A
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bindItems(datalist[position])
+        val srlNum=position+1
+        holder.bindItems(datalist[position],srlNum)
     }
 
     override fun getItemCount(): Int {

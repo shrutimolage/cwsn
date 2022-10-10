@@ -2,10 +2,13 @@ package com.cwsn.mobileapp.view.fragment
 
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -43,6 +46,12 @@ class QuestionListFragment : BaseFragment<FragmentQuestionListBinding>(FragmentQ
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+        val callback:OnBackPressedCallback=object:OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                listener?.onUserBackPressed()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(callback)
     }
 
     override fun onAttach(context: Context) {
@@ -61,6 +70,16 @@ class QuestionListFragment : BaseFragment<FragmentQuestionListBinding>(FragmentQ
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.surveyToolbar.imgGoBack.setOnClickListener {
+            listener?.onUserBackPressed()
+        }
+        binding.txtSubmitAnswer.setOnClickListener {
+            listener?.showProgress()
+            Handler(Looper.getMainLooper()).postDelayed({
+                listener?.hideProgress()
+                listener?.gotoHomeScreen()
+            },1000)
+        }
     }
 
     override fun onResume() {

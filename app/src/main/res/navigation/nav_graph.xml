@@ -43,5 +43,15 @@
         android:id="@+id/taskActivityFragment"
         android:name="com.cwsn.mobileapp.view.fragment.TaskActivityFragment"
         android:label="fragment_task_activity"
-        tools:layout="@layout/fragment_task_activity" />
+        tools:layout="@layout/fragment_task_activity" >
+        <action
+            android:id="@+id/action_taskActivityFragment_to_questionListFragment"
+            app:destination="@id/questionListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/questionListFragment"
+        tools:layout="@layout/fragment_question_list"
+        android:name="com.cwsn.mobileapp.view.fragment.QuestionListFragment"
+        android:label="QuestionListFragment" />
+
 </navigation>
