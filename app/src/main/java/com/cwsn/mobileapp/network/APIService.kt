@@ -2,6 +2,7 @@ package com.cwsn.mobileapp.network
 
 import com.cwsn.mobileapp.model.home.Cluster
 import com.cwsn.mobileapp.model.home.DashboardCount
+import com.cwsn.mobileapp.model.location.LocationLatLng
 import com.cwsn.mobileapp.model.login.LoginInput
 import com.cwsn.mobileapp.model.login.LoginModel
 import com.cwsn.mobileapp.model.profile.UserProfile
@@ -34,4 +35,10 @@ interface APIService
     @GET("api/question_list")
     suspend fun getAllSurveyServerQuestion():Response<Questions>
 
+    @GET
+    suspend fun getGoogleLocLatLng(@Url apiUrl: String):Response<LocationLatLng>
+
+    companion object{
+        const val LOCATION_API="api/geocode/json?"
+    }
 }

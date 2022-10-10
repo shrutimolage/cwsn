@@ -94,4 +94,5 @@ class HomeViewModel(private val repos:HomeRepository):ViewModel()
             emit(Resource.error(data = null, message = "${ex.message}"))
         }
     }
+
 }

@@ -2,6 +2,7 @@ package com.cwsn.mobileapp.network
 
 import com.cwsn.mobileapp.model.home.Cluster
 import com.cwsn.mobileapp.model.home.DashboardCount
+import com.cwsn.mobileapp.model.location.LocationLatLng
 import com.cwsn.mobileapp.model.login.LoginInput
 import com.cwsn.mobileapp.model.login.LoginModel
 import com.cwsn.mobileapp.model.profile.UserProfile
@@ -37,6 +38,10 @@ class ApiHelperImpl(private val apiService: APIService) : ApiHelper
 
     override suspend fun getAllSurveyServerQuestion(): Response<Questions> {
         return apiService.getAllSurveyServerQuestion()
+    }
+
+    override suspend fun getGoogleLocLatLng(apiUrl: String): Response<LocationLatLng> {
+        return apiService.getGoogleLocLatLng(apiUrl)
     }
 
 }

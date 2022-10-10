@@ -2,8 +2,11 @@ package com.cwsn.mobileapp.utils
 
 import android.content.Context
 import com.cwsn.mobileapp.R
+import com.cwsn.mobileapp.model.ApiError
 import com.cwsn.mobileapp.model.dashboard.DashboardItem
 import com.cwsn.mobileapp.model.home.SlideModel
+import com.google.gson.Gson
+import okhttp3.ResponseBody
 import java.util.concurrent.Callable
 
 /**
@@ -19,6 +22,7 @@ object Utils
     val API_SUCCESS: String="Success"
     val NO_NETWORK_FOUND_ERROR_MESG="Make sure you have an active data connection"
     val API_BASE_URL="https://paatham.us/cwsn/"
+    val GOOGLE_API_URL:String="https://maps.googleapis.com/maps/"
 
     fun generateSlidePanelItems(): MutableList<SlideModel> {
         val itemList:MutableList<SlideModel> = mutableListOf()
@@ -27,6 +31,26 @@ object Utils
         itemList.add(SlideModel(false,"Resource Room",R.drawable.ic_resource_room_slide))
         itemList.add(SlideModel(false,"Monitoring",R.drawable.ic_monitoring_slide))
         return itemList
+    }
+
+    fun getHttpStatusDetails(code: Int, responseBody: ResponseBody):String{
+        var result =""
+        when(code){
+            400->{
+                val errorJson = Gson().fromJson(responseBody.string(), ApiError::class.java)
+                result="${errorJson.message}"
+
+            }
+            401->{
+                val errorJson = Gson().fromJson(responseBody.string(), ApiError::class.java)
+                result="${errorJson.message}"
+            }
+            500,501,502,503->{
+                val errorJson = Gson().fromJson(responseBody.string(), ApiError::class.java)
+                result="Server Error ${errorJson.message}"
+            }
+        }
+        return result
     }
 
     fun generateDashboardItem():MutableList<DashboardItem>{

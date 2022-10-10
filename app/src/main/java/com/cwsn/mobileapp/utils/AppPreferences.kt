@@ -2,6 +2,8 @@ package com.cwsn.mobileapp.utils
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.cwsn.mobileapp.model.location.LatLngResults
+import okhttp3.internal.format
 import org.koin.core.KoinApplication.Companion.init
 
 
@@ -19,6 +21,7 @@ class AppPreferences(private val context: Context)
     val IS_USER_LOGIN="user login status"
     val LOCATION_LATITUDE="location_latitude"
     val LOCATION_LONGITUDE="location_longitude"
+    val LOCATION_ADDRESS="location_address"
 
     init {
         mInstance=context.getSharedPreferences(PREF_NAME,Context.MODE_PRIVATE)
@@ -59,4 +62,15 @@ class AppPreferences(private val context: Context)
         editor?.clear()
         editor?.commit()
     }
+
+    fun savedUserAddress(formattedAddress: String?) {
+        editor?.putString(LOCATION_ADDRESS, formattedAddress)
+        editor?.commit()
+    }
+
+    fun getLocationAddress():String?{
+        return mInstance?.getString(LOCATION_ADDRESS,"")
+    }
+
+
 }

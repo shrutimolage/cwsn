@@ -16,6 +16,7 @@ android {
         versionName "1.0"
         multiDexEnabled = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String","LOCATION_API_KEY",LOCATION_API_KEY)
     }
     buildFeatures{
         viewBinding true

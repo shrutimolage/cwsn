@@ -11,6 +11,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.GravityCompat
+import androidx.lifecycle.Observer
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -18,21 +19,26 @@ import androidx.navigation.get
 import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.cwsn.mobileapp.BuildConfig
 import com.cwsn.mobileapp.R
 import com.cwsn.mobileapp.databinding.AppDashboardLayoutBinding
 import com.cwsn.mobileapp.model.home.SlideModel
+import com.cwsn.mobileapp.network.APIService
 import com.cwsn.mobileapp.network.Status
 import com.cwsn.mobileapp.utils.*
 import com.cwsn.mobileapp.view.adapter.SlidePanelAdapter
 import com.cwsn.mobileapp.view.base.BaseActivity
 import com.cwsn.mobileapp.view.callback.*
 import com.cwsn.mobileapp.view.service.GPSTracker
+import com.cwsn.mobileapp.viewmodel.home.HomeViewModel
 import com.cwsn.mobileapp.viewmodel.localdb.DbViewModel
+import com.cwsn.mobileapp.viewmodel.shared.SharedViewModel
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermissionUtil
 import com.gun0912.tedpermission.normal.TedPermission
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.lang.StringBuilder
 
 @Suppress("MoveLambdaOutsideParentheses")
 class AppDashboard : BaseActivity<AppDashboardLayoutBinding>(), IHomeFragCallback ,
@@ -46,6 +52,7 @@ ISchoolListCallback,IResourceRoomCallback, IMonitoringFragCallback {
     private var locManager: LocationManager? = null
     private var gpsEnabled = false
     private var locIntent: Intent? = null
+    private val sharedViewModel by viewModel<SharedViewModel>()
 
     val gpsEnabledLauncher= registerForActivityResult(ActivityResultContracts.StartActivityForResult()){result->
         if (result.resultCode == Activity.RESULT_OK) {
@@ -56,7 +63,7 @@ ISchoolListCallback,IResourceRoomCallback, IMonitoringFragCallback {
 
     private val permissionListener = object:PermissionListener{
         override fun onPermissionGranted() {
-
+            startLocationService()
         }
 
         override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
@@ -255,10 +262,45 @@ ISchoolListCallback,IResourceRoomCallback, IMonitoringFragCallback {
                     hideProgressDialog()
                     LoggerUtils.error("LOCATION","currLat $currLat , currLong $currLong")
                     appPref.updateLocationDetails(currLat,currLong)
+                    getLocationAddress(currLat,currLong)
                 }
             }
         }
 
+    }
+
+    private fun getLocationAddress(currLat: Double, currLong: Double) {
+        sharedViewModel.fetchLocationAddress(generateLocationCoordinateUrl(currLat
+        ,currLong)).observe(this, { response->
+            when(response.status){
+                Status.LOADING->{
+
+                }
+                Status.SUCCESS->{
+                    response.data?.body()?.results?.let { locationResult->
+                        if(locationResult.size>0){
+                            val latLngResults = locationResult[0]
+                            if(latLngResults.formattedAddress != null){
+                                LoggerUtils.error("ADDRESS ","${latLngResults.formattedAddress}")
+                                appPref.savedUserAddress(latLngResults.formattedAddress)
+                                stopLocationUpdates()
+                            }
+                        }
+                    }
+                }
+                Status.ERROR->{
+                    response.message?.let {
+                        showAppAlert(getContext(),"Alert",it,null)
+                    }
+                }
+            }
+        })
+    }
+
+    private fun generateLocationCoordinateUrl(currLat: Double, currLong: Double): String {
+        return StringBuilder().append(Utils.GOOGLE_API_URL).append(APIService.LOCATION_API)
+            .append("latlng=").append(currLat).append(",").append(currLong)
+            .append("&sensor=").append("true").append("&key=").append(BuildConfig.LOCATION_API_KEY).toString()
     }
 
     private fun drawerNavigation(itemName: String) {
