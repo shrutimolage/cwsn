@@ -23,6 +23,7 @@ object Utils
     val NO_NETWORK_FOUND_ERROR_MESG="Make sure you have an active data connection"
     val API_BASE_URL="https://paatham.us/cwsn/"
     val GOOGLE_API_URL:String="https://maps.googleapis.com/maps/"
+    
 
     fun generateSlidePanelItems(): MutableList<SlideModel> {
         val itemList:MutableList<SlideModel> = mutableListOf()
