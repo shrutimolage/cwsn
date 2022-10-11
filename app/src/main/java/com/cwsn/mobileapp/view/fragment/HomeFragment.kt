@@ -13,6 +13,7 @@ import com.cwsn.mobileapp.databinding.FragmentHomeBinding
 import com.cwsn.mobileapp.model.home.ClusterData
 import com.cwsn.mobileapp.model.home.ItemCount
 import com.cwsn.mobileapp.network.Status
+import com.cwsn.mobileapp.utils.AppPreferences
 import com.cwsn.mobileapp.utils.Utils
 import com.cwsn.mobileapp.utils.toast
 import com.cwsn.mobileapp.view.activity.UserProfileActivity
@@ -20,6 +21,7 @@ import com.cwsn.mobileapp.view.base.BaseFragment
 import com.cwsn.mobileapp.view.callback.IHomeFragCallback
 import com.cwsn.mobileapp.view.callback.IDashboardListCallback
 import com.cwsn.mobileapp.viewmodel.home.HomeViewModel
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -37,6 +39,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     private var param1: String? = null
     private var param2: String? = null
     private val homeViewModel by viewModel<HomeViewModel>()
+    private val appPref by inject<AppPreferences>()
     private var clusterNames:MutableList<String> = mutableListOf()
     private var listener: IHomeFragCallback?=null
     private var itemCountList:MutableList<ItemCount> = mutableListOf()
@@ -79,7 +82,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         binding.toolbar.cimgProfileIcon.setOnClickListener {
             startActivity(Intent(context,UserProfileActivity::class.java))
         }
-
+        binding.toolbar.imgLogoutApp.setOnClickListener {
+            appPref.performAppLogout()
+            listener?.gotoLoginScreen()
+        }
     }
 
 

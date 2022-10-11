@@ -329,6 +329,11 @@ ISchoolListCallback,IResourceRoomCallback, IMonitoringFragCallback,ITaskActvtFra
         }
     }
 
+    override fun gotoLoginScreen() {
+        startActivity(Intent(getContext(),LoginSignUpAct::class.java))
+        finish()
+    }
+
     private fun gotoMonitoring() {
         navController.navigateSafe(R.id.action_homeFragment_to_monitoringFragment,null,null,null)
     }

@@ -22,16 +22,19 @@ class AppPreferences(private val context: Context)
     val LOCATION_LATITUDE="location_latitude"
     val LOCATION_LONGITUDE="location_longitude"
     val LOCATION_ADDRESS="location_address"
+    val KEY_BLOCK_ID="block_id"
+    val KEY_USER_EMAIL_ADDRESS="email_address"
 
     init {
         mInstance=context.getSharedPreferences(PREF_NAME,Context.MODE_PRIVATE)
         editor=mInstance?.edit()
     }
 
-    fun setUserLoginData(access_token:String,teacherName:String,teacherId:Int){
+    fun setUserLoginData(access_token:String,teacherName:String,teacherId:Int,blockId:Int){
         editor?.putString(KEY_TOKEN,access_token)
         editor?.putInt(KEY_TEACHER_ID,teacherId)
         editor?.putString(KEY_TEACHER_NAME,teacherName)
+        editor?.putInt(KEY_BLOCK_ID,blockId)
         editor?.putBoolean(IS_USER_LOGIN,true)
         editor?.commit()
     }
@@ -41,6 +44,7 @@ class AppPreferences(private val context: Context)
         userData[KEY_TOKEN] = mInstance?.getString(KEY_TOKEN,"")!!
         userData[KEY_TEACHER_NAME]=mInstance?.getString(KEY_TEACHER_NAME,"")!!
         userData[KEY_TEACHER_ID]=mInstance?.getInt(KEY_TEACHER_ID,0).toString()
+        userData[KEY_BLOCK_ID]=mInstance?.getInt(KEY_BLOCK_ID,0).toString()
         return userData
     }
 
@@ -59,7 +63,11 @@ class AppPreferences(private val context: Context)
     }
 
     fun performAppLogout(){
-        editor?.clear()
+        editor?.putString(KEY_TOKEN,"")
+        editor?.putInt(KEY_TEACHER_ID,0)
+        editor?.putString(KEY_TEACHER_NAME,"")
+        editor?.putInt(KEY_BLOCK_ID,0)
+        editor?.putBoolean(IS_USER_LOGIN,false)
         editor?.commit()
     }
 
@@ -70,6 +78,15 @@ class AppPreferences(private val context: Context)
 
     fun getLocationAddress():String?{
         return mInstance?.getString(LOCATION_ADDRESS,"")
+    }
+
+    fun saveUserEmailAddress(emailAddress: String) {
+        editor?.putString(KEY_USER_EMAIL_ADDRESS,emailAddress)
+        editor?.commit()
+    }
+
+    fun getSavedEmailAddress():String?{
+        return mInstance?.getString(KEY_USER_EMAIL_ADDRESS,"")
     }
 
 

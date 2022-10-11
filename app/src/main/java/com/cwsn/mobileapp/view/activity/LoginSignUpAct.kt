@@ -6,19 +6,24 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
+import android.widget.CompoundButton
 import androidx.core.content.ContextCompat
 import com.cwsn.mobileapp.R
 import com.cwsn.mobileapp.databinding.LoginSignupLayoutBinding
 import com.cwsn.mobileapp.network.Status
+import com.cwsn.mobileapp.utils.AppPreferences
 import com.cwsn.mobileapp.utils.toast
 import com.cwsn.mobileapp.view.base.BaseActivity
 import com.cwsn.mobileapp.view.dialog.ForgotPwdDialog
 import com.cwsn.mobileapp.viewmodel.login.LoginViewModel
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 @Suppress("MoveLambdaOutsideParentheses")
 class LoginSignUpAct : BaseActivity<LoginSignupLayoutBinding>() {
+    private var rememberMe: Boolean=false
     private val loginViewModel by viewModel<LoginViewModel>()
+    private val appPref by inject<AppPreferences>()
 
     override fun inflateLayout(layoutInflater: LayoutInflater): LoginSignupLayoutBinding {
         return LoginSignupLayoutBinding.inflate(layoutInflater)
@@ -49,6 +54,17 @@ class LoginSignUpAct : BaseActivity<LoginSignupLayoutBinding>() {
         binding.tvForgotPwd.setOnClickListener{
             showForgotPwdDialog()
         }
+        binding.cbSavePwd.setOnCheckedChangeListener(object:CompoundButton.OnCheckedChangeListener{
+            override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
+                if(isChecked){
+                    rememberMe=true
+                }
+                else{
+                    rememberMe=false
+                    appPref.saveUserEmailAddress("")
+                }
+            }
+        })
     }
 
     private fun showForgotPwdDialog() {
@@ -71,6 +87,11 @@ class LoginSignUpAct : BaseActivity<LoginSignupLayoutBinding>() {
     }
 
     override fun onActResume() {
+        val savedEmailAddress = appPref.getSavedEmailAddress()
+        if(savedEmailAddress?.isNotEmpty()!!){
+            binding.etUsername.setText(savedEmailAddress)
+            binding.cbSavePwd.isChecked=true
+        }
         val textLen = binding.tvForgotPwd.text.length
         val spannable = SpannableString(binding.tvForgotPwd.text)
         spannable.setSpan(
@@ -95,6 +116,12 @@ class LoginSignUpAct : BaseActivity<LoginSignupLayoutBinding>() {
                     it.data?.body()?.let { loginData ->
                         loginData.message?.let {
                             toast(it)
+                            if(rememberMe){
+                                appPref.saveUserEmailAddress(binding.etUsername.text.toString())
+                            }
+                            else{
+                                appPref.saveUserEmailAddress("")
+                            }
                             gotoDashboard()
                         }
                     }

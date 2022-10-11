@@ -17,4 +17,8 @@ interface IHomeFragCallback
     fun onNavigateOptionScreen(itemName: String) {
 
     }
+
+    fun gotoLoginScreen() {
+
+    }
 }
