@@ -20,7 +20,7 @@
             android:id="@+id/tv_blockName"
             style="@style/BigSizeBlackAppTextView"
             android:layout_width="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="5dp"
