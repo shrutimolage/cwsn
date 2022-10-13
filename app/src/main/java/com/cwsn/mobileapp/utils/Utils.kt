@@ -21,7 +21,7 @@ object Utils
     val NO_SCHOOL_FOUND: String="No school found"
     val API_SUCCESS: String="Success"
     val NO_NETWORK_FOUND_ERROR_MESG="Make sure you have an active data connection"
-    val API_BASE_URL="https://paatham.us/cwsn/"
+    val API_BASE_URL="https://paatham.us/cwsn_application/"
     val GOOGLE_API_URL:String="https://maps.googleapis.com/maps/"
     val SESSION_EXPIRE: String="session_expire"
 

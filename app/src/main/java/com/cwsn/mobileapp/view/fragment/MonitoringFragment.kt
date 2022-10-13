@@ -3,26 +3,25 @@ package com.cwsn.mobileapp.view.fragment
 import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.cwsn.mobileapp.R
 import com.cwsn.mobileapp.databinding.FragmentMonitoringBinding
 import com.cwsn.mobileapp.model.home.ClusterData
+import com.cwsn.mobileapp.model.school.SchoolListInput
 import com.cwsn.mobileapp.network.Status
+import com.cwsn.mobileapp.utils.AppPreferences
+import com.cwsn.mobileapp.utils.LoggerUtils
 import com.cwsn.mobileapp.view.adapter.SchoolListAdapter
 import com.cwsn.mobileapp.view.base.BaseFragment
-import com.cwsn.mobileapp.view.callback.IHomeFragCallback
 import com.cwsn.mobileapp.view.callback.IMonitoringFragCallback
 import com.cwsn.mobileapp.view.callback.ISchoolListItemClick
 import com.cwsn.mobileapp.viewmodel.home.HomeViewModel
 import com.cwsn.mobileapp.viewmodel.monitoring.MonitorViewModel
 import com.skydoves.powerspinner.OnSpinnerItemSelectedListener
-import com.skydoves.powerspinner.PowerSpinnerView
 import org.koin.android.ext.android.inject
+import java.util.*
 
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
@@ -41,6 +40,7 @@ class MonitoringFragment : BaseFragment<FragmentMonitoringBinding>(FragmentMonit
     private val monitorViewModel by inject<MonitorViewModel>()
     private val homeViewModel by inject<HomeViewModel>()
     private lateinit var allClusters: List<ClusterData>
+    private val appPref by inject<AppPreferences>()
     private var clusterNames:MutableList<String> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,13 +75,15 @@ class MonitoringFragment : BaseFragment<FragmentMonitoringBinding>(FragmentMonit
                 oldIndex: Int,
                 oldItem: String?,
                 newIndex: Int,
-                newItem: String
-            ) {
+                newItem: String)
+            {
                 val clusterId=getSelectedClusterId(newItem)
-                fetchSchoolList()
+                LoggerUtils.error("CLUSTER ID","$clusterId")
+                fetchSchoolList(clusterId)
             }
-
         })
+        val userLoginData = appPref.getUserLoginData()
+        binding.tvBlockName.text=userLoginData[appPref.KEY_BLOCK_NAME]
     }
 
     private fun getSelectedClusterId(clusterName: String): Int {
@@ -107,7 +109,7 @@ class MonitoringFragment : BaseFragment<FragmentMonitoringBinding>(FragmentMonit
                     listener?.hideProgress()
                     response.data?.body()?.data?.let {
                         allClusters=it
-                        allClusters.forEachIndexed { index, clusterData ->
+                        allClusters.forEachIndexed { _, clusterData ->
                             clusterData.name?.let {name->
                                 clusterNames.add(name)
                             }
@@ -127,40 +129,28 @@ class MonitoringFragment : BaseFragment<FragmentMonitoringBinding>(FragmentMonit
 
     }
 
-    private fun fetchSchoolList() {
-        monitorViewModel.getBlockWiseSchoolDetails(requireActivity(), R.raw.block_wise_school)
-            .observe(viewLifecycleOwner, { response ->
-                when (response.status) {
-                    Status.LOADING -> {
+    private fun fetchSchoolList(clusterId: Int) {
+        homeViewModel.getAllSchoolList(SchoolListInput(clusterId))
+            .observe(viewLifecycleOwner, { response->
+                when(response.status){
+                    Status.LOADING->{
                         listener?.showProgress()
                     }
-                    Status.SUCCESS -> {
+                    Status.SUCCESS->{
                         listener?.hideProgress()
-                        response.data?.let { blockDetails ->
-                            binding.tvBlockName.text = blockDetails.blockDetails?.name
-                        }
-                        response.data?.schoolList?.let { list ->
-                            if (list.size > 0) {
-                                binding.rclySchoolList.apply {
-                                    layoutManager = LinearLayoutManager(
-                                        requireActivity(),
-                                        RecyclerView.VERTICAL,
-                                        false
-                                    )
-                                    adapter =
-                                        SchoolListAdapter(list, object : ISchoolListItemClick {
-                                            override fun onStartSurvery(name: String?) {
-                                                listener?.gotoTaskActivityScreen(name)
-                                            }
-                                        })
-                                }
+                        response.data?.body()?.data?.let { schoolList->
+                            binding.rclySchoolList.apply {
+                                layoutManager=LinearLayoutManager(requireActivity(),RecyclerView.VERTICAL,false)
+                                adapter=SchoolListAdapter(schoolList,object: ISchoolListItemClick{
+
+                                })
                             }
                         }
                     }
-                    Status.ERROR -> {
+                    Status.ERROR->{
                         listener?.hideProgress()
                         response.message?.let {
-                            showAppAlert(requireActivity(), "Alert", it, null)
+                            showAppAlert(requireActivity(),"Alert",it,null)
                         }
                     }
                 }

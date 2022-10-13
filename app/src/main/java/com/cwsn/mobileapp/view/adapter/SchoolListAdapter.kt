@@ -5,19 +5,20 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.cwsn.mobileapp.databinding.RowClusterSchoolItemLayoutBinding
 import com.cwsn.mobileapp.model.monitoring.SchoolList
+import com.cwsn.mobileapp.model.school.SchoolData
 import com.cwsn.mobileapp.view.callback.ISchoolListItemClick
 
-class SchoolListAdapter(private val schoolList:ArrayList<SchoolList>,
-private val listener:ISchoolListItemClick):RecyclerView.Adapter<SchoolListAdapter.ViewHolder>()
+class SchoolListAdapter(private val schoolList:List<SchoolData>,
+                        private val listener:ISchoolListItemClick):RecyclerView.Adapter<SchoolListAdapter.ViewHolder>()
 {
     inner class ViewHolder(private val binding:RowClusterSchoolItemLayoutBinding):
         RecyclerView.ViewHolder(binding.root)
     {
-        fun bindItems(schoolList: SchoolList)
+        fun bindItems(schoolList: SchoolData)
         {
             binding.tvSchoolName.text=schoolList.name
             binding.tvSchoolAddress.text=schoolList.address
-            binding.tvTotalStudentCount.text=schoolList.student.toString()
+            binding.tvTotalStudentCount.text=schoolList.studentCount.toString()
             binding.imgStartSurvey.setOnClickListener {
                 listener.onStartSurvery(schoolList.name)
             }

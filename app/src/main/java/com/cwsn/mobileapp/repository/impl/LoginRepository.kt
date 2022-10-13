@@ -18,7 +18,7 @@ class LoginRepository(private val apiHelper: APIService,private val appPref:AppP
         return apiHelper.loginAPi(input)
     }
 
-    fun savedUserSession(token:String,teacherId:Int,teacherName:String,blockId:Int){
-        appPref.setUserLoginData(token,teacherName,teacherId,blockId)
+    fun savedUserSession(token:String,teacherId:Int,teacherName:String,blockId:Int,blockName:String){
+        appPref.setUserLoginData(token,teacherName,teacherId,blockId,blockName)
     }
 }

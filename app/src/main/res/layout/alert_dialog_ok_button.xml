@@ -29,7 +29,7 @@
             android:padding="5dp"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:textColor="@color/theme_color"
+            android:textColor="@color/white"
             android:fontFamily="@font/poppins_regular"
             android:textSize="@dimen/text_size_13"
             android:text="" />
@@ -39,7 +39,7 @@
             android:layout_height="1dp"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:background="@color/theme_color"
+            android:background="@color/white"
             />
 
         <TextView
@@ -50,7 +50,7 @@
             android:padding="5dp"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:textColor="@color/theme_color"
+            android:textColor="@color/white"
             android:fontFamily="@font/poppins_semibold"
             android:textSize="@dimen/text_size_16"
             android:text="@string/ok_label" />

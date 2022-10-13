@@ -9,6 +9,7 @@ data class LogInData(@Expose @SerializedName("token"            ) var token     
                      @Expose @SerializedName("division"         ) var divisionId             : Int?    = null,
                      @Expose @SerializedName("district"         ) var districtId             : Int?    = null,
                      @Expose @SerializedName("block"            ) var blockId             : Int?    = null,
+                     @Expose @SerializedName("block_name"       ) var blockName             : String?    = null,
                      @Expose @SerializedName("cluster"          ) var clusterId             : Int?    = null,
                      @Expose @SerializedName("created_at"       ) var createdAt      : String? = null,
                      @Expose @SerializedName("token_expires_at" ) var tokenExpiresAt : String? = null)

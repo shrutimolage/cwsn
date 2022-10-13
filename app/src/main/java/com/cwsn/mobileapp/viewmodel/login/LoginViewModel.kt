@@ -19,7 +19,8 @@ class LoginViewModel(private val loginRepos:LoginRepository):ViewModel()
             val loginResponse=loginRepos.appUserLogin(LoginInput(email,password))
             if(loginResponse.isSuccessful){
                 loginResponse.body()?.data?.let {
-                    loginRepos.savedUserSession(it.token!!,it.id!!,it.name!!,it.blockId!!)
+                    loginRepos.savedUserSession(it.token!!,it.id!!,it.name!!,it.blockId!!,
+                    it.blockName!!)
                 }
                 emit(Resource.success(data = loginResponse, message = Utils.API_SUCCESS))
             }

@@ -23,6 +23,7 @@ class AppPreferences(private val context: Context)
     val LOCATION_LONGITUDE="location_longitude"
     val LOCATION_ADDRESS="location_address"
     val KEY_BLOCK_ID="block_id"
+    val KEY_BLOCK_NAME="block_name"
     val KEY_USER_EMAIL_ADDRESS="email_address"
 
     init {
@@ -30,11 +31,13 @@ class AppPreferences(private val context: Context)
         editor=mInstance?.edit()
     }
 
-    fun setUserLoginData(access_token:String,teacherName:String,teacherId:Int,blockId:Int){
+    fun setUserLoginData(access_token:String,teacherName:String,teacherId:Int,blockId:Int,
+    blockName:String){
         editor?.putString(KEY_TOKEN,access_token)
         editor?.putInt(KEY_TEACHER_ID,teacherId)
         editor?.putString(KEY_TEACHER_NAME,teacherName)
         editor?.putInt(KEY_BLOCK_ID,blockId)
+        editor?.putString(KEY_BLOCK_NAME,blockName)
         editor?.putBoolean(IS_USER_LOGIN,true)
         editor?.commit()
     }
@@ -45,6 +48,7 @@ class AppPreferences(private val context: Context)
         userData[KEY_TEACHER_NAME]=mInstance?.getString(KEY_TEACHER_NAME,"")!!
         userData[KEY_TEACHER_ID]=mInstance?.getInt(KEY_TEACHER_ID,0).toString()
         userData[KEY_BLOCK_ID]=mInstance?.getInt(KEY_BLOCK_ID,0).toString()
+        userData[KEY_BLOCK_NAME]=mInstance?.getString(KEY_BLOCK_NAME,"")!!
         return userData
     }
 
