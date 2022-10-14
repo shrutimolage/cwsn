@@ -19,6 +19,12 @@
         <action
             android:id="@+id/action_homeFragment_to_schoolDetailsFragment"
             app:destination="@id/schoolDetailsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_schoolVisitedFragment"
+            app:destination="@id/schoolVisitedFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_schoolPendingFragment"
+            app:destination="@id/schoolPendingFragment" />
     </fragment>
     <fragment
         android:id="@+id/resourceRoomFrag"
@@ -54,4 +60,14 @@
         android:name="com.cwsn.mobileapp.view.fragment.QuestionListFragment"
         android:label="QuestionListFragment" />
 
+    <fragment
+        android:id="@+id/schoolVisitedFragment"
+        android:label="SchoolVisitedFragment"
+        android:name="com.cwsn.mobileapp.view.fragment.SchoolVisitedFrag"
+        tools:layout="@layout/fragment_school_visited"/>
+    <fragment
+        android:id="@+id/schoolPendingFragment"
+        android:label="SchoolPendingFragment"
+        android:name="com.cwsn.mobileapp.view.fragment.SchoolPendingFrag"
+        tools:layout="@layout/fragment_school_pending"/>
 </navigation>

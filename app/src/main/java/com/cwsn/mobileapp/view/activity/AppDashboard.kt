@@ -42,9 +42,10 @@ import java.lang.StringBuilder
 
 @Suppress("MoveLambdaOutsideParentheses")
 class AppDashboard : BaseActivity<AppDashboardLayoutBinding>(), IHomeFragCallback ,
-ISchoolListCallback,IResourceRoomCallback, IMonitoringFragCallback,ITaskActvtFragCallback,IQuestionListCallback  {
+ISchoolListCallback,IResourceRoomCallback, IMonitoringFragCallback,
+    ITaskActvtFragCallback,IQuestionListCallback,ISchoolVisitedFragCallback,
+    ISchoolPendingFragCallback{
     private val appPref by inject<AppPreferences>()
-    private lateinit var appPreferences: AppPreferences
     private val dbViewModel by viewModel<DbViewModel>()
     private lateinit var navController: NavController
     private var mDrawerToggle: ActionBarDrawerToggle? = null
@@ -401,6 +402,20 @@ ISchoolListCallback,IResourceRoomCallback, IMonitoringFragCallback,ITaskActvtFra
             "Monitoring"->{
                 gotoMonitoring()
             }
+            "School Visited"->{
+                gotoSchoolVisited()
+            }
+            "School Pending"->{
+                gotoSchoolPending()
+            }
         }
+    }
+
+    private fun gotoSchoolPending() {
+        navController.navigateSafe(R.id.action_homeFragment_to_schoolPendingFragment,null,null,null)
+    }
+
+    private fun gotoSchoolVisited() {
+        navController.navigateSafe(R.id.action_homeFragment_to_schoolVisitedFragment,null,null,null)
     }
 }

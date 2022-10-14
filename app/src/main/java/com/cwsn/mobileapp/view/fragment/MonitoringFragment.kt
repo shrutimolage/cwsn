@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cwsn.mobileapp.databinding.FragmentMonitoringBinding
@@ -17,11 +16,11 @@ import com.cwsn.mobileapp.view.adapter.SchoolListAdapter
 import com.cwsn.mobileapp.view.base.BaseFragment
 import com.cwsn.mobileapp.view.callback.IMonitoringFragCallback
 import com.cwsn.mobileapp.view.callback.ISchoolListItemClick
+import com.cwsn.mobileapp.view.dialog.TaskFormListDialog
 import com.cwsn.mobileapp.viewmodel.home.HomeViewModel
 import com.cwsn.mobileapp.viewmodel.monitoring.MonitorViewModel
 import com.skydoves.powerspinner.OnSpinnerItemSelectedListener
 import org.koin.android.ext.android.inject
-import java.util.*
 
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
@@ -83,7 +82,7 @@ class MonitoringFragment : BaseFragment<FragmentMonitoringBinding>(FragmentMonit
             }
         })
         val userLoginData = appPref.getUserLoginData()
-        binding.tvBlockName.text=userLoginData[appPref.KEY_BLOCK_NAME]
+        binding.tvBlockName.text="Block Name:-"+userLoginData[appPref.KEY_BLOCK_NAME]
     }
 
     private fun getSelectedClusterId(clusterName: String): Int {
@@ -107,6 +106,7 @@ class MonitoringFragment : BaseFragment<FragmentMonitoringBinding>(FragmentMonit
                 }
                 Status.SUCCESS->{
                     listener?.hideProgress()
+                    clusterNames= mutableListOf()
                     response.data?.body()?.data?.let {
                         allClusters=it
                         allClusters.forEachIndexed { _, clusterData ->
@@ -139,10 +139,14 @@ class MonitoringFragment : BaseFragment<FragmentMonitoringBinding>(FragmentMonit
                     Status.SUCCESS->{
                         listener?.hideProgress()
                         response.data?.body()?.data?.let { schoolList->
+                            binding.rclySchoolList.visibility=View.VISIBLE
+                            binding.tvNoResult.visibility=View.GONE
                             binding.rclySchoolList.apply {
                                 layoutManager=LinearLayoutManager(requireActivity(),RecyclerView.VERTICAL,false)
                                 adapter=SchoolListAdapter(schoolList,object: ISchoolListItemClick{
-
+                                    override fun onSchoolListItemClick(schoolId: Int?) {
+                                        showTaskFormListDialog(schoolId)
+                                    }
                                 })
                             }
                         }
@@ -151,10 +155,17 @@ class MonitoringFragment : BaseFragment<FragmentMonitoringBinding>(FragmentMonit
                         listener?.hideProgress()
                         response.message?.let {
                             showAppAlert(requireActivity(),"Alert",it,null)
+                            binding.rclySchoolList.visibility=View.GONE
+                            binding.tvNoResult.visibility=View.VISIBLE
                         }
                     }
                 }
             })
+    }
+
+    private fun showTaskFormListDialog(schoolId: Int?) {
+        val taskListDialog=TaskFormListDialog.newInstance()
+        taskListDialog.show(requireActivity().supportFragmentManager,TaskFormListDialog.TAG)
     }
 
     companion object {
