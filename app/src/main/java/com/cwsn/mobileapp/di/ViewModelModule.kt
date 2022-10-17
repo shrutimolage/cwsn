@@ -38,7 +38,7 @@ val viewModelModule= module {
         MonitorViewModel()
     }
     single{
-        TaskViewModel()
+        TaskViewModel(get())
     }
     single {
         SharedViewModel(get())

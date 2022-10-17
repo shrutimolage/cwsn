@@ -40,6 +40,6 @@ val repoModule = module {
         MonitoringRepository()
     }
     single {
-        TaskRepository()
+        TaskRepository(get())
     }
 }

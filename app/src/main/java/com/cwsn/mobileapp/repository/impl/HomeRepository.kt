@@ -4,6 +4,7 @@ import android.content.Context
 import com.cwsn.mobileapp.model.home.Cluster
 import com.cwsn.mobileapp.model.home.DashboardCount
 import com.cwsn.mobileapp.model.location.LocationLatLng
+import com.cwsn.mobileapp.model.school.PendingSchoolResp
 import com.cwsn.mobileapp.model.school.SchoolList
 import com.cwsn.mobileapp.model.school.SchoolListInput
 import com.cwsn.mobileapp.network.ApiHelper
@@ -31,6 +32,10 @@ class HomeRepository(private val apiHelper: ApiHelper)
     suspend fun getGoogleLocLatLng(apiUrl: String):Response<LocationLatLng>
     {
         return apiHelper.getGoogleLocLatLng(apiUrl)
+    }
+
+    suspend fun getAllPendingSchool():Response<PendingSchoolResp>{
+        return apiHelper.getAllPendingSchool()
     }
 
 }
