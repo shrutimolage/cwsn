@@ -9,6 +9,7 @@ import com.cwsn.mobileapp.model.questions.Questions
 import com.cwsn.mobileapp.model.school.PendingSchoolResp
 import com.cwsn.mobileapp.model.school.SchoolList
 import com.cwsn.mobileapp.model.school.SchoolListInput
+import com.cwsn.mobileapp.model.school.VisitedSchoolResp
 import com.cwsn.mobileapp.model.task.AllTaskList
 import retrofit2.Response
 import retrofit2.http.Body
@@ -25,7 +26,7 @@ interface ApiHelper
 
     suspend fun getAllClusterDetails():Response<Cluster>
 
-    suspend fun getAllDashboardCount():Response<DashboardCount>
+    suspend fun getAllSchoolDetailCount():Response<DashboardCount>
 
     suspend fun getSchoolClusterWise(input: SchoolListInput):Response<SchoolList>
 
@@ -34,4 +35,5 @@ interface ApiHelper
     suspend fun getGoogleLocLatLng(apiUrl: String):Response<LocationLatLng>
     suspend fun getAllTaskActivityList():Response<AllTaskList>
     suspend fun getAllPendingSchool():Response<PendingSchoolResp>
+    suspend fun getAllVisitedSchool():Response<VisitedSchoolResp>
 }

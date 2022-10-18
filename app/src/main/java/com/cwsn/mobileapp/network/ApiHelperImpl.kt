@@ -10,6 +10,7 @@ import com.cwsn.mobileapp.model.questions.Questions
 import com.cwsn.mobileapp.model.school.PendingSchoolResp
 import com.cwsn.mobileapp.model.school.SchoolList
 import com.cwsn.mobileapp.model.school.SchoolListInput
+import com.cwsn.mobileapp.model.school.VisitedSchoolResp
 import com.cwsn.mobileapp.model.task.AllTaskList
 import retrofit2.Response
 
@@ -30,8 +31,8 @@ class ApiHelperImpl(private val apiService: APIService) : ApiHelper
         return apiService.getAllCluster()
     }
 
-    override suspend fun getAllDashboardCount(): Response<DashboardCount> {
-        return apiService.getAllDashboardCount()
+    override suspend fun getAllSchoolDetailCount(): Response<DashboardCount> {
+        return apiService.getAllSchoolDetailCount()
     }
 
     override suspend fun getSchoolClusterWise(input: SchoolListInput): Response<SchoolList> {
@@ -52,6 +53,10 @@ class ApiHelperImpl(private val apiService: APIService) : ApiHelper
 
     override suspend fun getAllPendingSchool(): Response<PendingSchoolResp> {
         return apiService.getAllPendingSchool()
+    }
+
+    override suspend fun getAllVisitedSchool(): Response<VisitedSchoolResp> {
+        return apiService.getAllVisitedSchool()
     }
 
 }

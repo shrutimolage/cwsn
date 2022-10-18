@@ -10,6 +10,7 @@ import com.cwsn.mobileapp.model.questions.Questions
 import com.cwsn.mobileapp.model.school.PendingSchoolResp
 import com.cwsn.mobileapp.model.school.SchoolList
 import com.cwsn.mobileapp.model.school.SchoolListInput
+import com.cwsn.mobileapp.model.school.VisitedSchoolResp
 import com.cwsn.mobileapp.model.task.AllTaskList
 import retrofit2.Response
 import retrofit2.http.*
@@ -29,7 +30,7 @@ interface APIService
     suspend fun getAllCluster():Response<Cluster>
 
     @GET("api/total_school")
-    suspend fun getAllDashboardCount():Response<DashboardCount>
+    suspend fun getAllSchoolDetailCount():Response<DashboardCount>
 
     @POST("api/cluster_wise_school")
     suspend fun getSchoolClusterWise(@Body input:SchoolListInput):Response<SchoolList>
@@ -42,6 +43,9 @@ interface APIService
 
     @GET("api/school_list")
     suspend fun getAllPendingSchool():Response<PendingSchoolResp>
+
+    @GET("api/visitedSchooList")
+    suspend fun getAllVisitedSchool():Response<VisitedSchoolResp>
 
     @GET
     suspend fun getGoogleLocLatLng(@Url apiUrl: String):Response<LocationLatLng>

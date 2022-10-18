@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cwsn.mobileapp.R
 import com.cwsn.mobileapp.databinding.FragmentSchoolDetailsBinding
+import com.cwsn.mobileapp.model.school.SchoolCountData
 import com.cwsn.mobileapp.network.Status
 import com.cwsn.mobileapp.view.adapter.SchoolAllDataAdapter
 import com.cwsn.mobileapp.view.base.BaseFragment
@@ -34,6 +35,7 @@ class SchoolDetailsFragment : BaseFragment<FragmentSchoolDetailsBinding>(Fragmen
     private var param2: String? = null
     private var listener:ISchoolListCallback?=null
     private val homeViewModel by inject<HomeViewModel>()
+    private var schoolCountList:MutableList<SchoolCountData> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,7 +69,33 @@ class SchoolDetailsFragment : BaseFragment<FragmentSchoolDetailsBinding>(Fragmen
 
     override fun onResume() {
         super.onResume()
-        homeViewModel.getSchoolData(requireActivity(),R.raw.school_api).observe(viewLifecycleOwner,
+        homeViewModel.getAllSchoolDetailCount().observe(viewLifecycleOwner, { response->
+            when(response.status){
+                Status.LOADING->{
+                    listener?.showProgress()
+                }
+                Status.SUCCESS->{
+                    listener?.hideProgress()
+                    response.data?.body()?.data?.let {
+                        schoolCountList.add(SchoolCountData("Cwsn Enrollment",it.cwsn_enrollment))
+                        schoolCountList.add(SchoolCountData("School Having Cwsn",it.schoolHavingCWSN))
+                        schoolCountList.add(SchoolCountData("School Having Ramps",it.schoolHavingRamps))
+                        schoolCountList.add(SchoolCountData("School Having Cwsn Toilet",it.totalCwsnToilet))
+                        binding.rclySchoolDetails.apply {
+                            layoutManager=LinearLayoutManager(requireActivity(),RecyclerView.VERTICAL, false)
+                            adapter=SchoolAllDataAdapter(schoolCountList as ArrayList<SchoolCountData>)
+                        }
+                    }
+                }
+                Status.ERROR->{
+                    listener?.hideProgress()
+                    response.message?.let {
+                        showAppAlert(requireActivity(),"Alert",it,null)
+                    }
+                }
+            }
+        })
+       /* homeViewModel.getSchoolData(requireActivity(),R.raw.school_api).observe(viewLifecycleOwner,
             { response->
                 when(response.status){
                     Status.LOADING->{
@@ -91,7 +119,7 @@ class SchoolDetailsFragment : BaseFragment<FragmentSchoolDetailsBinding>(Fragmen
                         }
                     }
                 }
-            })
+            })*/
     }
 
     companion object {
