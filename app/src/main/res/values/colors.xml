@@ -14,9 +14,9 @@
 
 <!--    customized color-->
     <color name="status_bar_color">#5842AD</color>
-    <color name="theme_color">#1C75BC</color>
-    <color name="theme_color_light">#50B7E3</color>
-    <color name="theme_color_dark">#06375E</color>
+    <color name="theme_color">#7748cc</color>
+    <color name="theme_color_light">#7748cc</color>
+    <color name="theme_color_dark">#5B3998</color>
     <color name="theme_color_one">#4680ff</color>
     <color name="theme_text_color">#0531A3</color>
     <color name="green_btn_color">#4CAF50</color>

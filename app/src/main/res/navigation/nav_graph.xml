@@ -36,9 +36,10 @@
         android:name="com.cwsn.mobileapp.view.fragment.MonitoringFragment"
         android:label="fragment_monitoring"
         tools:layout="@layout/fragment_monitoring" >
+
         <action
-            android:id="@+id/action_monitoringFragment_to_taskActivityFragment"
-            app:destination="@id/taskActivityFragment" />
+            android:id="@+id/action_taskActivityFragment_to_questionListFragment"
+            app:destination="@id/questionListFragment" />
     </fragment>
     <fragment
         android:id="@+id/schoolDetailsFragment"

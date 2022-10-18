@@ -2,6 +2,7 @@ package com.cwsn.mobileapp.view.activity
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
@@ -67,6 +68,7 @@ class LoginSignUpAct : BaseActivity<LoginSignupLayoutBinding>() {
         })
     }
 
+
     private fun showForgotPwdDialog() {
         val forgotPwdDialog=ForgotPwdDialog.newInstance()
         forgotPwdDialog.show(supportFragmentManager,ForgotPwdDialog.TAG)
@@ -95,7 +97,7 @@ class LoginSignUpAct : BaseActivity<LoginSignupLayoutBinding>() {
         val textLen = binding.tvForgotPwd.text.length
         val spannable = SpannableString(binding.tvForgotPwd.text)
         spannable.setSpan(
-            ForegroundColorSpan(ContextCompat.getColor(getContext(), R.color.light_orange)),
+            ForegroundColorSpan(ContextCompat.getColor(getContext(), R.color.mapCircleStrokeColor)),
             18,
             textLen,
             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE

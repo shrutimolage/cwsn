@@ -20,21 +20,21 @@
         <shape>
             <corners android:radius="18dp" />
             <padding android:top="1dp" android:right="2dp" android:bottom="2dp" android:left="1dp" />
-            <solid android:color="#20FFFFFF" />
-        </shape>
-    </item>
-    <item android:bottom="3dp" android:right="3dp" android:left="3dp">
-        <shape>
-            <corners android:radius="18dp" />
-            <padding android:top="1dp" android:right="2dp" android:bottom="2dp" android:left="1dp" />
-            <solid android:color="#30FFFFFF" />
-        </shape>
-    </item>
-    <item android:bottom="3dp" android:right="3dp" android:left="3dp">
-        <shape>
-            <corners android:radius="18dp" />
-            <padding android:top="1dp" android:right="2dp" android:bottom="2dp" android:left="1dp" />
             <solid android:color="#50FFFFFF" />
+        </shape>
+    </item>
+    <item android:bottom="3dp" android:right="3dp" android:left="3dp">
+        <shape>
+            <corners android:radius="18dp" />
+            <padding android:top="1dp" android:right="2dp" android:bottom="2dp" android:left="1dp" />
+            <solid android:color="#60FFFFFF" />
+        </shape>
+    </item>
+    <item android:bottom="3dp" android:right="3dp" android:left="3dp">
+        <shape>
+            <corners android:radius="18dp" />
+            <padding android:top="1dp" android:right="2dp" android:bottom="2dp" android:left="1dp" />
+            <solid android:color="#80FFFFFF" />
         </shape>
     </item>
 

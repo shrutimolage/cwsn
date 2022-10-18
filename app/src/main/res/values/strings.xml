@@ -1,9 +1,10 @@
 <resources>
     <string name="app_name">CWSNs</string>
     <string name="usernameorEmail_label_nocolon">Email</string>
+    <string name="usernamenocolon">Username</string>
     <string name="password_label">Password</string>
     <string name="email_address_label">Email Address</string>
-    <string name="forgot_password_click_here"><u>Forgot password ? Click Here</u></string>
+    <string name="forgot_password_click_here">Forgot password ? Click Here</string>
     <string name="home_label">Home</string>
     <string name="summary_text">Summary</string>
     <string name="survey_text">Survey Report</string>
@@ -26,7 +27,7 @@
     <string name="enter_new_password_label">Enter new password</string>
     <string name="login_label">LOGIN</string>
     <string name="remember_me_label">Remember me</string>
-    <string name="welcome_to_cwsn_label">Welcome To CWSN</string>
+    <string name="welcome_to_cwsn_label">Welcome to CWSN</string>
     <string name="resource_room_text">Resource Room</string>
     <string name="school_label">School</string>
     <string name="monitoring_label">Monitoring</string>
@@ -41,4 +42,5 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="details_label">Details</string>
     <string name="cancel">Cancel</string>
+    <string name="children_with_special_needs_label">CHILDREN WITH SPECIAL NEEDS</string>
 </resources>

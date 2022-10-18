@@ -385,10 +385,7 @@ ISchoolListCallback,IResourceRoomCallback, IMonitoringFragCallback,
     }
 
     override fun gotoTaskActivityScreen(name: String?) {
-        val bundle = Bundle()
-        bundle.putString(Utils.SCHOOL_NAME,name)
-        navController.navigateSafe(R.id.action_monitoringFragment_to_taskActivityFragment,
-        bundle,null,null)
+
     }
 
     override fun onNavigateOptionScreen(itemName: String) {

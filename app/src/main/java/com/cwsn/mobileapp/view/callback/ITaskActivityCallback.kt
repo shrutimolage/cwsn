@@ -2,7 +2,7 @@ package com.cwsn.mobileapp.view.callback
 
 interface ITaskActivityCallback
 {
-    fun onTaskItemClicked() {
+    fun onTaskItemClicked(id: Int?) {
 
     }
 

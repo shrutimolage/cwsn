@@ -33,7 +33,7 @@ class ForgotPwdDialog :DialogFragment()
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState)
         dialog.window?.requestFeature(Window.FEATURE_NO_TITLE)
-        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.window?.setBackgroundDrawableResource(R.color.semiTransparentColor)
         dialog.setCanceledOnTouchOutside(false)
         return dialog
     }

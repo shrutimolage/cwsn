@@ -4,19 +4,19 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.cwsn.mobileapp.databinding.RowTaskActivityLayoutBinding
-import com.cwsn.mobileapp.model.task.Tasklist
+import com.cwsn.mobileapp.model.task.TaskData
 import com.cwsn.mobileapp.view.callback.ITaskActivityCallback
 
-class TaskActivityAdapter(private val datalist:List<Tasklist>,private val listener:
+class TaskActivityAdapter(private val datalist:List<TaskData>, private val listener:
 ITaskActivityCallback):RecyclerView.Adapter<TaskActivityAdapter.ViewHolder>()
 {
     inner class ViewHolder(private val binding:RowTaskActivityLayoutBinding):
         RecyclerView.ViewHolder(binding.root)
     {
-        fun bindItems(tasklist: Tasklist, listener: ITaskActivityCallback) {
-            binding.tvFieldName.text=tasklist.name
+        fun bindItems(tasklist: TaskData, listener: ITaskActivityCallback) {
+            binding.tvFieldName.text=tasklist.formatName
             binding.llTaskActivityList.setOnClickListener {
-                listener.onTaskItemClicked()
+                listener.onTaskItemClicked(tasklist.id)
             }
         }
 

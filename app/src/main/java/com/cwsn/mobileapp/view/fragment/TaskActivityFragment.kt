@@ -84,11 +84,11 @@ class TaskActivityFragment : BaseFragment<FragmentTaskActivityBinding>(FragmentT
                         response.data?.tasklist?.let {
                             binding.rclyTaskActvyList.apply {
                                 layoutManager=LinearLayoutManager(requireActivity(),RecyclerView.VERTICAL,false)
-                                adapter=TaskActivityAdapter(it,object:ITaskActivityCallback{
+                                /*adapter=TaskActivityAdapter(it,object:ITaskActivityCallback{
                                     override fun onTaskItemClicked() {
                                         listener?.gotoSurveyQuestionScreen()
                                     }
-                                })
+                                })*/
                             }
                         }
                     }

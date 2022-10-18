@@ -3,84 +3,53 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="230dp"
+    android:background="@drawable/drawer_header_bg_blue"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="195dp"
-        android:adjustViewBounds="true"
-        android:contentDescription="@string/nav_header_desc"
-        android:scaleType="centerCrop"
-        android:src="@drawable/drawer_header_bg_blue" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:orientation="vertical"
-        android:layout_marginEnd="40dp"
-        android:layout_marginStart="50dp"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="50dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
         android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            app:srcCompat="@drawable/ic_cwsn_logo_white_bg" />
+
         <TextView
             android:id="@+id/tv_title_name"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawablePadding="5dp"
-            android:fontFamily="@font/poppins_bold"
-            android:text=""
-            android:visibility="visible"
+            android:fontFamily="@font/poppins_medium"
+            android:layout_marginTop="15dp"
+            android:text="CWSN,Jharkhand"
             android:maxLines="2"
-            android:ellipsize="end"
+            android:gravity="center"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_17"
-            app:drawableEndCompat="@drawable/ic_edit" />
+            android:textSize="@dimen/text_size_18"
+            />
 
         <TextView
             android:id="@+id/tv_subtitle"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_regular"
-            android:text=""
+            android:text="(Children With Special Needs)"
+            android:gravity="center"
             android:textAllCaps="false"
-            android:textColor="#D8D4D4"
-            android:textSize="@dimen/text_size_12"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_16"
 
             />
     </LinearLayout>
 
-
-    <RelativeLayout
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="108dp"
-        android:layout_marginBottom="9dp"
-        android:background="@drawable/bg_circle_header"
-         />
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_circle_header"
-        android:layout_marginStart="30dp"
-        android:layout_alignParentBottom="true"
-        >
-
-        <com.mikhaellopez.circularimageview.CircularImageView
-            android:id="@+id/imageView"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:layout_centerInParent="true"
-            android:layout_marginStart="1dp"
-            android:layout_marginTop="1dp"
-            android:layout_marginEnd="1dp"
-            android:layout_marginBottom="1dp"
-            android:src="@drawable/ic_user_profile_loader"
-            app:civ_border_color="@color/theme_color"
-            app:civ_circle_color="@color/theme_color"
-            app:civ_shadow_radius="0.2dp" />
-    </RelativeLayout>
 
 
 
