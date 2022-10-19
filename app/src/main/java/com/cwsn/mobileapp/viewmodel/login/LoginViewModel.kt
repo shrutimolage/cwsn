@@ -18,11 +18,18 @@ class LoginViewModel(private val loginRepos:LoginRepository):ViewModel()
         try {
             val loginResponse=loginRepos.appUserLogin(LoginInput(email,password))
             if(loginResponse.isSuccessful){
-                loginResponse.body()?.data?.let {
-                    loginRepos.savedUserSession(it.token!!,it.id!!,it.name!!,it.blockId!!,
-                    it.blockName!!)
+                loginResponse.body()?.data?.let {loginData->
+                    if(loginData.appLogin==1){
+                        loginRepos.savedUserSession(loginData.token!!,loginData.id!!,
+                            loginData.name!!,loginData.blockId!!,
+                            loginData.blockName!!)
+                        emit(Resource.success(data = loginResponse, message = Utils.API_SUCCESS))
+                    }
+                    else{
+                        emit(Resource.error(data = loginResponse, message = "Unauthorized user.Please contact admin"))
+                    }
                 }
-                emit(Resource.success(data = loginResponse, message = Utils.API_SUCCESS))
+
             }
             else{
                 emit(Resource.error(data = null, message = "Server Error"))

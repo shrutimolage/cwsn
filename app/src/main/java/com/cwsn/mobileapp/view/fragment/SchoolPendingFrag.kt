@@ -7,11 +7,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.cwsn.mobileapp.R
 import com.cwsn.mobileapp.databinding.FragmentSchoolPendingBinding
+import com.cwsn.mobileapp.network.Status
+import com.cwsn.mobileapp.view.adapter.SchoolPendingAdapter
 import com.cwsn.mobileapp.view.base.BaseFragment
+import com.cwsn.mobileapp.view.callback.ISchoolListItemClick
 import com.cwsn.mobileapp.view.callback.ISchoolPendingFragCallback
 import com.cwsn.mobileapp.view.callback.ISchoolVisitedFragCallback
+import com.cwsn.mobileapp.viewmodel.home.HomeViewModel
+import org.koin.android.ext.android.inject
 import java.lang.Exception
 
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -27,6 +35,7 @@ class SchoolPendingFrag : BaseFragment<FragmentSchoolPendingBinding>(FragmentSch
     private var param1: String? = null
     private var param2: String? = null
     private var listener:ISchoolPendingFragCallback?=null
+    private val homeViewModel by inject<HomeViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,6 +75,32 @@ class SchoolPendingFrag : BaseFragment<FragmentSchoolPendingBinding>(FragmentSch
 
     override fun onResume() {
         super.onResume()
+        homeViewModel.getAllPendingSchool().observe(viewLifecycleOwner,Observer{response->
+            when(response.status){
+                Status.LOADING->{
+                    listener?.showProgress()
+                }
+                Status.SUCCESS->{
+                    listener?.hideProgress()
+                    response.data?.body()?.data?.let {
+                        binding.rclySchoolpending.apply {
+                            layoutManager=LinearLayoutManager(requireActivity(),RecyclerView.VERTICAL,false)
+                            adapter=SchoolPendingAdapter(it,object: ISchoolListItemClick{
+                                override fun onSchoolListItemClick(schoolId: Int?) {
+
+                                }
+                            })
+                        }
+                    }
+                }
+                Status.ERROR->{
+                    listener?.hideProgress()
+                    response.message?.let {
+                        showAppAlert(requireActivity(),"Alert",it,null)
+                    }
+                }
+            }
+        })
     }
 
     companion object {

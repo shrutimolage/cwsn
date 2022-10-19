@@ -100,7 +100,15 @@ class HomeViewModel(private val repos:HomeRepository):ViewModel()
         try {
             val response = repos.getAllPendingSchool()
             if(response.isSuccessful){
-                emit(Resource.success(data = response, message = "Success"))
+                response.body()?.data?.let {
+                    if(it.size>0){
+                        emit(Resource.success(data = response, message = "Success"))
+                    }
+                    else{
+                        emit(Resource.error(data = null, message = "No School Found"))
+                    }
+                }
+
             }
             else{
                 emit(Resource.error(data = null, message = "Server Error"))
@@ -117,7 +125,15 @@ class HomeViewModel(private val repos:HomeRepository):ViewModel()
         try{
             val response = repos.getAllVisitedSchool()
             if(response.isSuccessful){
-                emit(Resource.success(data=response, message = "Success"))
+                response.body()?.data?.let {
+                    if(it.size>0){
+                        emit(Resource.success(data=response, message = "Success"))
+                    }
+                    else{
+                        emit(Resource.error(data = null, message = "No School Found"))
+                    }
+                }
+
             }
             else{
                 emit(Resource.error(data = null, message = "Server Error"))

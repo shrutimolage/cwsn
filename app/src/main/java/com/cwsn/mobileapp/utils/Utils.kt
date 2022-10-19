@@ -31,6 +31,7 @@ object Utils
         itemList.add(SlideModel(false,"Home", R.drawable.home_icon_new))
         itemList.add(SlideModel(false,"Resource Room",R.drawable.ic_resource_room_slide))
         itemList.add(SlideModel(false,"Monitoring",R.drawable.ic_monitoring_slide))
+        itemList.add(SlideModel(false,"Logout",R.drawable.ic_logout_icon))
         return itemList
     }
 

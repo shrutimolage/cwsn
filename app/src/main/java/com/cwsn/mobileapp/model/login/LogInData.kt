@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class LogInData(@Expose @SerializedName("token"            ) var token          : String? = null,
                      @Expose @SerializedName("name"             ) var name           : String? = null,
+                     @Expose @SerializedName("app_login"        ) var appLogin           : Int? = null,
                      @Expose @SerializedName("id"               ) var id             : Int?    = null,
                      @Expose @SerializedName("division"         ) var divisionId             : Int?    = null,
                      @Expose @SerializedName("district"         ) var districtId             : Int?    = null,
