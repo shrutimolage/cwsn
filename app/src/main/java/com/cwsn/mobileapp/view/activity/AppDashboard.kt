@@ -347,6 +347,10 @@ ISchoolListCallback,IResourceRoomCallback, IMonitoringFragCallback,
         navController.navigateSafe(R.id.action_taskActivityFragment_to_questionListFragment,null,null,null)
     }
 
+    override fun gotoQuestionListScreen() {
+        navController.navigateSafe(R.id.action_schoolPendingFragment_to_questionListFragment,null,null,null)
+    }
+
     private fun getLocalQuestions() {
         dbViewModel.getAllQuestions().observe(this, { questions ->
             when (questions.status) {

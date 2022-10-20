@@ -87,7 +87,7 @@ class SchoolPendingFrag : BaseFragment<FragmentSchoolPendingBinding>(FragmentSch
                             layoutManager=LinearLayoutManager(requireActivity(),RecyclerView.VERTICAL,false)
                             adapter=SchoolPendingAdapter(it,object: ISchoolListItemClick{
                                 override fun onSchoolListItemClick(schoolId: Int?) {
-
+                                    listener?.gotoQuestionListScreen()
                                 }
                             })
                         }
