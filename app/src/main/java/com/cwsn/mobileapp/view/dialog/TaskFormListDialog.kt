@@ -1,5 +1,6 @@
 package com.cwsn.mobileapp.view.dialog
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
@@ -19,6 +20,7 @@ import com.google.gson.Gson
 
 class TaskFormListDialog:DialogFragment()
 {
+    private var selectedFormId: Int?=null
     private var allTaskData: AllTaskList?=null
     private var _binding: TaskFormListDialogBinding?=null
     private val binding get() = _binding!!
@@ -84,10 +86,22 @@ class TaskFormListDialog:DialogFragment()
             binding.rclyTaskActvyList.apply {
                 layoutManager=LinearLayoutManager(requireActivity(),RecyclerView.VERTICAL,false)
                 adapter=TaskActivityAdapter(it,object:ITaskActivityCallback{
+                    @SuppressLint("NotifyDataSetChanged")
                     override fun onTaskItemClicked(id: Int?) {
-                        callback?.gotoQuestionsScreen(id)
+                        selectedFormId=id
+                        it.forEachIndexed { index, taskData ->
+                            taskData.taskSelectedStatus = id==taskData.id
+                        }
+                        adapter?.notifyDataSetChanged()
                     }
                 })
+            }
+        }
+
+        binding.tvSubmit.setOnClickListener {
+            selectedFormId?.let {
+                dismiss()
+                callback?.gotoQuestionsScreen(selectedFormId)
             }
         }
 

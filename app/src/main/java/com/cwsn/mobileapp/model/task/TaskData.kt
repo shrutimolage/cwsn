@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class TaskData(@SerializedName("id"                  ) var id                : Int?    = null,
                     @SerializedName("format_id"           ) var formatId          : Int?    = null,
+                    var taskSelectedStatus          : Boolean    = false,
                     @SerializedName("format_name"         ) var formatName        : String? = null,
                     @SerializedName("type"                ) var type              : String? = null,
                     @SerializedName("district_id"         ) var districtId        : String? = null,
