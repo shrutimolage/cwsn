@@ -54,7 +54,7 @@
         android:id="@+id/ll_textQuestion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
+        android:visibility="visible"
         android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
@@ -90,7 +90,7 @@
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:padding="3dp"
-                android:visibility="invisible"
+                android:visibility="visible"
                 android:layout_margin="3dp"
                 app:srcCompat="@drawable/ic_add_icon" />
         </LinearLayout>
@@ -120,7 +120,7 @@
     <LinearLayout
         android:id="@+id/ll_fileUploadArea"
         android:layout_width="match_parent"
-        android:visibility="visible"
+        android:visibility="gone"
         android:orientation="vertical"
         android:layout_height="wrap_content">
         <LinearLayout
