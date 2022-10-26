@@ -2,11 +2,8 @@ package com.cwsn.mobileapp.view.fragment
 
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.lifecycle.Observer
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cwsn.mobileapp.R
@@ -18,7 +15,6 @@ import com.cwsn.mobileapp.view.base.BaseFragment
 import com.cwsn.mobileapp.view.callback.ISchoolListCallback
 import com.cwsn.mobileapp.viewmodel.home.HomeViewModel
 import org.koin.android.ext.android.inject
-import java.lang.Exception
 
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
@@ -77,10 +73,10 @@ class SchoolDetailsFragment : BaseFragment<FragmentSchoolDetailsBinding>(Fragmen
                 Status.SUCCESS->{
                     listener?.hideProgress()
                     response.data?.body()?.data?.let {
-                        schoolCountList.add(SchoolCountData("Cwsn Enrollment",it.cwsn_enrollment))
-                        schoolCountList.add(SchoolCountData("School Having Cwsn",it.schoolHavingCWSN))
-                        schoolCountList.add(SchoolCountData("School Having Ramps",it.schoolHavingRamps))
-                        schoolCountList.add(SchoolCountData("School Having Cwsn Toilet",it.totalCwsnToilet))
+                        schoolCountList.add(SchoolCountData("Cwsn Enrollment",it.cwsn_enrollment, R.drawable.ic_visited_school_icon))
+                        schoolCountList.add(SchoolCountData("School Having Cwsn",it.schoolHavingCWSN,R.drawable.ic_school_icon))
+                        schoolCountList.add(SchoolCountData("School Having Ramps",it.schoolHavingRamps,R.drawable.ic_school_icon))
+                        schoolCountList.add(SchoolCountData("School Having Cwsn Toilet",it.totalCwsnToilet,R.drawable.ic_school_icon))
                         binding.rclySchoolDetails.apply {
                             layoutManager=LinearLayoutManager(requireActivity(),RecyclerView.VERTICAL, false)
                             adapter=SchoolAllDataAdapter(schoolCountList as ArrayList<SchoolCountData>)

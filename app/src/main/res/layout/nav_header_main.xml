@@ -27,25 +27,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawablePadding="5dp"
-            android:fontFamily="@font/poppins_medium"
+            android:fontFamily="@font/montserrat_medium"
             android:layout_marginTop="15dp"
             android:text="CWSN,Jharkhand"
             android:maxLines="2"
             android:gravity="center"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_18"
+            android:textSize="@dimen/text_size_15"
             />
 
         <TextView
             android:id="@+id/tv_subtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_regular"
+            android:fontFamily="@font/montserrat_medium"
             android:text="(Children With Special Needs)"
             android:gravity="center"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_16"
+            android:textSize="@dimen/text_size_13"
 
             />
     </LinearLayout>

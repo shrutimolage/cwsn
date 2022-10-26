@@ -2,9 +2,8 @@ package com.cwsn.mobileapp.view.fragment
 
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.View
-import androidx.lifecycle.Observer
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cwsn.mobileapp.databinding.FragmentMonitoringBinding

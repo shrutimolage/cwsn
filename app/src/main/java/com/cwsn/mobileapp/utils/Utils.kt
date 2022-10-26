@@ -58,11 +58,11 @@ object Utils
     fun generateDashboardItem():MutableList<DashboardItem>{
         val itemList:MutableList<DashboardItem> = mutableListOf()
 
-        itemList.add(DashboardItem("School",R.drawable.ic_school_dashboard))
+        itemList.add(DashboardItem("School",R.drawable.ic_school_icon))
         itemList.add(DashboardItem("Resource Room",R.drawable.ic_resource_room))
         itemList.add(DashboardItem("Monitoring",R.drawable.ic_monitoring_dashboard))
-        itemList.add(DashboardItem("School Visited",R.drawable.ic_school_dashboard))
-        itemList.add(DashboardItem("School Pending",R.drawable.ic_school_dashboard))
+        itemList.add(DashboardItem("School Visited",R.drawable.ic_visited_school_icon))
+        itemList.add(DashboardItem("School Pending",R.drawable.ic_pending_school_icon))
         return itemList
     }
 

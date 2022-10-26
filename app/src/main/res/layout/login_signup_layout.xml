@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="top|center"
         android:layout_marginTop="90dp"
-        android:fontFamily="@font/poppins_regular"
+        android:fontFamily="@font/montserrat_medium"
         android:gravity="center"
         android:text="@string/children_with_special_needs_label"
         android:textColor="@color/white"
@@ -48,11 +48,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="45dp"
-                    android:fontFamily="@font/montserrat_medium"
+                    android:fontFamily="@font/montserrat_semibold"
                     android:gravity="center"
                     android:text="@string/welcome_to_cwsn_label"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_18"
+                    android:textSize="@dimen/text_size_20"
                     android:textStyle="bold" />
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -73,7 +73,7 @@
                         android:layout_height="wrap_content"
                         android:drawableEnd="@drawable/ic_person_black"
                         android:drawablePadding="5dp"
-                        android:fontFamily="@font/poppins_regular"
+                        android:fontFamily="@font/montserrat_medium"
                         android:inputType="text"
                         android:maxLines="1"
                         android:textColor="@color/black"
@@ -102,6 +102,7 @@
                         android:drawablePadding="15dp"
                         android:inputType="textPassword"
                         android:maxLines="1"
+                        android:fontFamily="@font/montserrat_medium"
                         android:textColor="@color/colorGray"
                         android:textSize="@dimen/text_size_13" />
 
@@ -118,7 +119,7 @@
                         android:id="@+id/cb_savePwd"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins_regular"
+                        android:fontFamily="@font/montserrat_medium"
                         android:text="@string/remember_me_label"
                         android:textColor="@color/black"
                         android:textSize="@dimen/text_size_13" />
@@ -138,7 +139,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
-                        android:fontFamily="@font/poppins_regular"
+                        android:fontFamily="@font/montserrat_medium"
                         android:gravity="center"
                         android:padding="5dp"
                         android:text="@string/login_label"
@@ -153,7 +154,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|top"
                     android:layout_marginTop="20dp"
-                    android:fontFamily="@font/poppins_regular"
+                    android:fontFamily="@font/montserrat_medium"
                     android:gravity="right"
                     android:padding="5dp"
                     android:text="@string/forgot_password_click_here"

@@ -1,25 +1,23 @@
 package com.cwsn.mobileapp.view.fragment
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.View
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import com.cwsn.mobileapp.R
 import com.cwsn.mobileapp.adapter.home.DashboardItemAdapter
 import com.cwsn.mobileapp.adapter.home.ItemCountAdapter
 import com.cwsn.mobileapp.databinding.FragmentHomeBinding
 import com.cwsn.mobileapp.model.home.ClusterData
 import com.cwsn.mobileapp.model.home.ItemCount
-import com.cwsn.mobileapp.network.Status
 import com.cwsn.mobileapp.utils.AppPreferences
 import com.cwsn.mobileapp.utils.Utils
-import com.cwsn.mobileapp.utils.toast
 import com.cwsn.mobileapp.view.activity.UserProfileActivity
 import com.cwsn.mobileapp.view.base.BaseFragment
-import com.cwsn.mobileapp.view.callback.IHomeFragCallback
 import com.cwsn.mobileapp.view.callback.IDashboardListCallback
+import com.cwsn.mobileapp.view.callback.IHomeFragCallback
 import com.cwsn.mobileapp.viewmodel.home.HomeViewModel
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -65,6 +63,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         }
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.toolbar.navigationBar.setOnClickListener {
@@ -72,7 +71,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         }
         val dashboardItem = Utils.generateDashboardItem()
         binding.rclyDashboardItem.apply {
-            layoutManager=GridLayoutManager(requireActivity(),3)
+            layoutManager=GridLayoutManager(requireActivity(),2)
             adapter=DashboardItemAdapter(dashboardItem,object:IDashboardListCallback{
                 override fun onItemClicked(itemName: String) {
                     listener?.onNavigateOptionScreen(itemName)
@@ -86,6 +85,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             appPref.performAppLogout()
             listener?.gotoLoginScreen()
         }
+        binding.tvTeacherName.text="Welcome,${appPref.getUserLoginData()[appPref.KEY_TEACHER_NAME]}"
+
     }
 
 

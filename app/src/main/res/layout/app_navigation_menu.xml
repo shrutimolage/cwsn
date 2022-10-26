@@ -16,13 +16,13 @@
         android:orientation="vertical"
         android:layout_marginStart="1dp"
         android:layout_marginEnd="1dp"
-        android:layout_marginTop="210dp"
+        android:layout_marginTop="180dp"
         android:background="@drawable/only_top_curve_white_bg"
         android:layout_height="match_parent">
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rclv_sideDrawer"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="220dp"
             android:layout_marginTop="20dp"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
@@ -30,9 +30,23 @@
             android:scrollbarStyle="insideOverlay"
             android:scrollbarThumbVertical="@color/colorPrimaryDark"
             android:scrollbars="vertical"
-            tools:listitem="@layout/row_side_drawer_item" />
+            tools:listitem="@layout/row_side_drawer_item" >
+
+
+        </androidx.recyclerview.widget.RecyclerView>
+
 
     </LinearLayout>
 
-
+    <TextView
+        android:id="@+id/label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_size_13"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="Created By IT-SCIENT" />
 </FrameLayout>

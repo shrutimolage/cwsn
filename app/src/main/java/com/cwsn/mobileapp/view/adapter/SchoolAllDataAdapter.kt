@@ -13,6 +13,10 @@ class SchoolAllDataAdapter(private val datalist:ArrayList<SchoolCountData>):Recy
         fun bindItems(schoolDetails: SchoolCountData) {
             binding.tvFieldName.text=schoolDetails.itemName
             binding.tvFieldCount.text= schoolDetails.itemCount.toString()
+            schoolDetails.itemImage?.let {
+                binding.imgItemImage.setImageResource(it)
+            }
+
         }
     }
 
