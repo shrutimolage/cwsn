@@ -88,11 +88,8 @@ class TaskFormListDialog:DialogFragment()
                 adapter=TaskActivityAdapter(it,object:ITaskActivityCallback{
                     @SuppressLint("NotifyDataSetChanged")
                     override fun onTaskItemClicked(id: Int?) {
-                        selectedFormId=id
-                        it.forEachIndexed { index, taskData ->
-                            taskData.taskSelectedStatus = id==taskData.id
-                        }
-                        adapter?.notifyDataSetChanged()
+                        dismiss()
+                        callback?.gotoQuestionsScreen(id)
                     }
                 })
             }
@@ -101,7 +98,7 @@ class TaskFormListDialog:DialogFragment()
         binding.tvSubmit.setOnClickListener {
             selectedFormId?.let {
                 dismiss()
-                callback?.gotoQuestionsScreen(selectedFormId)
+                //callback?.gotoQuestionsScreen(selectedFormId)
             }
         }
 

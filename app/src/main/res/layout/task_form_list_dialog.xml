@@ -55,6 +55,7 @@
             android:fontFamily="@font/poppins_bold"
             android:gravity="center"
             android:padding="7dp"
+            android:visibility="gone"
             android:text="@string/submit_label"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_14"

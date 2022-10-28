@@ -16,12 +16,6 @@ ITaskActivityCallback):RecyclerView.Adapter<TaskActivityAdapter.ViewHolder>()
     {
         fun bindItems(tasklist: TaskData, listener: ITaskActivityCallback) {
             binding.tvFieldName.text=tasklist.formatName
-            if(tasklist.taskSelectedStatus){
-                binding.llTaskActivityList.setBackgroundResource(R.drawable.card_drop_shadow_selected_bg)
-            }
-            else{
-                binding.llTaskActivityList.setBackgroundResource(R.drawable.card_drop_shadow_white_bg)
-            }
             binding.llTaskActivityList.setOnClickListener {
                 listener.onTaskItemClicked(tasklist.id)
             }

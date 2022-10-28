@@ -6,7 +6,7 @@
     android:weightSum="1"
     android:layout_margin="3dp"
     android:id="@+id/ll_taskActivityList"
-    android:background="@drawable/card_drop_shadow_white_bg"
+    android:background="@drawable/task_list_item_selector"
     android:layout_height="wrap_content">
 
 
