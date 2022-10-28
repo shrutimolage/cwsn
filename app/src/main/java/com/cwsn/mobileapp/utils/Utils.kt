@@ -14,6 +14,7 @@ Created by  on 16,June,2022
  **/
 object Utils
 {
+    val SCHOOLNAME: String="school_name"
     val FORMID: String="form_id"
     val SCHOOL_ADDRS: String="school address"
     val SCHOOL_NAME: String="school name"

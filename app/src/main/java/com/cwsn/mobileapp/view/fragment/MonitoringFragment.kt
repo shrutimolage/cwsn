@@ -156,8 +156,12 @@ class MonitoringFragment :
                                 )
                                 adapter =
                                     SchoolListAdapter(schoolList, object : ISchoolListItemClick {
-                                        override fun onSchoolListItemClick(schoolId: Int?) {
-                                            showTaskFormListDialog(schoolId)
+                                        override fun onSchoolListItemClick(
+                                            schoolId: Int?,
+                                            name: String?,
+                                            address: String?)
+                                        {
+                                            showTaskFormListDialog(schoolId,name,address)
                                         }
                                     })
                             }
@@ -175,7 +179,7 @@ class MonitoringFragment :
             })
     }
 
-    private fun showTaskFormListDialog(schoolId: Int?) {
+    private fun showTaskFormListDialog(schoolId: Int?, name: String?, address: String?) {
         taskViewModel.getAllTaskActList().observe(viewLifecycleOwner, { response ->
             when (response.status) {
                 Status.LOADING -> {
@@ -188,7 +192,7 @@ class MonitoringFragment :
                         val taskListDialog = TaskFormListDialog.newInstance(taskActvtyList)
                         taskListDialog.registerTaskDialogCallback(object:ITaskDialogCallback{
                             override fun gotoQuestionsScreen(id: Int) {
-                                listener?.gotoSurveyQuestionScreen(id)
+                                listener?.gotoSurveyQuestionScreen(id,name,address)
                             }
                         })
                         taskListDialog.show(requireActivity().supportFragmentManager,TaskFormListDialog.TAG)

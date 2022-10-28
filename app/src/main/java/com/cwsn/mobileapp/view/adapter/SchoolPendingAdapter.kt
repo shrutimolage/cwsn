@@ -19,7 +19,7 @@ class SchoolPendingAdapter(private val schoolList:List<SchoolData>,
             binding.tvSchoolAddress.text=schoolList.address
             binding.tvTotalStudentCount.text="Total Student:- "+schoolList.studentCount.toString()
             binding.imgStartSurvey.setOnClickListener {
-                listener.onSchoolListItemClick(schoolList.id)
+                listener.onSchoolListItemClick(schoolList.id, schoolList.name, schoolList.address)
             }
         }
 

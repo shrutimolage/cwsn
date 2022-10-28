@@ -17,7 +17,9 @@ ITaskActivityCallback):RecyclerView.Adapter<TaskActivityAdapter.ViewHolder>()
         fun bindItems(tasklist: TaskData, listener: ITaskActivityCallback) {
             binding.tvFieldName.text=tasklist.formatName
             binding.llTaskActivityList.setOnClickListener {
-                listener.onTaskItemClicked(tasklist.id)
+                tasklist.id?.let {
+                    listener.onTaskItemClicked(it)
+                }
             }
         }
 

@@ -87,7 +87,7 @@ class TaskFormListDialog:DialogFragment()
                 layoutManager=LinearLayoutManager(requireActivity(),RecyclerView.VERTICAL,false)
                 adapter=TaskActivityAdapter(it,object:ITaskActivityCallback{
                     @SuppressLint("NotifyDataSetChanged")
-                    override fun onTaskItemClicked(id: Int?) {
+                    override fun onTaskItemClicked(id: Int) {
                         dismiss()
                         callback?.gotoQuestionsScreen(id)
                     }

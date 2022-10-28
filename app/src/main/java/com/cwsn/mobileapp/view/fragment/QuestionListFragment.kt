@@ -1,5 +1,6 @@
 package com.cwsn.mobileapp.view.fragment
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.os.Handler
@@ -37,6 +38,8 @@ private const val ARG_PARAM2 = "param2"
 @Suppress("MoveLambdaOutsideParentheses")
 class QuestionListFragment : BaseFragment<FragmentQuestionListBinding>(FragmentQuestionListBinding::inflate)
 {
+    private var schoolAddress: String?=null
+    private var schoolName: String?=null
     private var formId: Int?=0
     private var param1: String? = null
     private var param2: String? = null
@@ -71,9 +74,14 @@ class QuestionListFragment : BaseFragment<FragmentQuestionListBinding>(FragmentQ
         }
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         formId = arguments?.getInt(Utils.FORMID,0)
+        schoolName = arguments?.getString(Utils.SCHOOLNAME)
+        schoolAddress = arguments?.getString(Utils.SCHOOL_ADDRS)
+        binding.tvSchoolName.text="School Name - $schoolName"
+        binding.tvSchoolAddress.text="Address - $schoolAddress"
         binding.surveyToolbar.imgGoBack.setOnClickListener {
             listener?.onUserBackPressed()
         }

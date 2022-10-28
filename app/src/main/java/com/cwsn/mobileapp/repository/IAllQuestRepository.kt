@@ -24,6 +24,4 @@ interface IAllQuestRepository
     suspend fun deleteMCQOptions()
 
     suspend fun performAppLogout():Boolean
-
-    suspend fun getAllSurveyServerQuestion(): Response<SurveyQuestList>
 }

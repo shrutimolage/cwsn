@@ -3,21 +3,17 @@ package com.cwsn.mobileapp.view.fragment
 import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.cwsn.mobileapp.R
 import com.cwsn.mobileapp.databinding.FragmentSchoolPendingBinding
 import com.cwsn.mobileapp.network.Status
 import com.cwsn.mobileapp.view.adapter.SchoolPendingAdapter
 import com.cwsn.mobileapp.view.base.BaseFragment
 import com.cwsn.mobileapp.view.callback.ISchoolListItemClick
 import com.cwsn.mobileapp.view.callback.ISchoolPendingFragCallback
-import com.cwsn.mobileapp.view.callback.ISchoolVisitedFragCallback
 import com.cwsn.mobileapp.viewmodel.home.HomeViewModel
 import org.koin.android.ext.android.inject
 import java.lang.Exception
@@ -86,7 +82,11 @@ class SchoolPendingFrag : BaseFragment<FragmentSchoolPendingBinding>(FragmentSch
                         binding.rclySchoolpending.apply {
                             layoutManager=LinearLayoutManager(requireActivity(),RecyclerView.VERTICAL,false)
                             adapter=SchoolPendingAdapter(it,object: ISchoolListItemClick{
-                                override fun onSchoolListItemClick(schoolId: Int?) {
+                                override fun onSchoolListItemClick(
+                                    schoolId: Int?,
+                                    name: String?,
+                                    address: String?
+                                ) {
                                     listener?.gotoQuestionListScreen()
                                 }
                             })

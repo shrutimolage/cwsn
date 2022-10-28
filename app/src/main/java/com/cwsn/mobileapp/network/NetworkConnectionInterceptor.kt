@@ -7,11 +7,11 @@ import android.os.Build
 import android.provider.Settings
 import com.cwsn.mobileapp.utils.Utils
 import okhttp3.Interceptor
-import okhttp3.Request
 import okhttp3.Response
 import okio.GzipSource
 import java.io.IOException
 import java.nio.charset.Charset
+
 
 class NetworkConnectionInterceptor(context: Context):Interceptor
 {
@@ -67,19 +67,23 @@ class NetworkConnectionInterceptor(context: Context):Interceptor
         var message = ""
         //check airplane mode
         if (isAirplaneMode(applicationContext)) {
-            message = "Make sure you have an active data connection"
+            message = "Make sure you have an active network connection"
         }
         if (!isInternetAvailable(applicationContext)) {
-            message = "Make sure you have an active data connection"
+            message = "Make sure you have an active network connection"
         }
         if (isAirplaneMode(applicationContext) && !isInternetAvailable(applicationContext))//airplane mode on but not internet
         {
-            message = "Make sure you have an active data connection"
+            message = "Make sure you have an active network connection"
+        }
+        if(!isNetworkOnline1(applicationContext)&&!isNetworkOnline2()){
+            message = "Make sure you have an active network connection"
         }
         if (isAirplaneMode(applicationContext) && isInternetAvailable(applicationContext))//airplane mode on and wifi also on
         {
             message = ""
         }
+
         return message
 
     }
@@ -111,6 +115,39 @@ class NetworkConnectionInterceptor(context: Context):Interceptor
                 }
             }
             return result
+        }
+
+        fun isNetworkOnline1(context: Context):Boolean{
+            var isOnline = false
+            try {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    val manager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+                    val capabilities = manager.getNetworkCapabilities(manager.activeNetwork)
+                    isOnline = capabilities != null && capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
+                }
+            }
+            catch (e:Exception) {
+                e.printStackTrace()
+                isOnline=false
+            }
+            return isOnline
+        }
+
+        fun isNetworkOnline2():Boolean{
+            var isOnline = false
+            try {
+                val runtime = Runtime.getRuntime()
+                val process = runtime.exec("ping -c 1 8.8.8.8")
+                val waitFor = process.waitFor()
+                isOnline = waitFor == 0
+            }
+            catch (ex:IOException){
+                ex.printStackTrace()
+            }
+            catch (e:InterruptedException) {
+                e.printStackTrace()
+            }
+            return isOnline
         }
 
         @Suppress("DEPRECATION")

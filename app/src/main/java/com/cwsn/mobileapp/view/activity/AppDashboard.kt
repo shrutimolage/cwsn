@@ -317,9 +317,11 @@ ISchoolListCallback,IResourceRoomCallback, IMonitoringFragCallback,
         navController.navigateSafe(R.id.action_homeFragment_to_resourceRoomFrag,null,null,null)
     }
 
-    override fun gotoSurveyQuestionScreen(id: Int) {
+    override fun gotoSurveyQuestionScreen(id: Int, name: String?, address: String?) {
         val bundle= Bundle()
         bundle.putInt(Utils.FORMID,id)
+        bundle.putString(Utils.SCHOOLNAME,name)
+        bundle.putString(Utils.SCHOOL_ADDRS,address)
         navController.navigateSafe(R.id.action_taskActivityFragment_to_questionListFragment,bundle,null,null)
     }
 
