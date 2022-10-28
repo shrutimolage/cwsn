@@ -6,7 +6,9 @@ import com.cwsn.mobileapp.model.location.LocationLatLng
 import com.cwsn.mobileapp.model.login.LoginInput
 import com.cwsn.mobileapp.model.login.LoginModel
 import com.cwsn.mobileapp.model.profile.UserProfile
+import com.cwsn.mobileapp.model.questions.QuestListInput
 import com.cwsn.mobileapp.model.questions.Questions
+import com.cwsn.mobileapp.model.questions.SurveyQuestList
 import com.cwsn.mobileapp.model.school.PendingSchoolResp
 import com.cwsn.mobileapp.model.school.SchoolList
 import com.cwsn.mobileapp.model.school.SchoolListInput
@@ -39,8 +41,8 @@ class ApiHelperImpl(private val apiService: APIService) : ApiHelper
         return apiService.getSchoolClusterWise(input)
     }
 
-    override suspend fun getAllSurveyServerQuestion(): Response<Questions> {
-        return apiService.getAllSurveyServerQuestion()
+    override suspend fun getAllSurveyServerQuestion(input: QuestListInput): Response<SurveyQuestList> {
+        return apiService.getAllSurveyServerQuestion(input)
     }
 
     override suspend fun getGoogleLocLatLng(apiUrl: String): Response<LocationLatLng> {

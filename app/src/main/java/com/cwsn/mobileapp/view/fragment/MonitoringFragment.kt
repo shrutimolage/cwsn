@@ -187,8 +187,8 @@ class MonitoringFragment :
                         val taskActvtyList = Gson().toJson(activityList)
                         val taskListDialog = TaskFormListDialog.newInstance(taskActvtyList)
                         taskListDialog.registerTaskDialogCallback(object:ITaskDialogCallback{
-                            override fun gotoQuestionsScreen(id: Int?) {
-                                listener?.gotoSurveyQuestionScreen()
+                            override fun gotoQuestionsScreen(id: Int) {
+                                listener?.gotoSurveyQuestionScreen(id)
                             }
                         })
                         taskListDialog.show(requireActivity().supportFragmentManager,TaskFormListDialog.TAG)

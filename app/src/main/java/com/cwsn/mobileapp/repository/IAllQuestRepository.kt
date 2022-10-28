@@ -3,6 +3,7 @@ package com.cwsn.mobileapp.repository
 import com.cwsn.mobileapp.local.table.AllQuestion
 import com.cwsn.mobileapp.local.table.MCQOptions
 import com.cwsn.mobileapp.model.questions.Questions
+import com.cwsn.mobileapp.model.questions.SurveyQuestList
 import retrofit2.Response
 
 /**
@@ -24,5 +25,5 @@ interface IAllQuestRepository
 
     suspend fun performAppLogout():Boolean
 
-    suspend fun getAllSurveyServerQuestion(): Response<Questions>
+    suspend fun getAllSurveyServerQuestion(): Response<SurveyQuestList>
 }

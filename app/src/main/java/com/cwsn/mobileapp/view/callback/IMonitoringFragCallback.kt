@@ -5,7 +5,7 @@ interface IMonitoringFragCallback:IAppBaseCallback
     fun gotoTaskActivityScreen(name: String?) {
 
     }
-    fun gotoSurveyQuestionScreen() {
+    fun gotoSurveyQuestionScreen(id: Int) {
 
     }
 }

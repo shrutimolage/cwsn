@@ -5,7 +5,9 @@ import com.cwsn.mobileapp.model.home.DashboardCount
 import com.cwsn.mobileapp.model.location.LocationLatLng
 import com.cwsn.mobileapp.model.login.LoginModel
 import com.cwsn.mobileapp.model.profile.UserProfile
+import com.cwsn.mobileapp.model.questions.QuestListInput
 import com.cwsn.mobileapp.model.questions.Questions
+import com.cwsn.mobileapp.model.questions.SurveyQuestList
 import com.cwsn.mobileapp.model.school.PendingSchoolResp
 import com.cwsn.mobileapp.model.school.SchoolList
 import com.cwsn.mobileapp.model.school.SchoolListInput
@@ -30,7 +32,7 @@ interface ApiHelper
 
     suspend fun getSchoolClusterWise(input: SchoolListInput):Response<SchoolList>
 
-    suspend fun getAllSurveyServerQuestion():Response<Questions>
+    suspend fun getAllSurveyServerQuestion(input: QuestListInput):Response<SurveyQuestList>
 
     suspend fun getGoogleLocLatLng(apiUrl: String):Response<LocationLatLng>
     suspend fun getAllTaskActivityList():Response<AllTaskList>

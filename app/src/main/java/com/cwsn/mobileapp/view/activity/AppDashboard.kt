@@ -11,7 +11,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.GravityCompat
-import androidx.lifecycle.Observer
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -30,7 +29,6 @@ import com.cwsn.mobileapp.view.adapter.SlidePanelAdapter
 import com.cwsn.mobileapp.view.base.BaseActivity
 import com.cwsn.mobileapp.view.callback.*
 import com.cwsn.mobileapp.view.service.GPSTracker
-import com.cwsn.mobileapp.viewmodel.home.HomeViewModel
 import com.cwsn.mobileapp.viewmodel.localdb.DbViewModel
 import com.cwsn.mobileapp.viewmodel.shared.SharedViewModel
 import com.gun0912.tedpermission.PermissionListener
@@ -132,30 +130,6 @@ ISchoolListCallback,IResourceRoomCallback, IMonitoringFragCallback,
     private fun gotoUserProfileScreen() {
         val profileIntent = Intent(getContext(), UserProfileActivity::class.java)
         startActivity(profileIntent)
-    }
-
-    override fun gotoSchoolSurvey(schoolId: Int?, name: String?, address: String?) {
-        dbViewModel.getAllSurveyQuestions(schoolId).observe(this, { response->
-            when(response.status){
-                Status.SUCCESS->{
-                    hideProgressDialog()
-                    val surveyIntent=Intent(getContext(),SurveyStartActivity::class.java)
-                    surveyIntent.putExtra(Utils.SCHOOL_ID,schoolId)
-                    surveyIntent.putExtra(Utils.SCHOOL_NAME,name)
-                    surveyIntent.putExtra(Utils.SCHOOL_ADDRS,address)
-                    startActivity(surveyIntent)
-                }
-                Status.ERROR->{
-                    hideProgressDialog()
-                    response.message?.let{
-                        toast(it)
-                    }
-                }
-                Status.LOADING->{
-                    showProgressDialog()
-                }
-            }
-        })
     }
 
     override fun onActResume() {
@@ -343,8 +317,10 @@ ISchoolListCallback,IResourceRoomCallback, IMonitoringFragCallback,
         navController.navigateSafe(R.id.action_homeFragment_to_resourceRoomFrag,null,null,null)
     }
 
-    override fun gotoSurveyQuestionScreen() {
-        navController.navigateSafe(R.id.action_taskActivityFragment_to_questionListFragment,null,null,null)
+    override fun gotoSurveyQuestionScreen(id: Int) {
+        val bundle= Bundle()
+        bundle.putInt(Utils.FORMID,id)
+        navController.navigateSafe(R.id.action_taskActivityFragment_to_questionListFragment,bundle,null,null)
     }
 
     override fun gotoQuestionListScreen() {

@@ -14,7 +14,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cwsn.mobileapp.R
 import com.cwsn.mobileapp.databinding.FragmentQuestionListBinding
+import com.cwsn.mobileapp.model.questions.QuestListInput
 import com.cwsn.mobileapp.network.Status
+import com.cwsn.mobileapp.utils.Utils
 import com.cwsn.mobileapp.view.adapter.QuestionListAdapter
 import com.cwsn.mobileapp.view.base.BaseFragment
 import com.cwsn.mobileapp.view.callback.IQuestionListCallback
@@ -35,6 +37,7 @@ private const val ARG_PARAM2 = "param2"
 @Suppress("MoveLambdaOutsideParentheses")
 class QuestionListFragment : BaseFragment<FragmentQuestionListBinding>(FragmentQuestionListBinding::inflate)
 {
+    private var formId: Int?=0
     private var param1: String? = null
     private var param2: String? = null
     private val viewModel by inject<SurveyViewModel>()
@@ -70,6 +73,7 @@ class QuestionListFragment : BaseFragment<FragmentQuestionListBinding>(FragmentQ
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        formId = arguments?.getInt(Utils.FORMID,0)
         binding.surveyToolbar.imgGoBack.setOnClickListener {
             listener?.onUserBackPressed()
         }
@@ -84,24 +88,26 @@ class QuestionListFragment : BaseFragment<FragmentQuestionListBinding>(FragmentQ
 
     override fun onResume() {
         super.onResume()
-        viewModel.getAllQuestionData(requireActivity(),R.raw.questions)
-            .observe(viewLifecycleOwner, { response->
+        viewModel.getAllQuestionByFormId(QuestListInput(formId)).observe(viewLifecycleOwner,
+            {response->
                 when(response.status){
                     Status.LOADING->{
                         listener?.showProgress()
                     }
                     Status.SUCCESS->{
                         listener?.hideProgress()
-                        response.data?.questionist?.let {
+                        response.data?.body()?.data?.let {
                             binding.rclyAllQuestion.apply {
                                 layoutManager=LinearLayoutManager(requireActivity(),RecyclerView.VERTICAL,false)
                                 adapter=QuestionListAdapter(it)
-
                             }
                         }
                     }
                     Status.ERROR->{
                         listener?.hideProgress()
+                        response.message?.let {
+                            showAppAlert(requireActivity(),"Alert",it,null)
+                        }
                     }
                 }
             })

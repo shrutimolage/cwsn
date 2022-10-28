@@ -41,35 +41,6 @@ class DbViewModel(private val questRepository: IAllQuestRepository):ViewModel()
         }
     }
 
-    fun getAllSurveyQuestions(schoolId: Int?) = liveData(Dispatchers.IO){
-        emit(Resource.loading(data = null))
-        try{
-            questRepository.deleteSurveyQuestions()
-            questRepository.deleteMCQOptions()
-            val allSurveyServerQuestion = questRepository.getAllSurveyServerQuestion()
-            if(allSurveyServerQuestion.isSuccessful){
-                allSurveyServerQuestion.body()?.data?.let { surveyQuest->
-                    if(surveyQuest.isNotEmpty()){
-                        val allQuestions=generateQuestions(surveyQuest,schoolId)
-                        val allMCQOptions = generateMCQOptions(surveyQuest)
-                        questRepository.saveAllQuestion(allQuestions)
-                        questRepository.saveAllMCQOptions(allMCQOptions)
-                        emit(Resource.success(data = allSurveyServerQuestion, message = "Success"))
-                    }
-                    else{
-                        emit(Resource.error(data = null, message = "No survey question found"))
-                    }
-                }
-            }else{
-                emit(Resource.error(data = null, message = "Server Error ${allSurveyServerQuestion.code()}"))
-            }
-        }
-        catch (ex:Exception){
-            ex.printStackTrace()
-            emit(Resource.error(data = null, message = "API Error while getting questions"))
-        }
-    }
-
     private fun generateMCQOptions(surveyQuest: List<SurveyQuestion>) :List<MCQOptions>{
         var mcqOptions:MutableList<MCQOptions> = mutableListOf()
         for(surveyQuest in surveyQuest){

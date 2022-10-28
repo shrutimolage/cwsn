@@ -4,6 +4,7 @@ import com.cwsn.mobileapp.local.dao.QuestionDao
 import com.cwsn.mobileapp.local.table.AllQuestion
 import com.cwsn.mobileapp.local.table.MCQOptions
 import com.cwsn.mobileapp.model.questions.Questions
+import com.cwsn.mobileapp.model.questions.SurveyQuestList
 import com.cwsn.mobileapp.network.ApiHelper
 import com.cwsn.mobileapp.repository.IAllQuestRepository
 import com.cwsn.mobileapp.utils.AppPreferences
@@ -43,7 +44,7 @@ class AllQuestRepository(private val questDao: QuestionDao,private val appPref:A
         return true
     }
 
-    override suspend fun getAllSurveyServerQuestion(): Response<Questions> {
+    override suspend fun getAllSurveyServerQuestion(): Response<SurveyQuestList> {
         return apiHelper.getAllSurveyServerQuestion()
     }
 

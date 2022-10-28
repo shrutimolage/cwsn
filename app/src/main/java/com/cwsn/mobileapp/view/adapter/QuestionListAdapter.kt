@@ -6,14 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.cwsn.mobileapp.databinding.RowSchoolSurveySaveBinding
+import com.cwsn.mobileapp.model.questions.QuestionData
 import com.cwsn.mobileapp.model.questions.Questionist
 
-class QuestionListAdapter(private val datalist:List<Questionist>):RecyclerView.Adapter<QuestionListAdapter.ViewHolder>()
+class QuestionListAdapter(private val datalist:List<QuestionData>):RecyclerView.Adapter<QuestionListAdapter.ViewHolder>()
 {
     inner class ViewHolder(private val binding:RowSchoolSurveySaveBinding) : RecyclerView.ViewHolder(
         binding.root){
         @SuppressLint("SetTextI18n")
-        fun bindItems(questionist: Questionist, srlNum: Int) {
+        fun bindItems(questionist: QuestionData, srlNum: Int) {
             when(questionist.type){
                 "multi_file"->{
                     binding.llMcqQuestion.visibility= View.GONE

@@ -6,7 +6,9 @@ import com.cwsn.mobileapp.model.location.LocationLatLng
 import com.cwsn.mobileapp.model.login.LoginInput
 import com.cwsn.mobileapp.model.login.LoginModel
 import com.cwsn.mobileapp.model.profile.UserProfile
+import com.cwsn.mobileapp.model.questions.QuestListInput
 import com.cwsn.mobileapp.model.questions.Questions
+import com.cwsn.mobileapp.model.questions.SurveyQuestList
 import com.cwsn.mobileapp.model.school.PendingSchoolResp
 import com.cwsn.mobileapp.model.school.SchoolList
 import com.cwsn.mobileapp.model.school.SchoolListInput
@@ -35,8 +37,8 @@ interface APIService
     @POST("api/cluster_wise_school")
     suspend fun getSchoolClusterWise(@Body input:SchoolListInput):Response<SchoolList>
 
-    @GET("api/question_list")
-    suspend fun getAllSurveyServerQuestion():Response<Questions>
+    @POST("api/question_list")
+    suspend fun getAllSurveyServerQuestion(@Body input:QuestListInput):Response<SurveyQuestList>
 
     @GET("api/FormListMonitoring")
     suspend fun getAllTaskActivityList():Response<AllTaskList>
@@ -49,6 +51,8 @@ interface APIService
 
     @GET
     suspend fun getGoogleLocLatLng(@Url apiUrl: String):Response<LocationLatLng>
+
+
 
     companion object{
         const val LOCATION_API="api/geocode/json?"
