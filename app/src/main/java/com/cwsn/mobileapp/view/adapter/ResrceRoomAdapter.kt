@@ -16,7 +16,7 @@ private val listener:IResRoomListCallback) :RecyclerView.Adapter<ResrceRoomAdapt
             binding.tvFieldName.text=resRoomDetails.itemName
             binding.tvFieldCount.text=resRoomDetails.itemCount.toString()
             binding.llResRoomListItem.setOnClickListener {
-                listener.onItemClick(resRoomDetails.itemName!!,resRoomDetails.itemCount!!)
+                listener.onItemClick(resRoomDetails.providedLabel!!,resRoomDetails.itemCount!!)
             }
         }
 

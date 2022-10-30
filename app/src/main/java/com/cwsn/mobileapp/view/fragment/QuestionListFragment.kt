@@ -6,22 +6,20 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.cwsn.mobileapp.R
 import com.cwsn.mobileapp.databinding.FragmentQuestionListBinding
 import com.cwsn.mobileapp.model.questions.QuestListInput
+import com.cwsn.mobileapp.model.questions.QuestionData
 import com.cwsn.mobileapp.network.Status
+import com.cwsn.mobileapp.utils.LoggerUtils
 import com.cwsn.mobileapp.utils.Utils
 import com.cwsn.mobileapp.view.adapter.QuestionListAdapter
 import com.cwsn.mobileapp.view.base.BaseFragment
+import com.cwsn.mobileapp.view.callback.IQuestListInterface
 import com.cwsn.mobileapp.view.callback.IQuestionListCallback
-import com.cwsn.mobileapp.view.callback.IResourceRoomCallback
 import com.cwsn.mobileapp.viewmodel.survey.SurveyViewModel
 import org.koin.android.ext.android.inject
 import java.lang.Exception
@@ -38,6 +36,7 @@ private const val ARG_PARAM2 = "param2"
 @Suppress("MoveLambdaOutsideParentheses")
 class QuestionListFragment : BaseFragment<FragmentQuestionListBinding>(FragmentQuestionListBinding::inflate)
 {
+    private lateinit var questAdapter: QuestionListAdapter
     private var schoolAddress: String?=null
     private var schoolName: String?=null
     private var formId: Int?=0
@@ -45,6 +44,7 @@ class QuestionListFragment : BaseFragment<FragmentQuestionListBinding>(FragmentQ
     private var param2: String? = null
     private val viewModel by inject<SurveyViewModel>()
     private var listener: IQuestionListCallback?=null
+    private var updateQuestionList:MutableList<QuestionData> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -86,11 +86,9 @@ class QuestionListFragment : BaseFragment<FragmentQuestionListBinding>(FragmentQ
             listener?.onUserBackPressed()
         }
         binding.txtSubmitAnswer.setOnClickListener {
-            listener?.showProgress()
-            Handler(Looper.getMainLooper()).postDelayed({
-                listener?.hideProgress()
-                listener?.gotoHomeScreen()
-            },1000)
+            updateQuestionList.forEachIndexed { index, questionData ->
+                LoggerUtils.error("TAG", questionData.userTextAnswer)
+            }
         }
     }
 
@@ -105,9 +103,31 @@ class QuestionListFragment : BaseFragment<FragmentQuestionListBinding>(FragmentQ
                     Status.SUCCESS->{
                         listener?.hideProgress()
                         response.data?.body()?.data?.let {
+                            updateQuestionList.addAll(it)
                             binding.rclyAllQuestion.apply {
                                 layoutManager=LinearLayoutManager(requireActivity(),RecyclerView.VERTICAL,false)
-                                adapter=QuestionListAdapter(it)
+                                questAdapter=QuestionListAdapter(updateQuestionList,object:IQuestListInterface{
+                                    override fun refreshListAtPos(position: Int) {
+                                        questAdapter.notifyItemChanged(position)
+                                    }
+
+                                    override fun refreshList() {
+                                        Handler(Looper.getMainLooper()).postDelayed({
+                                            questAdapter.notifyDataSetChanged()
+                                        },1000)
+
+                                    }
+
+                                    override fun updateUserTextAnswer(
+                                        userTextAnswer: String,
+                                        position: Int
+                                    ) {
+                                        LoggerUtils.error(" user text answer", userTextAnswer)
+                                        val questionData = updateQuestionList[position]
+                                        questionData.userTextAnswer=userTextAnswer
+                                    }
+                                })
+                                adapter=questAdapter
                             }
                         }
                     }

@@ -75,7 +75,7 @@ class SchoolDetailsFragment : BaseFragment<FragmentSchoolDetailsBinding>(Fragmen
                     response.data?.body()?.data?.let {
                         schoolCountList.add(SchoolCountData("Cwsn Enrollment",it.cwsn_enrollment, R.drawable.ic_visited_school_icon))
                         schoolCountList.add(SchoolCountData("School Having Cwsn",it.schoolHavingCWSN,R.drawable.ic_school_icon))
-                        schoolCountList.add(SchoolCountData("School Having Ramps",it.schoolHavingRamps,R.drawable.ic_school_icon))
+                        schoolCountList.add(SchoolCountData("School Having Ramps",it.schoolHavingRamps,R.drawable.school_having_ramps_icon))
                         schoolCountList.add(SchoolCountData("School Having Cwsn Toilet",it.totalCwsnToilet,R.drawable.ic_school_icon))
                         binding.rclySchoolDetails.apply {
                             layoutManager=LinearLayoutManager(requireActivity(),RecyclerView.VERTICAL, false)

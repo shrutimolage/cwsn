@@ -33,7 +33,7 @@ object Utils
         itemList.add(SlideModel(false,"Home", R.drawable.home_icon_new))
         itemList.add(SlideModel(false,"Resource Room",R.drawable.ic_resource_room_slide))
         itemList.add(SlideModel(false,"Monitoring",R.drawable.ic_monitoring_slide))
-        itemList.add(SlideModel(false,"Logout",R.drawable.ic_logout_icon))
+        itemList.add(SlideModel(false,"Logout",R.drawable.ic_logout_blue_icon))
         return itemList
     }
 
@@ -61,8 +61,8 @@ object Utils
         val itemList:MutableList<DashboardItem> = mutableListOf()
 
         itemList.add(DashboardItem("School",R.drawable.ic_school_icon))
-        itemList.add(DashboardItem("Resource Room",R.drawable.ic_resource_room))
-        itemList.add(DashboardItem("Monitoring",R.drawable.ic_monitoring_dashboard))
+        itemList.add(DashboardItem("Resource Room",R.drawable.resource_room_icon))
+        itemList.add(DashboardItem("Monitoring",R.drawable.monitoring_icon))
         itemList.add(DashboardItem("School Visited",R.drawable.ic_visited_school_icon))
         itemList.add(DashboardItem("School Pending",R.drawable.ic_pending_school_icon))
         return itemList

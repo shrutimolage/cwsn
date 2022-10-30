@@ -6,4 +6,8 @@ interface IQuestionListCallback:IAppBaseCallback
 
     }
 
+    fun refreshListAtPos(position: Int) {
+
+    }
+
 }

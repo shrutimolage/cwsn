@@ -30,4 +30,6 @@ data class QuestionData(@SerializedName("id"                    ) var id        
                         @SerializedName("updated_by"            ) var updatedBy          : String?           = null,
                         @SerializedName("is_deleted"            ) var isDeleted          : Int?              = null,
                         @SerializedName("deleted_at"            ) var deletedAt          : String?           = null,
-                        @SerializedName("deleted_by"            ) var deletedBy          : String?           = null)
+                        @SerializedName("deleted_by"            ) var deletedBy          : String?           = null,
+var isEditing:Boolean=false,
+var userTextAnswer:String="")

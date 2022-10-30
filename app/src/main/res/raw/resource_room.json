@@ -2,10 +2,12 @@
   "list": [
   {
     "name":"No. of CWSN visited for therapy",
+    "provided_label": "Total therapy provided",
 	"count":30
   },
   {
 	"name":"Education Support",
+    "provided_label": "Total education support provided",
 	"count":20
   }
   ]

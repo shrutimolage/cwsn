@@ -179,7 +179,6 @@ ISchoolListCallback,IResourceRoomCallback, IMonitoringFragCallback,
 
     private fun checkNFetchLocation() {
         if (gpsEnabled) {
-            showProgressDialog()
             startLocUpdate()
             if (TedPermissionUtil.isGranted(
                     Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -235,7 +234,6 @@ ISchoolListCallback,IResourceRoomCallback, IMonitoringFragCallback,
                 val currLat = intent.getDoubleExtra("Latitude", 0.0)
                 val currLong = intent.getDoubleExtra("Longitude", 0.0)
                 if (currLat != 0.0 && currLong != 0.0) {
-                    hideProgressDialog()
                     LoggerUtils.error("LOCATION","currLat $currLat , currLong $currLong")
                     appPref.updateLocationDetails(currLat,currLong)
                     getLocationAddress(currLat,currLong)
@@ -293,6 +291,10 @@ ISchoolListCallback,IResourceRoomCallback, IMonitoringFragCallback,
             }
             "Monitoring"->{
                 gotoMonitoring()
+            }
+            "Logout"->{
+                appPref.performAppLogout()
+                gotoLoginScreen()
             }
         }
     }
