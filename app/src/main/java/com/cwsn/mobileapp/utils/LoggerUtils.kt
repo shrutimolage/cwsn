@@ -8,6 +8,7 @@ Created by  on 20,June,2022
 object LoggerUtils
 {
     var isLogEnabled = true
+
     const val SERVICE_LOG_TAG = "TestServiceLoG"
     const val APP_TAG = "TestProject"
 
