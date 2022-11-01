@@ -17,7 +17,7 @@
         android:layout_marginEnd="15dp"
         android:layout_marginTop="5dp"
         android:padding="10dp"
-        android:fontFamily="@font/poppins_semibold"
+        android:fontFamily="@font/montserrat_medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Task List" />
@@ -52,7 +52,7 @@
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/btn_submit_rect_blue"
-            android:fontFamily="@font/poppins_bold"
+            android:fontFamily="@font/montserrat_medium"
             android:gravity="center"
             android:padding="7dp"
             android:visibility="gone"
@@ -69,12 +69,12 @@
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/btn_submit_rect_red"
-            android:fontFamily="@font/poppins_bold"
+            android:fontFamily="@font/montserrat_semibold"
             android:gravity="center"
             android:padding="7dp"
             android:text="@string/cancel"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_size_14"
+            android:textSize="@dimen/text_size_13"
             />
 
     </LinearLayout>

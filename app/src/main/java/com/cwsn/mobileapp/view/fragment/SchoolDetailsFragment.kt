@@ -76,7 +76,7 @@ class SchoolDetailsFragment : BaseFragment<FragmentSchoolDetailsBinding>(Fragmen
                         schoolCountList.add(SchoolCountData("Cwsn Enrollment",it.cwsn_enrollment, R.drawable.ic_visited_school_icon))
                         schoolCountList.add(SchoolCountData("School Having Cwsn",it.schoolHavingCWSN,R.drawable.ic_school_icon))
                         schoolCountList.add(SchoolCountData("School Having Ramps",it.schoolHavingRamps,R.drawable.school_having_ramps_icon))
-                        schoolCountList.add(SchoolCountData("School Having Cwsn Toilet",it.totalCwsnToilet,R.drawable.ic_school_icon))
+                        schoolCountList.add(SchoolCountData("School Having Cwsn Toilet",it.totalCwsnToilet,R.drawable.ic_cwsn_school_toilet))
                         binding.rclySchoolDetails.apply {
                             layoutManager=LinearLayoutManager(requireActivity(),RecyclerView.VERTICAL, false)
                             adapter=SchoolAllDataAdapter(schoolCountList as ArrayList<SchoolCountData>)

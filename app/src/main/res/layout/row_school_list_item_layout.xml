@@ -7,13 +7,13 @@
     android:layout_margin="5dp"
     android:id="@+id/ll_resRoomListItem"
     android:background="@drawable/card_drop_shadow_white_bg"
-    android:layout_height="100dp">
+    android:layout_height="90dp">
 
 
     <ImageView
         android:id="@+id/img_itemImage"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="65dp"
         android:layout_weight="0.25"
         android:layout_gravity="center"
         android:layout_margin="5dp"
@@ -42,7 +42,7 @@
             android:text="Schools" />
         <TextView
             android:id="@+id/tv_fieldCount"
-            style="@style/BigSizeBlackAppTextView"
+            style="@style/NormalSizeBlackAppTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
