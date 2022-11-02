@@ -5,11 +5,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import com.cwsn.mobileapp.model.questions.QuestListInput
 import com.cwsn.mobileapp.model.questions.QuestionList
+import com.cwsn.mobileapp.model.survey.SurveyInput
+import com.cwsn.mobileapp.model.survey.SurveyResponse
 import com.cwsn.mobileapp.network.Resource
 import com.cwsn.mobileapp.repository.impl.SurveyRepository
 import com.cwsn.mobileapp.utils.Utils
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
+import retrofit2.Response
+import retrofit2.http.Body
 
 /**
 Created by  on 01,July,2022
@@ -68,6 +72,24 @@ class SurveyViewModel(private val repos:SurveyRepository):ViewModel()
             else{
                 emit(Resource.error(data = null, message = Utils.getHttpStatusDetails(
                     response.code(),response.errorBody()!!)))
+            }
+        }
+        catch (ex:Exception){
+            ex.printStackTrace()
+            emit(Resource.error(data = null, message = "${ex.message}"))
+        }
+    }
+
+    fun saveSurveyData(input:List<SurveyInput>) = liveData(Dispatchers.IO){
+        emit(Resource.loading(data = null))
+        try {
+            val response = repos.saveSurveyData(input)
+            if(response.isSuccessful){
+                emit(Resource.success(data = response, message = "Success"))
+            }
+            else{
+                emit(Resource.error(data = null, message = Utils
+                    .getHttpStatusDetails(response.code(),response.errorBody()!!)))
             }
         }
         catch (ex:Exception){

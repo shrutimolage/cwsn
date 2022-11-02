@@ -71,6 +71,7 @@ class AppPreferences(private val context: Context)
         editor?.putInt(KEY_TEACHER_ID,0)
         editor?.putString(KEY_TEACHER_NAME,"")
         editor?.putInt(KEY_BLOCK_ID,0)
+        editor?.putString(KEY_BLOCK_NAME,"")
         editor?.putBoolean(IS_USER_LOGIN,false)
         editor?.commit()
     }

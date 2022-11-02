@@ -13,6 +13,8 @@ import com.cwsn.mobileapp.model.school.PendingSchoolResp
 import com.cwsn.mobileapp.model.school.SchoolList
 import com.cwsn.mobileapp.model.school.SchoolListInput
 import com.cwsn.mobileapp.model.school.VisitedSchoolResp
+import com.cwsn.mobileapp.model.survey.SurveyInput
+import com.cwsn.mobileapp.model.survey.SurveyResponse
 import com.cwsn.mobileapp.model.task.AllTaskList
 import retrofit2.Response
 import retrofit2.http.*
@@ -52,7 +54,8 @@ interface APIService
     @GET
     suspend fun getGoogleLocLatLng(@Url apiUrl: String):Response<LocationLatLng>
 
-
+    @POST("api/school_survey")
+    suspend fun saveSurveyData(@Body input:List<SurveyInput>):Response<SurveyResponse>
 
     companion object{
         const val LOCATION_API="api/geocode/json?"

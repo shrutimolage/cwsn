@@ -13,6 +13,8 @@ import com.cwsn.mobileapp.model.school.PendingSchoolResp
 import com.cwsn.mobileapp.model.school.SchoolList
 import com.cwsn.mobileapp.model.school.SchoolListInput
 import com.cwsn.mobileapp.model.school.VisitedSchoolResp
+import com.cwsn.mobileapp.model.survey.SurveyInput
+import com.cwsn.mobileapp.model.survey.SurveyResponse
 import com.cwsn.mobileapp.model.task.AllTaskList
 import retrofit2.Response
 
@@ -59,6 +61,10 @@ class ApiHelperImpl(private val apiService: APIService) : ApiHelper
 
     override suspend fun getAllVisitedSchool(): Response<VisitedSchoolResp> {
         return apiService.getAllVisitedSchool()
+    }
+
+    override suspend fun saveSurveyData(input: List<SurveyInput>): Response<SurveyResponse> {
+        return apiService.saveSurveyData(input)
     }
 
 }

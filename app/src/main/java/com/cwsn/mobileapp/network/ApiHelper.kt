@@ -12,6 +12,8 @@ import com.cwsn.mobileapp.model.school.PendingSchoolResp
 import com.cwsn.mobileapp.model.school.SchoolList
 import com.cwsn.mobileapp.model.school.SchoolListInput
 import com.cwsn.mobileapp.model.school.VisitedSchoolResp
+import com.cwsn.mobileapp.model.survey.SurveyInput
+import com.cwsn.mobileapp.model.survey.SurveyResponse
 import com.cwsn.mobileapp.model.task.AllTaskList
 import retrofit2.Response
 import retrofit2.http.Body
@@ -38,4 +40,5 @@ interface ApiHelper
     suspend fun getAllTaskActivityList():Response<AllTaskList>
     suspend fun getAllPendingSchool():Response<PendingSchoolResp>
     suspend fun getAllVisitedSchool():Response<VisitedSchoolResp>
+    suspend fun saveSurveyData(input:List<SurveyInput>):Response<SurveyResponse>
 }
