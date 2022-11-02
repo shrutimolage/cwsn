@@ -13,7 +13,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cwsn.mobileapp.databinding.FragmentQuestionListBinding
 import com.cwsn.mobileapp.model.questions.QuestListInput
 import com.cwsn.mobileapp.model.questions.QuestionData
+import com.cwsn.mobileapp.model.survey.SurveyInput
 import com.cwsn.mobileapp.network.Status
+import com.cwsn.mobileapp.utils.AppPreferences
 import com.cwsn.mobileapp.utils.LoggerUtils
 import com.cwsn.mobileapp.utils.Utils
 import com.cwsn.mobileapp.view.adapter.QuestionListAdapter
@@ -36,6 +38,8 @@ private const val ARG_PARAM2 = "param2"
 @Suppress("MoveLambdaOutsideParentheses")
 class QuestionListFragment : BaseFragment<FragmentQuestionListBinding>(FragmentQuestionListBinding::inflate)
 {
+    private var userAddress: String?=null
+    private var teacherId: String?=null
     private lateinit var questAdapter: QuestionListAdapter
     private var schoolAddress: String?=null
     private var schoolName: String?=null
@@ -44,7 +48,9 @@ class QuestionListFragment : BaseFragment<FragmentQuestionListBinding>(FragmentQ
     private var param2: String? = null
     private val viewModel by inject<SurveyViewModel>()
     private var listener: IQuestionListCallback?=null
+    private val appPref by inject<AppPreferences>()
     private var updateQuestionList:MutableList<QuestionData> = mutableListOf()
+    private var surveyQuesAnsList:MutableList<SurveyInput> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,6 +83,9 @@ class QuestionListFragment : BaseFragment<FragmentQuestionListBinding>(FragmentQ
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        userAddress = appPref.getLocationAddress()
+        val userLoginData = appPref.getUserLoginData()
+        teacherId = userLoginData[appPref.KEY_TEACHER_ID]
         formId = arguments?.getInt(Utils.FORMID,0)
         schoolName = arguments?.getString(Utils.SCHOOLNAME)
         schoolAddress = arguments?.getString(Utils.SCHOOL_ADDRS)
@@ -88,7 +97,18 @@ class QuestionListFragment : BaseFragment<FragmentQuestionListBinding>(FragmentQ
         binding.txtSubmitAnswer.setOnClickListener {
             updateQuestionList.forEachIndexed { index, questionData ->
                 LoggerUtils.error("TAG", questionData.userTextAnswer)
+                val surveyInput =SurveyInput(questionData.id,
+                    questionData.schoolId?.toInt(),
+                teacherId?.toInt(),
+                    questionData.question,
+                    questionData.type,
+                    questionData.formatName,
+                    questionData.userTextAnswer,
+                questionData.formId,
+                    userAddress)
+                surveyQuesAnsList.add(surveyInput)
             }
+            LoggerUtils.error("QUEST LIST SIZE","${surveyQuesAnsList.size}")
         }
     }
 
