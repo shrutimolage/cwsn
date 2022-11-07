@@ -1,6 +1,7 @@
 package com.cwsn.mobileapp.view.callback
 
 import com.cwsn.mobileapp.model.questions.LocalSurveyQuestion
+import com.cwsn.mobileapp.model.questions.QuestionData
 
 interface IQuestListInterface
 {
@@ -9,11 +10,11 @@ interface IQuestListInterface
 
     }
 
-    fun updateUserTextAnswer(userTextAnswer: String, position: Int) {
+    fun refreshList() {
 
     }
 
-    fun refreshList() {
+    fun updateRadioOptionAnswer(questData: QuestionData,value:String){
 
     }
 }

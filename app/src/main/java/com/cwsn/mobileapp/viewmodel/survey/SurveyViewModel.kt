@@ -1,14 +1,17 @@
 package com.cwsn.mobileapp.viewmodel.survey
 
 import android.content.Context
+import android.view.View
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import com.cwsn.mobileapp.model.questions.QuestListInput
+import com.cwsn.mobileapp.model.questions.QuestionData
 import com.cwsn.mobileapp.model.questions.QuestionList
 import com.cwsn.mobileapp.model.survey.SurveyInput
 import com.cwsn.mobileapp.model.survey.SurveyResponse
 import com.cwsn.mobileapp.network.Resource
 import com.cwsn.mobileapp.repository.impl.SurveyRepository
+import com.cwsn.mobileapp.utils.LoggerUtils
 import com.cwsn.mobileapp.utils.Utils
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
@@ -20,6 +23,7 @@ Created by  on 01,July,2022
  **/
 class SurveyViewModel(private val repos:SurveyRepository):ViewModel()
 {
+
 
     fun getAllLocalDBQuestions() = liveData(Dispatchers.IO){
         emit(Resource.loading(data = null))
@@ -97,5 +101,8 @@ class SurveyViewModel(private val repos:SurveyRepository):ViewModel()
             emit(Resource.error(data = null, message = "${ex.message}"))
         }
     }
+
+
+
 
 }

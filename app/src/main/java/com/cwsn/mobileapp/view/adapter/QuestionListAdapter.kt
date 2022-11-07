@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.RadioGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.cwsn.mobileapp.R
 import com.cwsn.mobileapp.databinding.RowSchoolSurveySaveBinding
@@ -14,7 +15,8 @@ import com.cwsn.mobileapp.model.questions.QuestionData
 import com.cwsn.mobileapp.utils.LoggerUtils
 import com.cwsn.mobileapp.view.callback.IQuestListInterface
 
-class QuestionListAdapter(private var datalist:MutableList<QuestionData>, private val listener: IQuestListInterface):RecyclerView.Adapter<QuestionListAdapter.ViewHolder>()
+class QuestionListAdapter(private var datalist:MutableList<QuestionData>,
+                          private val listener: IQuestListInterface):RecyclerView.Adapter<QuestionListAdapter.ViewHolder>()
 {
     inner class ViewHolder(private val binding:RowSchoolSurveySaveBinding) : RecyclerView.ViewHolder(
         binding.root){
@@ -31,6 +33,7 @@ class QuestionListAdapter(private var datalist:MutableList<QuestionData>, privat
                     binding.llMcqQuestion.visibility= View.GONE
                     binding.llTextQuestion.visibility=View.GONE
                     binding.llFileUploadArea.visibility=View.VISIBLE
+                    binding.llRadioQuestion.visibility=View.VISIBLE
                     questionData.question?.let {
                         binding.tvFileQuestion.text=it
                         binding.tvFileQuestNum.text="(Q$srlNum)"
@@ -40,6 +43,7 @@ class QuestionListAdapter(private var datalist:MutableList<QuestionData>, privat
                     binding.llMcqQuestion.visibility= View.GONE
                     binding.llTextQuestion.visibility=View.GONE
                     binding.llFileUploadArea.visibility=View.VISIBLE
+                    binding.llRadioQuestion.visibility=View.VISIBLE
                     questionData.question?.let {
                         binding.tvFileQuestion.text=it
                         binding.tvFileQuestNum.text="(Q$srlNum)"
@@ -49,6 +53,7 @@ class QuestionListAdapter(private var datalist:MutableList<QuestionData>, privat
                     binding.llMcqQuestion.visibility= View.GONE
                     binding.llTextQuestion.visibility=View.VISIBLE
                     binding.llFileUploadArea.visibility=View.GONE
+                    binding.llRadioQuestion.visibility=View.GONE
                     questionData.question?.let {
                         binding.tvTextQuestion.text=it
                         binding.tvTextQuestNum.text="(Q$srlNum)"
@@ -58,10 +63,40 @@ class QuestionListAdapter(private var datalist:MutableList<QuestionData>, privat
                     binding.llMcqQuestion.visibility= View.VISIBLE
                     binding.llTextQuestion.visibility=View.GONE
                     binding.llFileUploadArea.visibility=View.GONE
+                    binding.llRadioQuestion.visibility=View.GONE
                     questionData.question?.let {
                         binding.tvMcqQuestion.text=it
                         binding.tvMcqQuestionNum.text="(Q$srlNum)"
                     }
+                }
+                "radio"->{
+                    binding.llMcqQuestion.visibility= View.GONE
+                    binding.llTextQuestion.visibility=View.GONE
+                    binding.llFileUploadArea.visibility=View.GONE
+                    binding.llRadioQuestion.visibility=View.VISIBLE
+                    questionData.question?.let {
+                       binding.tvRadioQuestionNum.text="(Q$srlNum)"
+                    }
+                    questionData.options.let { allOptions->
+                        binding.rbtnTrue.text = allOptions[0]
+                        binding.rbtnFalse.text = allOptions[1]
+                    }
+                    binding.rdgrpRadioOption.setOnCheckedChangeListener(object:RadioGroup.OnCheckedChangeListener{
+                        override fun onCheckedChanged(radioGroup: RadioGroup?, checkedId: Int) {
+                            when(checkedId){
+                                R.id.rbtn_true->{
+                                    LoggerUtils.error("TAG TRUE","${questionData.id}")
+                                    listener.updateRadioOptionAnswer(questionData,"true")
+                                }
+                                R.id.rbtn_false->{
+                                    LoggerUtils.error("TAG FALSE","${questionData.id}")
+                                    listener.updateRadioOptionAnswer(questionData,"false")
+                                }
+                            }
+
+                        }
+
+                    })
                 }
             }
         }

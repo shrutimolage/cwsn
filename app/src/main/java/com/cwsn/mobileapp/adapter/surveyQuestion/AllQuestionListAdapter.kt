@@ -24,7 +24,7 @@ class AllQuestionListAdapter(private val _datalist:List<LocalSurveyQuestion>,pri
         ) {
             allQuestion.questionType?.let { questType->
                 if(questType == "radio" || questType == "mcq"){
-                    binding.imgAddSaveAnswer.visibility=View.GONE
+                    //binding.imgAddSaveAnswer.visibility=View.GONE
                     binding.llMcqQuestion.visibility=View.VISIBLE
                     binding.llTextQuestion.visibility=View.GONE
                     if(allQuestion.mcqOptionList==null){

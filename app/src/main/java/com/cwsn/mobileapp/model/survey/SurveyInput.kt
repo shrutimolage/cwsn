@@ -8,6 +8,6 @@ data class SurveyInput(@SerializedName("question_id"     ) var questionId     : 
                        @SerializedName("question_name"   ) var questionName   : String? = null,
                        @SerializedName("question_type"   ) var questionType   : String? = null,
                        @SerializedName("question_format" ) var questionFormat : String? = null,
-                       @SerializedName("user_answer"     ) var userAnswer     : Int?    = null,
+                       @SerializedName("user_answer"     ) var userAnswer     : String?    = null,
                        @SerializedName("form_id"         ) var formId         : Int?    = null,
                        @SerializedName("address"         ) var address        : String? = null)
