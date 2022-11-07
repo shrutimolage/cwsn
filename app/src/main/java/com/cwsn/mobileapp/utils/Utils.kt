@@ -38,7 +38,7 @@ object Utils
     }
 
     fun getHttpStatusDetails(code: Int, responseBody: ResponseBody):String{
-        var result =""
+        var result =" "
         when(code){
             400->{
                 val errorJson = Gson().fromJson(responseBody.string(), ApiError::class.java)
