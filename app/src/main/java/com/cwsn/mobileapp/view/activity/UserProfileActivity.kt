@@ -80,7 +80,7 @@ class UserProfileActivity : BaseActivity<ActivityUserProfileBinding>() {
                 Status.SUCCESS -> {
                     hideProgressDialog()
                     profileData.data?.body()?.user?.let {userData ->
-                        binding.tvTeacherName.text=userData.name
+                        binding.tvTeacherName.setText(userData.name)
                     }
                 }
                 Status.ERROR->{

@@ -66,6 +66,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.toolbar.toolbarTitle.text = "Dashboard"
         binding.toolbar.navigationBar.setOnClickListener {
             listener?.toggleAppTopBar()
         }
