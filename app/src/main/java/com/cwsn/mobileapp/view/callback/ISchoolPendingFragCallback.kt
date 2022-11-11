@@ -5,4 +5,8 @@ interface ISchoolPendingFragCallback:IAppBaseCallback {
     fun gotoQuestionListScreen() {
 
     }
+
+    fun gotoSurveyQuestionScreen(id: Int, name: String?, address: String?) {
+
+    }
 }

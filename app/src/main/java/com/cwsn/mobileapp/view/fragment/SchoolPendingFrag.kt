@@ -14,7 +14,11 @@ import com.cwsn.mobileapp.view.adapter.SchoolPendingAdapter
 import com.cwsn.mobileapp.view.base.BaseFragment
 import com.cwsn.mobileapp.view.callback.ISchoolListItemClick
 import com.cwsn.mobileapp.view.callback.ISchoolPendingFragCallback
+import com.cwsn.mobileapp.view.callback.ITaskDialogCallback
+import com.cwsn.mobileapp.view.dialog.TaskFormListDialog
 import com.cwsn.mobileapp.viewmodel.home.HomeViewModel
+import com.cwsn.mobileapp.viewmodel.task.TaskViewModel
+import com.google.gson.Gson
 import org.koin.android.ext.android.inject
 import java.lang.Exception
 
@@ -32,6 +36,7 @@ class SchoolPendingFrag : BaseFragment<FragmentSchoolPendingBinding>(FragmentSch
     private var param2: String? = null
     private var listener:ISchoolPendingFragCallback?=null
     private val homeViewModel by inject<HomeViewModel>()
+    private val taskViewModel by inject<TaskViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,7 +92,8 @@ class SchoolPendingFrag : BaseFragment<FragmentSchoolPendingBinding>(FragmentSch
                                     name: String?,
                                     address: String?
                                 ) {
-                                    listener?.gotoQuestionListScreen()
+                                    showTaskFormListDialog(schoolId,name,address)
+                                    //listener?.gotoQuestionListScreen()
                                 }
                             })
                         }
@@ -101,6 +107,36 @@ class SchoolPendingFrag : BaseFragment<FragmentSchoolPendingBinding>(FragmentSch
                 }
             }
         })
+    }
+
+    private fun showTaskFormListDialog(schoolId: Int?, name: String?, address: String?) {
+        taskViewModel.getAllTaskActList().observe(viewLifecycleOwner, Observer { response->
+            when (response.status) {
+                Status.LOADING -> {
+                    listener?.showProgress()
+                }
+                Status.SUCCESS -> {
+                    listener?.hideProgress()
+                    response.data?.body()?.let {activityList ->
+                        val taskActvtyList = Gson().toJson(activityList)
+                        val taskListDialog = TaskFormListDialog.newInstance(taskActvtyList)
+                        taskListDialog.registerTaskDialogCallback(object:ITaskDialogCallback{
+                            override fun gotoQuestionsScreen(id: Int) {
+                                listener?.gotoSurveyQuestionScreen(id,name,address)
+                            }
+                        })
+                        taskListDialog.show(requireActivity().supportFragmentManager,TaskFormListDialog.TAG)
+                    }
+                }
+                Status.ERROR -> {
+                    listener?.hideProgress()
+                    response.message?.let {
+                        showAppAlert(requireActivity(), "Alert", it, null)
+                    }
+                }
+            }
+        })
+
     }
 
     companion object {

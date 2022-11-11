@@ -71,7 +71,9 @@
         android:label="SchoolPendingFragment"
         android:name="com.cwsn.mobileapp.view.fragment.SchoolPendingFrag"
         tools:layout="@layout/fragment_school_pending">
-
+        <action
+            android:id="@+id/action_taskActivityFragment_to_questionListFragment"
+            app:destination="@id/questionListFragment" />
         <action
             android:id="@+id/action_schoolPendingFragment_to_questionListFragment"
             app:destination="@id/questionListFragment" />
