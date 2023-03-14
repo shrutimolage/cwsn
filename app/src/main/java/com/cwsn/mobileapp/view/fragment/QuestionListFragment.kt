@@ -86,11 +86,11 @@ class QuestionListFragment : BaseFragment<FragmentQuestionListBinding>(FragmentQ
         super.onViewCreated(view, savedInstanceState)
         teacherId = appPref.getUserLoginData()[appPref.KEY_TEACHER_ID]
         locationAddress = appPref.getLocationAddress()
-        formId = arguments?.getInt(Utils.FORMID,0)
+        formId = arguments?.getInt(Utils.FORMID, 0)
         schoolName = arguments?.getString(Utils.SCHOOLNAME)
         schoolAddress = arguments?.getString(Utils.SCHOOL_ADDRS)
-        binding.tvSchoolName.text="School Name - $schoolName"
-        binding.tvSchoolAddress.text="Address - $schoolAddress"
+        binding.tvSchoolName.text = "School Name - $schoolName"
+        binding.tvSchoolAddress.text = "Address - $schoolAddress"
 //        binding.surveyToolbar.imgGoBack.setOnClickListener {
 //            listener?.onUserBackPressed()
 //        }
@@ -99,34 +99,36 @@ class QuestionListFragment : BaseFragment<FragmentQuestionListBinding>(FragmentQ
                 LoggerUtils.error("TAG", questionData.userTextAnswer)
 
 
-                val surveyInput=SurveyInput(questionData.id,
-                    questionData.schoolId?.toInt(),teacherId?.toInt(),
-                    questionData.question,questionData.type,questionData.formatName,
-                    questionData.userTextAnswer,locationAddress,formId)
+                val surveyInput = SurveyInput(
+                    questionData.id,
+                    questionData.schoolId?.toInt(), teacherId?.toInt(),
+                    questionData.question, questionData.type, questionData.formatName,
+                    questionData.userTextAnswer, locationAddress, formId
+                )
                 surveyRequest.add(surveyInput)
             }
 
-            viewModel.saveSurveyData(surveyRequest).observe(viewLifecycleOwner, { response->
-                when(response.status){
-                    Status.LOADING->{
-                        listener?.showProgress()
-                    }
-                    Status.SUCCESS->{
-                        listener?.hideProgress()
-                        showCustomToast(requireActivity(),"Survey Saved Successfully")
-                        listener?.gotoHomeScreen()
-                    }
-                    Status.ERROR->{
-                        listener?.hideProgress()
-                        response.message?.let {
-                            showAppAlert(requireActivity(),"Alert",it,null)
-                        }
-                    }
-                }
-            })
+//            viewModel.saveSurveyData(surveyRequest).observe(viewLifecycleOwner, { response->
+//                when(response.status){
+//                    Status.LOADING->{
+//                        listener?.showProgress()
+//                    }
+//                    Status.SUCCESS->{
+//                        listener?.hideProgress()
+//                        showCustomToast(requireActivity(),"Survey Saved Successfully")
+//                        listener?.gotoHomeScreen()
+//                    }
+//                    Status.ERROR->{
+//                        listener?.hideProgress()
+//                        response.message?.let {
+//                            showAppAlert(requireActivity(),"Alert",it,null)
+//                        }
+//                    }
+//                }
+//            })
+//        }
         }
     }
-
     override fun onResume() {
         super.onResume()
         viewModel.getAllQuestionByFormId(QuestListInput(formId)).observe(viewLifecycleOwner,

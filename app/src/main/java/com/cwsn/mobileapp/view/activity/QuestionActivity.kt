@@ -29,6 +29,7 @@ import com.cwsn.mobileapp.view.base.BaseActivity
 import com.cwsn.mobileapp.view.callback.IQuestListInterface
 import com.cwsn.mobileapp.view.callback.IQuestionListCallback
 import com.cwsn.mobileapp.view.dialog.ResetPwdDialog
+import com.cwsn.mobileapp.view.fragment.HomeFragment
 import com.cwsn.mobileapp.viewmodel.survey.SurveyViewModel
 import com.gun0912.tedpermission.provider.TedPermissionProvider.context
 import org.koin.android.ext.android.inject
@@ -37,13 +38,13 @@ import java.lang.reflect.Array.getInt
 
 class QuestionActivity : BaseActivity<ActivityQuestionBinding>(), IQuestionListCallback {
     private var locationAddress: String? = null
-    private var  surveyInput:SurveyInput?=null
     private var teacherId: String? = null
     private lateinit var questAdapter: QuestionListAdapter
     private var schoolAddress: String? = null
     private var block_name: String? = null
     private var district_name: String? = null
     private var district_id: Int? = null
+    private var homeFragment:HomeFragment?=null
     private var school_id: Int? = null
     private var schoolName: String? = null
     private var block_id: Int? = null
@@ -129,14 +130,7 @@ class QuestionActivity : BaseActivity<ActivityQuestionBinding>(), IQuestionListC
 
     @SuppressLint("SetTextI18n")
     override fun onActCreate() {
-        val callback: OnBackPressedCallback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                listener?.onUserBackPressed()
-            }
-        }
 
-
-        // requireActivity().onBackPressedDispatcher.addCallback(callback)
         teacherId = appPref.getUserLoginData()[appPref.KEY_TEACHER_ID]
         block_id = appPref.getUserLoginData()[appPref.KEY_BLOCK_ID]?.toInt()
         cluster_id = appPref.getUserLoginData()[appPref.KEY_CLUSTER_ID]?.toInt()
@@ -167,15 +161,17 @@ class QuestionActivity : BaseActivity<ActivityQuestionBinding>(), IQuestionListC
 
             updateQuestionList.forEachIndexed { index, questionData ->
                 LoggerUtils.error("TAG", questionData.userTextAnswer)
-                    surveyInput = SurveyInput(
-                        questionData.id,
-                        school_id, teacherId?.toInt(),
-                        questionData.question, questionData.formatName, questionData.type,
-                        questionData.userTextAnswer, locationAddress,
-                        district_id, district_name,
-                        block_id, block_name, questionData.id
-                    )
-                    surveyRequest.add(surveyInput!!)
+                val surveyInput = SurveyInput(
+                    questionData.id,
+                    school_id, teacherId?.toInt(),
+                    questionData.question, questionData.formatName, questionData.type,
+                    questionData.userTextAnswer, locationAddress,
+                    district_id, district_name,
+                    block_id, block_name, questionData.id
+                )
+                surveyRequest.add(surveyInput!!)
+            }
+
                     LoggerUtils.error("districtid", district_id.toString())
                     LoggerUtils.error("name", "west")
                     LoggerUtils.error("formatid", formatId.toString())
@@ -197,7 +193,7 @@ class QuestionActivity : BaseActivity<ActivityQuestionBinding>(), IQuestionListC
                                     showAppAlert(this, "Alert", it, null)
                                 }
                             }
-                        }
+
 
 
                 }
