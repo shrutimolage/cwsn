@@ -85,6 +85,7 @@
                         android:padding="2dp"
                         android:layout_height="wrap_content">
                         <TextView
+                            android:id="@+id/username"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:textStyle="bold"
@@ -96,7 +97,7 @@
                             android:textColor="@color/black"
                             android:text="@string/username_label"
                             />
-                        <EditText
+                        <TextView
                             android:id="@+id/edt_userName"
                             android:layout_width="0dp"
                             android:layout_weight="0.75"
@@ -106,9 +107,10 @@
                             android:textSize="@dimen/text_size_13"
                             android:inputType="text|textAutoCorrect|textAutoComplete"
                             android:textColor="@color/black"
-                            android:enabled="false"
                             android:text=""
                             />
+                        // android:enabled="true"
+
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -121,10 +123,10 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
-                            android:layout_weight="0.24"
+                            android:layout_weight="0.25"
                             android:gravity="left|center"
                             android:padding="3dp"
-                            android:text="@string/date_of_birth_label"
+                            android:text="@string/email_label"
                             android:textColor="@color/black"
                             android:textSize="@dimen/text_size_12"
                             android:textStyle="bold" />
@@ -146,19 +148,19 @@
                         android:weightSum="1"
                         android:padding="2dp"
                         android:layout_height="wrap_content">
+
                         <TextView
                             android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:textStyle="bold"
-                            android:layout_weight="0.25"
-                            android:padding="3dp"
-                            android:gravity="left|center"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:textSize="@dimen/text_size_12"
-                            android:textColor="@color/black"
+                            android:layout_weight="0.25"
+                            android:gravity="left|center"
+                            android:padding="3dp"
                             android:text="@string/gender_label"
-                            />
-                        <EditText
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/text_size_12"
+                            android:textStyle="bold" />
+                        <TextView
                             android:id="@+id/edt_gender"
                             android:layout_width="0dp"
                             android:layout_weight="0.75"
@@ -183,7 +185,7 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:textStyle="bold"
-                            android:layout_weight="0.2"
+                            android:layout_weight="0.25"
                             android:padding="3dp"
                             android:gravity="left|top"
                             android:layout_gravity="center"
@@ -191,7 +193,7 @@
                             android:textColor="@color/black"
                             android:text="@string/address_label"
                             />
-                        <EditText
+                        <TextView
                             android:id="@+id/edt_address"
                             android:layout_width="0dp"
                             android:layout_weight="0.8"
@@ -239,7 +241,7 @@
                             android:textColor="@color/black"
                             android:text="@string/schoolName"
                             />
-                        <EditText
+                        <TextView
                             android:id="@+id/edt_schoolName"
                             android:layout_width="0dp"
                             android:layout_weight="0.75"
@@ -273,7 +275,7 @@
                             android:textColor="@color/black"
                             android:text="@string/schooladdress_label"
                             />
-                        <EditText
+                        <TextView
                             android:id="@+id/edt_schoolAddress"
                             android:layout_width="0dp"
                             android:layout_weight="0.75"
@@ -307,7 +309,7 @@
                             android:textColor="@color/black"
                             android:text="@string/cityName"
                             />
-                        <EditText
+                        <TextView
                             android:id="@+id/edt_cityName"
                             android:layout_width="0dp"
                             android:layout_weight="0.75"
@@ -339,7 +341,7 @@
                             android:textColor="@color/black"
                             android:text="@string/state_label"
                             />
-                        <EditText
+                        <TextView
                             android:id="@+id/edt_stateName"
                             android:layout_width="0dp"
                             android:layout_weight="0.75"
@@ -371,7 +373,7 @@
                             android:textColor="@color/black"
                             android:text="@string/pincode_label"
                             />
-                        <EditText
+                        <TextView
                             android:id="@+id/edt_pincode"
                             android:layout_width="0dp"
                             android:layout_weight="0.75"
@@ -426,7 +428,7 @@
                     android:text="Edit" />
 
                 <TextView
-                    android:id="@+id/textView13"
+                    android:id="@+id/resetpassword"
                     style="@style/NormalSizeBlackAppTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -439,6 +441,7 @@
             </LinearLayout>
 
         </FrameLayout>
+
 
     </ScrollView>
 

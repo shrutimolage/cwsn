@@ -1,5 +1,6 @@
 package com.cwsn.mobileapp.repository.impl
 
+import com.cwsn.mobileapp.model.home.ActivitiesType
 import com.cwsn.mobileapp.model.home.Cluster
 import com.cwsn.mobileapp.model.home.DashboardCount
 import com.cwsn.mobileapp.model.location.LocationLatLng
@@ -15,8 +16,11 @@ Created by  on 30,June,2022
  **/
 class HomeRepository(private val apiHelper: ApiHelper)
 {
-    suspend fun getAllClusterDetails(): Response<Cluster> {
-        return apiHelper.getAllClusterDetails()
+    suspend fun getAllClusterDetails(id:Int): Response<Cluster> {
+        return apiHelper.getAllClusterDetails(id)
+    }
+    suspend fun getFormTypeList(): Response<ActivitiesType> {
+        return apiHelper.getFormTypeList()
     }
 
     suspend fun getAllSchoolDetailCount(): Response<DashboardCount> {

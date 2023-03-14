@@ -22,7 +22,8 @@ val repoModule = module {
         AllQuestRepository(get(),get(),get())
     }
     single {
-        LoginRepository(get(),get())
+        LoginRepository(get(),get(),get())
+
     }
     single {
         ProfileRepository(get())
@@ -37,9 +38,12 @@ val repoModule = module {
         ResRoomRepository()
     }
     single{
-        MonitoringRepository()
+        MonitoringRepository(get())
     }
     single {
         TaskRepository(get())
+    }
+    single {
+        IChangePwdRepos(get())
     }
 }

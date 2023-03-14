@@ -8,3 +8,4 @@ Created by  on 30,June,2022
  **/
 data class ClusterData(@Expose @SerializedName("name" ) var name : String? = null,
                        @Expose @SerializedName("id"   ) var id   : Int?    = null)
+//display_value

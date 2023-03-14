@@ -24,10 +24,10 @@
             android:id="@+id/toolbar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="left|center"
             android:gravity="center"
-            android:text="School Survey"
-            android:layout_marginStart="10dp"
+            android:layout_marginTop="9dp"
+            android:layout_marginStart="80dp"
+            android:text="Survey"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_14" />
     </LinearLayout>

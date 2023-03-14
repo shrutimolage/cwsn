@@ -15,11 +15,41 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/app_icon_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MyApplication">
+        android:theme="@style/Theme.MyApplication"
+        android:usesCleartextTraffic="true">
+
+        <activity
+            android:name=".view.activity.VisitActivity"
+            android:screenOrientation="portrait"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.QuestionActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.MyApplication" />
+        <activity
+            android:name=".view.activity.SchoolActivity"
+            android:screenOrientation="portrait"
+            android:exported="false"
+            tools:ignore="MissingClass" />
+        <activity
+            android:name=".view.activity.SchoolTypeActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.FieldActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" /> <!-- <activity -->
+        <!-- android:name=".FieldVisitActivity" -->
+        <!-- android:exported="false" /> -->
+        <!-- <activity -->
+        <!-- android:name=".view.activity.SchoolActivity" -->
+        <!-- android:exported="false" /> -->
         <service
             android:name=".view.service.GPSTracker"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
 
         <activity
             android:name=".view.activity.SurveyStartActivity"

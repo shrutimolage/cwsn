@@ -6,6 +6,7 @@
     <string name="email_address_label">Email Address</string>
     <string name="forgot_password_click_here">Forgot password ? Click Here</string>
     <string name="home_label">Home</string>
+    <string name="email_label">Email</string>
     <string name="summary_text">Summary</string>
     <string name="survey_text">Survey Report</string>
     <string name="setting_label">Settings</string>
@@ -44,4 +45,14 @@
     <string name="cancel">Cancel</string>
     <string name="children_with_special_needs_label">CHILDREN WITH SPECIAL NEEDS</string>
     <string name="children_with_special_needs_label_caps">CHILDREN WITH SPECIAL NEEDS</string>
+    <string name="title_activity_visiting_dialog">VisitingDialog</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="title_activity_fiel">FielAct</string>
 </resources>

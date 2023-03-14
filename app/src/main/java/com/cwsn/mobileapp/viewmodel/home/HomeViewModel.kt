@@ -3,6 +3,7 @@ package com.cwsn.mobileapp.viewmodel.home
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
+import com.cwsn.mobileapp.model.home.ClusterInput
 import com.cwsn.mobileapp.model.school.SchoolDetails
 import com.cwsn.mobileapp.model.school.SchoolListInput
 import com.cwsn.mobileapp.network.Resource
@@ -16,10 +17,10 @@ Created by  on 30,June,2022
  **/
 class HomeViewModel(private val repos:HomeRepository):ViewModel()
 {
-    fun fetchAllCluster() = liveData(Dispatchers.IO){
+    fun fetchAllCluster(id: Int) = liveData(Dispatchers.IO){
         emit(Resource.loading(data = null))
         try {
-            val allClusterDetails = repos.getAllClusterDetails()
+            val allClusterDetails = repos.getAllClusterDetails(id)
             if(allClusterDetails.isSuccessful){
                 allClusterDetails.body()?.data?.size?.let {
                     if(it>0)
@@ -47,6 +48,25 @@ class HomeViewModel(private val repos:HomeRepository):ViewModel()
             val allDashboardCount = repos.getAllSchoolDetailCount()
             if(allDashboardCount.isSuccessful){
                 emit(Resource.success(data = allDashboardCount, message = "Success"))
+            }else{
+                emit(Resource.error(data = null, message = "Server Error"))
+            }
+        }
+        catch (ex:Exception){
+            ex.printStackTrace()
+            emit(Resource.error(data = null, message = "API Error"))
+        }
+    }
+    fun getActivityType()= liveData(Dispatchers.IO){
+        emit(Resource.loading(data = null))
+        try {
+            val allActivityType = repos.getFormTypeList()
+            if(allActivityType.isSuccessful){
+                allActivityType.body()?.data.let {
+
+
+                }
+                emit(Resource.success(data = allActivityType, message = "Success"))
             }else{
                 emit(Resource.error(data = null, message = "Server Error"))
             }
@@ -144,5 +164,8 @@ class HomeViewModel(private val repos:HomeRepository):ViewModel()
             emit(Resource.error(data = null, message = "${ex.message}"))
         }
     }
+
+
+
 
 }

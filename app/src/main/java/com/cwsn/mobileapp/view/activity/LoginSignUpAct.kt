@@ -11,17 +11,19 @@ import android.widget.CompoundButton
 import androidx.core.content.ContextCompat
 import com.cwsn.mobileapp.R
 import com.cwsn.mobileapp.databinding.LoginSignupLayoutBinding
+import com.cwsn.mobileapp.model.login.Data
 import com.cwsn.mobileapp.network.Status
 import com.cwsn.mobileapp.utils.AppPreferences
 import com.cwsn.mobileapp.utils.toast
 import com.cwsn.mobileapp.view.base.BaseActivity
+import com.cwsn.mobileapp.view.callback.IForgetPwdCallback
 import com.cwsn.mobileapp.view.dialog.ForgotPwdDialog
 import com.cwsn.mobileapp.viewmodel.login.LoginViewModel
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 @Suppress("MoveLambdaOutsideParentheses")
-class LoginSignUpAct : BaseActivity<LoginSignupLayoutBinding>() {
+class LoginSignUpAct : BaseActivity<LoginSignupLayoutBinding>(), IForgetPwdCallback {
     private var rememberMe: Boolean=false
     private val loginViewModel by viewModel<LoginViewModel>()
     private val appPref by inject<AppPreferences>()
@@ -125,6 +127,32 @@ class LoginSignUpAct : BaseActivity<LoginSignupLayoutBinding>() {
                                 appPref.saveUserEmailAddress("")
                             }
                             gotoDashboard()
+                        }
+                    }
+                }
+                Status.ERROR -> {
+                    hideProgressDialog()
+                    it.message?.let {
+                        toast(it)
+                    }
+                }
+                Status.LOADING -> {
+                    showProgressDialog()
+                }
+            }
+        })
+    }
+
+    override fun performForgotPassword(emailOrUsername:String) {
+        emailOrUsername.let { Data(it) }
+        loginViewModel.forgetPassword(emailOrUsername).observe(this, {
+            when (it.status) {
+                Status.SUCCESS -> {
+
+                    hideProgressDialog()
+                    it.data?.body()?.let { forgot ->
+                        forgot.message?.let {
+                            toast(it)
                         }
                     }
                 }

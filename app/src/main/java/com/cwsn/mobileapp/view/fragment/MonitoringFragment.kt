@@ -1,28 +1,34 @@
 package com.cwsn.mobileapp.view.fragment
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.core.text.isDigitsOnly
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.cwsn.mobileapp.adapter.home.ActlistAdapter
 import com.cwsn.mobileapp.databinding.FragmentMonitoringBinding
+import com.cwsn.mobileapp.model.home.AllActData
 import com.cwsn.mobileapp.model.home.ClusterData
-import com.cwsn.mobileapp.model.school.SchoolListInput
+import com.cwsn.mobileapp.model.login.Data
 import com.cwsn.mobileapp.network.Status
 import com.cwsn.mobileapp.utils.AppPreferences
 import com.cwsn.mobileapp.utils.LoggerUtils
-import com.cwsn.mobileapp.view.adapter.SchoolListAdapter
+import com.cwsn.mobileapp.view.activity.FieldActivity
 import com.cwsn.mobileapp.view.base.BaseFragment
 import com.cwsn.mobileapp.view.callback.IMonitoringFragCallback
-import com.cwsn.mobileapp.view.callback.ISchoolListItemClick
 import com.cwsn.mobileapp.view.callback.ITaskDialogCallback
 import com.cwsn.mobileapp.view.dialog.TaskFormListDialog
+import com.cwsn.mobileapp.view.dialog.VisitingMode
 import com.cwsn.mobileapp.viewmodel.home.HomeViewModel
 import com.cwsn.mobileapp.viewmodel.monitoring.MonitorViewModel
 import com.cwsn.mobileapp.viewmodel.task.TaskViewModel
 import com.google.gson.Gson
-import com.skydoves.powerspinner.OnSpinnerItemSelectedListener
+import org.json.JSONArray
+import org.json.JSONObject
+import org.json.JSONTokener
 import org.koin.android.ext.android.inject
 
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -43,6 +49,7 @@ class MonitoringFragment :
     private val monitorViewModel by inject<MonitorViewModel>()
     private val homeViewModel by inject<HomeViewModel>()
     private val taskViewModel by inject<TaskViewModel>()
+    private lateinit var allact: List<Data>
     private lateinit var allClusters: List<ClusterData>
     private val appPref by inject<AppPreferences>()
     private var clusterNames: MutableList<String> = mutableListOf()
@@ -71,114 +78,181 @@ class MonitoringFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.toolbar.toolbarTitle.text = "Monitoring"
-        binding.toolbar.navigationBar.setOnClickListener {
+        binding.surveyToolbar.toolbarTitle.text="Monitoring"
+
+        binding.surveyToolbar.imgGoBack.setOnClickListener {
             listener?.onUserBackPressed()
         }
-        binding.spnrCluster.setOnSpinnerItemSelectedListener(object :
-            OnSpinnerItemSelectedListener<String> {
-            override fun onItemSelected(
-                oldIndex: Int,
-                oldItem: String?,
-                newIndex: Int,
-                newItem: String
-            ) {
-                val clusterId = getSelectedClusterId(newItem)
-                LoggerUtils.error("CLUSTER ID", "$clusterId")
-                fetchSchoolList(clusterId)
-            }
-        })
-        val userLoginData = appPref.getUserLoginData()
-        binding.tvBlockName.text = "Block Name:-" + userLoginData[appPref.KEY_BLOCK_NAME]
-    }
-
-    private fun getSelectedClusterId(clusterName: String): Int {
-        var clusterId = 0
-        allClusters.forEachIndexed { _, clusterData ->
-            if (clusterName == clusterData.name) {
-                clusterData.id?.let {
-                    clusterId = it
-                }
-            }
-        }
-        return clusterId
+//        binding.Fieldvisit.setOnClickListener{
+//            val intent= Intent(context,FieldActivity::class.java)
+//            startActivity(intent)
+//        }
+//        binding.spnrCluster.setOnSpinnerItemSelectedListener(object :
+//            OnSpinnerItemSelectedListener<String> {
+//            override fun onItemSelected(
+//                oldIndex: Int,
+//                oldItem: String?,
+//                newIndex: Int,
+//                newItem: String
+//            ) {
+//                val clusterId = getSelectedClusterId(newItem)
+//                LoggerUtils.error("CLUSTER ID", "$clusterId")
+//                fetchSchoolList(clusterId)
+//            }
+//        })
+//        val userLoginData = appPref.getUserLoginData()
+//        binding.tvBlockName.text = "Block Name:-" + userLoginData[appPref.KEY_BLOCK_NAME]
+//    }
+//
+//    private fun getSelectedClusterId(clusterName: String): Int {
+//        var clusterId = 0
+//        allClusters.forEachIndexed { _, clusterData ->
+//            if (clusterName == clusterData.name) {
+//                clusterData.id?.let {
+//                    clusterId = it
+//                }
+//            }
+//        }
+//        return clusterId
     }
 
     override fun onResume() {
         super.onResume()
-        homeViewModel.fetchAllCluster().observe(viewLifecycleOwner, { response ->
+
+        fecthActivityType()
+
+
+    }
+//        homeViewModel.fetchAllCluster().observe(viewLifecycleOwner, { response ->
+//            when (response.status) {
+//                Status.LOADING -> {
+//                    listener?.showProgress()
+//                }
+//                Status.SUCCESS -> {
+//                    listener?.hideProgress()
+//                    clusterNames = mutableListOf()
+//                    response.data?.body()?.data?.let {
+//                        allClusters = it
+//                        allClusters.forEachIndexed { _, clusterData ->
+//                            binding.rclySchoolList.visibility = View.VISIBLE
+////                            binding.tvNoResult.visibility = View.GONE
+//                            binding.rclyClusterlist.apply {
+//                                layoutManager = LinearLayoutManager(
+//                                    requireActivity(),
+//                                    RecyclerView.VERTICAL,
+//                                    false
+//                                )
+//                                adapter =
+//                                    ClusterAdapterlist(allClusters, object :IClusterListItemClick {
+//                                        override fun IClusterListItemClick(
+//
+//                                            name: String?
+//
+//                                        ) {
+//                                            showVisitingListDialog()
+//                                        }
+//                                    })
+//                            }
+//                        }
+//                    }
+//                }
+//                Status.ERROR -> {
+//                    listener?.hideProgress()
+//                    response.message?.let {
+//                        showAppAlert(requireActivity(), "Alert", it, null)
+//                    }
+//                }
+//            }
+//
+//        })
+//
+//    }
+
+//    private fun fetchSchoolList(clusterId: Int) {
+//        homeViewModel.getAllSchoolList(SchoolListInput(clusterId))
+//            .observe(viewLifecycleOwner, { response ->
+//                when (response.status) {
+//                    Status.LOADING -> {
+//                        listener?.showProgress()
+//                    }
+//                    Status.SUCCESS -> {
+//                        listener?.hideProgress()
+//                        response.data?.body()?.data?.let { schoolList ->
+//                            binding.rclySchoolList.visibility = View.VISIBLE
+//                            binding.tvNoResult.visibility = View.GONE
+//                            binding.rclySchoolList.apply {
+//                                layoutManager = LinearLayoutManager(
+//                                    requireActivity(),
+//                                    RecyclerView.VERTICAL,
+//                                    false
+//                                )
+//                                adapter =
+//                                    SchoolListAdapter(schoolList, object : ISchoolListItemClick {
+//                                        override fun onSchoolListItemClick(
+//                                            schoolId: Int?,
+//                                            name: String?,
+//                                            address: String?)
+//                                        {
+//                                            showTaskFormListDialog(schoolId,name,address)
+//                                        }
+//                                    })
+//                            }
+//                        }
+//                    }
+//                    Status.ERROR -> {
+//                        listener?.hideProgress()
+//                        response.message?.let {
+//                            showAppAlert(requireActivity(), "Alert", it, null)
+//                            binding.rclySchoolList.visibility = View.GONE
+//                            binding.tvNoResult.visibility = View.VISIBLE
+//                        }
+//                    }
+//                }
+//            })
+ //   }
+//    private fun showVisitingListDialog(){
+//        val visitingMode= VisitingMode.newInstance()
+//        visitingMode.show(childFragmentManager, visitingMode.TAG)
+//
+//    }
+    fun fecthActivityType() {
+        homeViewModel.getActivityType().observe(this) { response ->
             when (response.status) {
                 Status.LOADING -> {
                     listener?.showProgress()
+
                 }
                 Status.SUCCESS -> {
                     listener?.hideProgress()
-                    clusterNames = mutableListOf()
                     response.data?.body()?.data?.let {
-                        allClusters = it
-                        allClusters.forEachIndexed { _, clusterData ->
-                            clusterData.name?.let { name ->
-                                clusterNames.add(name)
-                            }
+                        val ActvtyList = Gson().toJson(it)
+                        binding.actList.apply {
+                            layoutManager = LinearLayoutManager(
+                                requireActivity(),
+                                RecyclerView.HORIZONTAL,
+                                false
+                            )
+                            adapter =
+                                ActlistAdapter(it)
+
+
                         }
-                        clusterNames.add(0, "Select Cluster")
-                        binding.spnrCluster.setItems(clusterNames)
+
                     }
                 }
+
+
                 Status.ERROR -> {
                     listener?.hideProgress()
                     response.message?.let {
                         showAppAlert(requireActivity(), "Alert", it, null)
+                        // Toast.makeText(this,response.message.toString(),Toast.LENGTH_LONG).show()
                     }
                 }
             }
-        })
 
+        }
     }
-
-    private fun fetchSchoolList(clusterId: Int) {
-        homeViewModel.getAllSchoolList(SchoolListInput(clusterId))
-            .observe(viewLifecycleOwner, { response ->
-                when (response.status) {
-                    Status.LOADING -> {
-                        listener?.showProgress()
-                    }
-                    Status.SUCCESS -> {
-                        listener?.hideProgress()
-                        response.data?.body()?.data?.let { schoolList ->
-                            binding.rclySchoolList.visibility = View.VISIBLE
-                            binding.tvNoResult.visibility = View.GONE
-                            binding.rclySchoolList.apply {
-                                layoutManager = LinearLayoutManager(
-                                    requireActivity(),
-                                    RecyclerView.VERTICAL,
-                                    false
-                                )
-                                adapter =
-                                    SchoolListAdapter(schoolList, object : ISchoolListItemClick {
-                                        override fun onSchoolListItemClick(
-                                            schoolId: Int?,
-                                            name: String?,
-                                            address: String?)
-                                        {
-                                            showTaskFormListDialog(schoolId,name,address)
-                                        }
-                                    })
-                            }
-                        }
-                    }
-                    Status.ERROR -> {
-                        listener?.hideProgress()
-                        response.message?.let {
-                            showAppAlert(requireActivity(), "Alert", it, null)
-                            binding.rclySchoolList.visibility = View.GONE
-                            binding.tvNoResult.visibility = View.VISIBLE
-                        }
-                    }
-                }
-            })
-    }
-
     private fun showTaskFormListDialog(schoolId: Int?, name: String?, address: String?) {
         taskViewModel.getAllTaskActList().observe(viewLifecycleOwner, { response ->
             when (response.status) {

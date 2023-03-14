@@ -27,7 +27,7 @@ ITaskActivityCallback):RecyclerView.Adapter<TaskActivityAdapter.ViewHolder>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding=RowTaskActivityLayoutBinding.inflate(LayoutInflater.from(parent.context)
-        ,parent,false)
+            ,parent,false)
         return ViewHolder(binding)
     }
 
@@ -36,6 +36,6 @@ ITaskActivityCallback):RecyclerView.Adapter<TaskActivityAdapter.ViewHolder>()
     }
 
     override fun getItemCount(): Int {
-       return datalist.size
+        return datalist.size
     }
 }

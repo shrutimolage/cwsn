@@ -1,5 +1,7 @@
 package com.cwsn.mobileapp.di
 
+import com.cwsn.mobileapp.repository.impl.IChangePwdRepos
+import com.cwsn.mobileapp.viewmodel.ChangePwd.ChangePwdVM
 import com.cwsn.mobileapp.viewmodel.home.HomeViewModel
 import com.cwsn.mobileapp.viewmodel.localdb.DbViewModel
 import com.cwsn.mobileapp.viewmodel.login.LoginViewModel
@@ -35,12 +37,15 @@ val viewModelModule= module {
         ResRoomViewModel()
     }
     single{
-        MonitorViewModel()
+        MonitorViewModel(get())
     }
     single{
         TaskViewModel(get())
     }
     single {
         SharedViewModel(get())
+    }
+    single {
+      ChangePwdVM(get())
     }
 }

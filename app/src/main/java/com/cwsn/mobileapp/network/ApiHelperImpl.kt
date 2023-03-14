@@ -1,10 +1,9 @@
 package com.cwsn.mobileapp.network
 
-import com.cwsn.mobileapp.model.home.Cluster
-import com.cwsn.mobileapp.model.home.DashboardCount
+import com.cwsn.mobileapp.model.home.*
 import com.cwsn.mobileapp.model.location.LocationLatLng
-import com.cwsn.mobileapp.model.login.LoginInput
-import com.cwsn.mobileapp.model.login.LoginModel
+import com.cwsn.mobileapp.model.login.*
+import com.cwsn.mobileapp.model.profile.ChangePwdInput
 import com.cwsn.mobileapp.model.profile.UserProfile
 import com.cwsn.mobileapp.model.questions.QuestListInput
 import com.cwsn.mobileapp.model.questions.Questions
@@ -27,12 +26,28 @@ class ApiHelperImpl(private val apiService: APIService) : ApiHelper
         return apiService.loginAPi(LoginInput(emailId,password))
     }
 
+ override suspend fun performForgotPwd(emailId: String): Response<ForgotPassword> {
+        return apiService.forgotPassword(Data(emailId))
+    }
+
+override  suspend fun changeUserPassword(token: String,password:String,confom_password:String): Response<ResetPassword> {
+        return apiService.changeUserPassword(ChangePwdInput(token,password,confom_password))
+    }
+
     override suspend fun getuserProfile(): Response<UserProfile> {
         return apiService.getUserProfile()
     }
 
-    override suspend fun getAllClusterDetails(): Response<Cluster> {
-        return apiService.getAllCluster()
+    override suspend fun getactivitiesList(id: Int): Response<Actist_Data> {
+        return apiService.getactivitiesList(ActivitiesInput(id))
+    }
+
+    override suspend fun getAllClusterDetails(id:Int): Response<Cluster> {
+        return apiService.getAllCluster(ClusterInput(id))
+    }
+
+    override suspend fun getFormTypeList(): Response<ActivitiesType> {
+        return apiService.getFormTypeList()
     }
 
     override suspend fun getAllSchoolDetailCount(): Response<DashboardCount> {

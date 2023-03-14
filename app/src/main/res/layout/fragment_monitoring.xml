@@ -7,13 +7,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.fragment.MonitoringFragment">
     <include
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/monitoring_toolbar" />
+        android:id="@+id/survey_toolbar"
+        layout="@layout/survey_save_toolbar" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_marginBottom="5dp"
+        android:visibility="visible"
         android:layout_marginStart="5dp"
         android:orientation="vertical"
         android:layout_height="wrap_content">
@@ -34,6 +33,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/bg_edit_field_rect_dark"
             android:gravity="center"
+            android:visibility="gone"
             android:hint="Select Cluster"
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"
@@ -55,21 +55,33 @@
             app:spinner_popup_animation="dropdown"
             app:spinner_popup_background="@color/bg_grid_1"
             app:spinner_popup_elevation="14dp" />
-
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcly_clusterlist"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/cluster_namelist"
+            tools:itemCount="5"
+            />
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="5dp"
             android:layout_marginRight="5dp"
+            android:visibility="gone"
             android:layout_marginBottom="5dp"
             android:layout_height="wrap_content">
+
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcly_schoolList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 tools:listitem="@layout/row_cluster_school_item_layout"
                 tools:itemCount="5"
                 />
+
             <TextView
                 android:id="@+id/tv_noResult"
                 android:layout_width="wrap_content"
@@ -84,4 +96,31 @@
     </LinearLayout>
 
 
+    <!--on below line we are creating a recycler view-->
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/idRVCourses"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:visibility="gone"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_below="@id/idTVHeading"-->
+<!--        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/act_list"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:layout_margin="10dp"
+            tools:listitem="@layout/actlist_row"
+            tools:itemCount="2"
+            />
+
+
+
+    </LinearLayout>
 </LinearLayout>

@@ -1,10 +1,10 @@
 package com.cwsn.mobileapp.network
 
-import com.cwsn.mobileapp.model.home.Cluster
-import com.cwsn.mobileapp.model.home.DashboardCount
+import com.cwsn.mobileapp.model.home.*
 import com.cwsn.mobileapp.model.location.LocationLatLng
-import com.cwsn.mobileapp.model.login.LoginInput
-import com.cwsn.mobileapp.model.login.LoginModel
+import com.cwsn.mobileapp.model.login.*
+import com.cwsn.mobileapp.model.login.Data
+import com.cwsn.mobileapp.model.profile.ChangePwdInput
 import com.cwsn.mobileapp.model.profile.UserProfile
 import com.cwsn.mobileapp.model.questions.QuestListInput
 import com.cwsn.mobileapp.model.questions.Questions
@@ -26,12 +26,30 @@ interface APIService
 {
     @POST("api/login")
     suspend fun loginAPi(@Body input: LoginInput): Response<LoginModel>
+    @POST("api/forgot")
+    suspend fun forgotPassword(@Body email: Data): Response<ForgotPassword>
+
+
+    @POST("api/reset")
+    suspend fun changeUserPassword(@Body input: ChangePwdInput): Response<ResetPassword>
+
+    @POST("api/form_activities_list")
+    suspend fun getactivitiesList(@Body input:ActivitiesInput):Response<Actist_Data>
+
 
     @GET("api/user-details")
     suspend fun getUserProfile():Response<UserProfile>
+//
+//    @GET("api//cluster_list")
+//   suspend fun getAllCluster():Response<Cluster>
+//
+    @GET("api/form_types_list")
+    suspend fun getFormTypeList():Response<ActivitiesType>
 
-    @GET("api/cluster_list")
-    suspend fun getAllCluster():Response<Cluster>
+
+
+    @POST("api/cluster_list")
+    suspend fun getAllCluster(@Body input:ClusterInput):Response<Cluster>
 
     @GET("api/total_school")
     suspend fun getAllSchoolDetailCount():Response<DashboardCount>

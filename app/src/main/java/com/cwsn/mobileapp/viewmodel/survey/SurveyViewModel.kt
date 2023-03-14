@@ -93,6 +93,7 @@ class SurveyViewModel(private val repos:SurveyRepository):ViewModel()
             }
             else{
                 emit(Resource.error(data = null, message = Utils
+
                     .getHttpStatusDetails(response.code(),response.errorBody()!!)))
             }
         }

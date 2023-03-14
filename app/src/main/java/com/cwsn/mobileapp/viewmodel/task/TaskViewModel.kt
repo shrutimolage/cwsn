@@ -40,6 +40,7 @@ class TaskViewModel(private val repos:TaskRepository) : ViewModel()
                 response.body()?.data?.let {
                     if(it.size>0){
                         emit(Resource.success(data = response, message = "Success"))
+
                     }
                     else{
                         emit(Resource.error(data = null, message = "No Task/Activity Found"))

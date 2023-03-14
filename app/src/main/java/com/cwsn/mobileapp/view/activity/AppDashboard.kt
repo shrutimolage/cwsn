@@ -147,6 +147,7 @@ ISchoolListCallback,IResourceRoomCallback, IMonitoringFragCallback,
         }
 
         initializeLocManager()
+        getLocalQuestions()
 
     }
 
@@ -312,6 +313,7 @@ ISchoolListCallback,IResourceRoomCallback, IMonitoringFragCallback,
     }
 
     private fun gotoMonitoring() {
+        //startActivity(Intent(getContext(),SchoolActivity::class.java))
         navController.navigateSafe(R.id.action_homeFragment_to_monitoringFragment,null,null,null)
     }
 
@@ -331,7 +333,7 @@ ISchoolListCallback,IResourceRoomCallback, IMonitoringFragCallback,
         navController.navigateSafe(R.id.action_schoolPendingFragment_to_questionListFragment,null,null,null)
     }
 
-    private fun getLocalQuestions() {
+   fun getLocalQuestions() {
         dbViewModel.getAllQuestions().observe(this, { questions ->
             when (questions.status) {
                 Status.SUCCESS -> {
