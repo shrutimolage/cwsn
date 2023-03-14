@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".view.activity.SchoolActivity">
+    <include
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/monitoring_toolbar" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginBottom="5dp"
+        android:layout_marginStart="5dp"
+        android:visibility="visible"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_blockName"
+            style="@style/NormalSizeBlackAppTextView"
+            android:layout_width="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_height="wrap_content"
+            android:text="@string/block_name_label" />
+
+        <com.skydoves.powerspinner.PowerSpinnerView
+            android:id="@+id/spnr_cluster"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_edit_field_rect_dark"
+            android:gravity="center"
+            android:hint="Select Cluster"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/montserrat_medium"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:textSize="@dimen/text_size_14"
+            app:spinner_arrow_gravity="end"
+            app:spinner_arrow_padding="5dp"
+            app:spinner_arrow_tint="@color/colorBlack"
+            app:spinner_divider_color="@color/colorBlack"
+            app:spinner_divider_show="true"
+            app:spinner_divider_size="0.4dp"
+            app:spinner_item_height="46dp"
+            app:spinner_popup_height="300dp"
+            app:spinner_popup_animation="dropdown"
+            app:spinner_popup_background="@color/bg_grid_1"
+            app:spinner_popup_elevation="14dp" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_height="wrap_content">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcly_schoolList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/row_cluster_school_item_layout"
+                tools:itemCount="5"
+                />
+            <TextView
+                android:id="@+id/tv_noResult"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:textColor="@color/black"
+                android:visibility="gone"
+                android:textSize="@dimen/text_size_15"
+                android:text="@string/no_school_found_label" />
+        </FrameLayout>
+    </LinearLayout>
+
+</LinearLayout>
