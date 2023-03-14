@@ -33,9 +33,9 @@ class SchoolListAdapter(private val schoolList:List<SchoolData>,
                 listener.onSchoolListItemClick(schoolList.id,schoolList.name,schoolList.address)
                 val intent  = Intent (context,QuestionActivity::class.java)
                 intent.putExtra("schoolname",schoolList.name)
-                intent.putExtra("formatid",formatid)
                 intent.putExtra("schooladress",schoolList.address)
                 intent.putExtra("id",schoolList.id)
+                intent.putExtra("formatid",formatid)
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent)
 

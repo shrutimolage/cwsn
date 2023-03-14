@@ -147,7 +147,7 @@ ISchoolListCallback,IResourceRoomCallback, IMonitoringFragCallback,
         }
 
         initializeLocManager()
-        getLocalQuestions()
+      //  getLocalQuestions()
 
     }
 

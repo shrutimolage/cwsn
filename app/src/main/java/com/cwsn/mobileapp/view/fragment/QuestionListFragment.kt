@@ -97,12 +97,15 @@ class QuestionListFragment : BaseFragment<FragmentQuestionListBinding>(FragmentQ
         binding.txtSubmitAnswer.setOnClickListener {
             updateQuestionList.forEachIndexed { index, questionData ->
                 LoggerUtils.error("TAG", questionData.userTextAnswer)
+
+
                 val surveyInput=SurveyInput(questionData.id,
                     questionData.schoolId?.toInt(),teacherId?.toInt(),
                     questionData.question,questionData.type,questionData.formatName,
                     questionData.userTextAnswer,locationAddress,formId)
                 surveyRequest.add(surveyInput)
             }
+
             viewModel.saveSurveyData(surveyRequest).observe(viewLifecycleOwner, { response->
                 when(response.status){
                     Status.LOADING->{
