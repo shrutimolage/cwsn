@@ -21,13 +21,14 @@ import com.cwsn.mobileapp.view.adapter.ActvityLitstAdapterList
 import com.cwsn.mobileapp.view.adapter.SchoolListAdapter
 import com.cwsn.mobileapp.view.base.BaseActivity
 import com.cwsn.mobileapp.view.callback.IActivityTypeCallback
+import com.cwsn.mobileapp.view.callback.IAppBaseCallback
 import com.cwsn.mobileapp.view.callback.IMonitoringFragCallback
 import com.cwsn.mobileapp.view.callback.ISchoolListItemClick
 import com.cwsn.mobileapp.viewmodel.home.HomeViewModel
 import com.cwsn.mobileapp.viewmodel.monitoring.MonitorViewModel
 import org.koin.android.ext.android.inject
 
-class VisitActivity : BaseActivity<ActivityVisitBinding>() {
+class VisitActivity : BaseActivity<ActivityVisitBinding>() , IAppBaseCallback {
     private var id: Int? = null
     private var Name: String? = null
     private var listener: IMonitoringFragCallback? = null
@@ -55,9 +56,9 @@ class VisitActivity : BaseActivity<ActivityVisitBinding>() {
 
     override fun getToolBar(): Toolbar? {
         return findViewById(R.id.toolbar)
+
+
     }
-
-
     override fun getToolBartTitle(): String {
         return "Profile"
     }
@@ -72,6 +73,14 @@ class VisitActivity : BaseActivity<ActivityVisitBinding>() {
 
     override fun onUserBackPressed() {
         finish()
+    }
+
+    override fun showProgress() {
+       showProgressDialog()
+    }
+
+    override fun hideProgress() {
+        hideProgressDialog()
     }
 
     override fun onToolbarBackArrowPress() {
@@ -139,10 +148,10 @@ class VisitActivity : BaseActivity<ActivityVisitBinding>() {
         monitorViewModel.activitiesList(type_id).observe(this) { response ->
             when (response.status) {
                 Status.LOADING -> {
-                    listener?.showProgress()
+                    showProgress()
                 }
                 Status.SUCCESS -> {
-                    listener?.hideProgress()
+                   hideProgress()
                     response.data?.body()?.data?.let {
                         allActlist = it
                         allActlist!!.forEachIndexed { _, list ->
@@ -171,7 +180,7 @@ class VisitActivity : BaseActivity<ActivityVisitBinding>() {
 
                 }
                 Status.ERROR -> {
-                    listener?.hideProgress()
+                  hideProgress()
                     response.message?.let {
                         showAppAlert(this, "Alert", it, null)
                         // Toast.makeText(this,response.message.toString(),Toast.LENGTH_LONG).show()
@@ -187,10 +196,10 @@ class VisitActivity : BaseActivity<ActivityVisitBinding>() {
             .observe(this) { response ->
                 when (response.status) {
                     Status.LOADING -> {
-                        listener?.showProgress()
+                        showProgress()
                     }
                     Status.SUCCESS -> {
-                        listener?.hideProgress()
+                      hideProgress()
                         response.data?.body()?.data?.let { schoolList ->
                             binding.rclySchoolList.visibility = View.VISIBLE
                             binding.tvNoResult.visibility = View.GONE
@@ -221,7 +230,7 @@ class VisitActivity : BaseActivity<ActivityVisitBinding>() {
                         }
                     }
                     Status.ERROR -> {
-                        listener?.hideProgress()
+                   hideProgress()
                         response.message?.let {
                             showAppAlert(getContext(), "Alert", it, null)
                             binding.rclySchoolList.visibility = View.GONE

@@ -116,7 +116,7 @@ class QuestionListFragment : BaseFragment<FragmentQuestionListBinding>(FragmentQ
 //                    Status.SUCCESS->{
 //                        listener?.hideProgress()
 //                        showCustomToast(requireActivity(),"Survey Saved Successfully")
-//                        listener?.gotoHomeScreen()
+                       listener?.gotoHomeScreen()
 //                    }
 //                    Status.ERROR->{
 //                        listener?.hideProgress()

@@ -80,11 +80,11 @@ class FieldActivity : BaseActivity<ActivityFieldBinding>(), IMonitoringFragCallb
     }
 
     override fun showProgress() {
-
+        showProgressDialog()
     }
 
     override fun hideProgress() {
-
+hideProgressDialog()
     }
 
     override fun onToolbarBackArrowPress() {

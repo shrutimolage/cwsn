@@ -3,6 +3,7 @@ package com.cwsn.mobileapp.view.activity
 import android.annotation.SuppressLint
 import android.app.PendingIntent.getActivity
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -45,6 +46,7 @@ class QuestionActivity : BaseActivity<ActivityQuestionBinding>(), IQuestionListC
     private var district_name: String? = null
     private var district_id: Int? = null
     private var homeFragment:HomeFragment?=null
+    private var appDashboard:AppDashboard?=null
     private var school_id: Int? = null
     private var schoolName: String? = null
     private var block_id: Int? = null
@@ -183,12 +185,15 @@ class QuestionActivity : BaseActivity<ActivityQuestionBinding>(), IQuestionListC
                             Status.SUCCESS -> {
                                 hideProgressDialog()
                                 showCustomToast(context, "Survey Saved Successfully")
-                                finish()
+                            //  finish()
+                                val intent= Intent(this,AppDashboard::class.java)
+                                startActivity(intent)
+                              //  appDashboard?.gotoHomeScreen()
                                // listener?.gotoHomeScreen()
 
                             }
                             Status.ERROR -> {
-                                listener?.hideProgress()
+                               hideProgress()
                                 response.message?.let {
                                     showAppAlert(this, "Alert", it, null)
                                 }
