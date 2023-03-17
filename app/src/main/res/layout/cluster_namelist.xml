@@ -2,6 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/shadow_white_layer_list"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
@@ -28,6 +30,14 @@
             android:layout_weight="0.1"
             android:padding="5dp"
             app:srcCompat="@drawable/ic_start_survey_icon" />
-    </LinearLayout>
 
+    </LinearLayout>
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="0.2dp"
+        android:visibility="gone"
+        android:layout_margin="2dp"
+        android:background="@color/backgd"
+        />
 </LinearLayout>

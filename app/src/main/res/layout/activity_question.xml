@@ -17,7 +17,7 @@ android:background="@color/white"
 
     <include
         android:id="@+id/survey_toolbar"
-        layout="@layout/survey_save_toolbar" />
+        layout="@layout/monitoring_toolbar" />
 <TextView
     android:id="@+id/tv_schoolName"
     style="@style/BigSizeBlackAppTextView"

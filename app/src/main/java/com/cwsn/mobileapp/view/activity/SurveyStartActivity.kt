@@ -51,7 +51,7 @@ class SurveyStartActivity : BaseActivity<SurveySaveActivityBinding>() {
         teacherId = appPreferences.getUserLoginData()[appPreferences.KEY_TEACHER_ID]
         binding.tvSchoolName.text=schoolName
         binding.tvSchoolAddress.text=schoolAddrs
-        binding.surveyToolbar.imgGoBack.setOnClickListener {
+        binding.surveyToolbar.navigationBar.setOnClickListener {
             onUserBackPressed()
         }
     }

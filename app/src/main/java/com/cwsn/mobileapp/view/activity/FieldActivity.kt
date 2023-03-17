@@ -20,8 +20,6 @@ import com.cwsn.mobileapp.view.adapter.ClusterAdapterlist
 import com.cwsn.mobileapp.view.base.BaseActivity
 import com.cwsn.mobileapp.view.callback.*
 import com.cwsn.mobileapp.viewmodel.home.HomeViewModel
-import com.cwsn.mobileapp.viewmodel.monitoring.MonitorViewModel
-import com.cwsn.mobileapp.viewmodel.task.TaskViewModel
 import com.gun0912.tedpermission.provider.TedPermissionProvider.context
 import org.koin.android.ext.android.inject
 import java.util.*
@@ -84,7 +82,7 @@ class FieldActivity : BaseActivity<ActivityFieldBinding>(), IMonitoringFragCallb
     }
 
     override fun hideProgress() {
-hideProgressDialog()
+        hideProgressDialog()
     }
 
     override fun onToolbarBackArrowPress() {
@@ -217,7 +215,7 @@ hideProgressDialog()
     }
 
     override fun onActResume() {
-        fecthcluster()
+        //fecthcluster()
 
     }
 
@@ -312,67 +310,67 @@ hideProgressDialog()
 //    }
 //
 
-    fun fecthcluster() {
-        homeViewModel.fetchAllCluster(block_id!!).observe(this) { response ->
-            when (response.status) {
-                Status.LOADING -> {
-                    showProgress()
-                }
-                Status.SUCCESS -> {
-                    hideProgressDialog()
-                    clusterNames = mutableListOf()
-                    response.data?.body()?.data?.let {
-                        allClusters = it
-                        allClusters!!.forEachIndexed { _, clusterData ->
-                            binding.rclySchoolList.visibility = View.VISIBLE
-//                            binding.tvNoResult.visibility = View.GONE
-                            binding.rclyClusterlist.apply {
-                                layoutManager = LinearLayoutManager(
-                                    context,
-                                    RecyclerView.VERTICAL,
-                                    false
-                                )
-
-                                adapter =
-                                    ClusterAdapterlist(
-                                        this@FieldActivity,
-                                        allClusters!!,
-                                        type_id,
-                                        object : IClusterListItemClick {
-                                            override fun IClusterListItemClick(
-                                                name: String?,
-                                                id: Int?
-                                            ) {
-                                                if (id != null) {
-                                                    LoggerUtils.error("name", name)
-                                                    LoggerUtils.error("name", id.toString())
-                                                    clusterId = id
-                                                }
-
-
-                                            }
-
-                                            override fun showDialog(id: Int?) {
-
-                                            }
-
-
-                                        })
-                            }
-                        }
-                    }
-                }
-                Status.ERROR -> {
-                    listener?.hideProgress()
-                    response.message?.let {
-                        showAppAlert(this, "Alert", it, null)
-                        // Toast.makeText(this,response.message.toString(),Toast.LENGTH_LONG).show()
-                    }
-                }
-            }
-
-        }
-    }
+//    fun fecthcluster() {
+//        homeViewModel.fetchAllCluster(block_id!!).observe(this) { response ->
+//            when (response.status) {
+//                Status.LOADING -> {
+//                    showProgress()
+//                }
+//                Status.SUCCESS -> {
+//                    hideProgressDialog()
+//                    clusterNames = mutableListOf()
+//                    response.data?.body()?.data?.let {
+//                        allClusters = it
+//                        allClusters!!.forEachIndexed { _, clusterData ->
+//                            binding.rclySchoolList.visibility = View.VISIBLE
+////                            binding.tvNoResult.visibility = View.GONE
+//                            binding.rclyClusterlist.apply {
+//                                layoutManager = LinearLayoutManager(
+//                                    context,
+//                                    RecyclerView.VERTICAL,
+//                                    false
+//                                )
+//
+//                                adapter =
+//                                    ClusterAdapterlist(
+//                                        this@FieldActivity,
+//                                        allClusters!!,
+//                                        type_id,
+//                                        object : IClusterListItemClick {
+//                                            override fun IClusterListItemClick(
+//                                                name: String?,
+//                                                id: Int?
+//                                            ) {
+//                                                if (id != null) {
+//                                                    LoggerUtils.error("name", name)
+//                                                    LoggerUtils.error("name", id.toString())
+//                                                    clusterId = id
+//                                                }
+//
+//
+//                                            }
+//
+//                                            override fun showDialog(id: Int?) {
+//
+//                                            }
+//
+//
+//                                        })
+//                            }
+//                        }
+//                    }
+//                }
+//                Status.ERROR -> {
+//                    listener?.hideProgress()
+//                    response.message?.let {
+//                        showAppAlert(this, "Alert", it, null)
+//                        // Toast.makeText(this,response.message.toString(),Toast.LENGTH_LONG).show()
+//                    }
+//                }
+//            }
+//
+//        }
+//    }
 
 
 }

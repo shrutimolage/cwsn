@@ -1,34 +1,28 @@
 package com.cwsn.mobileapp.view.fragment
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.core.text.isDigitsOnly
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cwsn.mobileapp.adapter.home.ActlistAdapter
 import com.cwsn.mobileapp.databinding.FragmentMonitoringBinding
-import com.cwsn.mobileapp.model.home.AllActData
+import com.cwsn.mobileapp.model.home.Actlist_data
 import com.cwsn.mobileapp.model.home.ClusterData
 import com.cwsn.mobileapp.model.login.Data
 import com.cwsn.mobileapp.network.Status
 import com.cwsn.mobileapp.utils.AppPreferences
 import com.cwsn.mobileapp.utils.LoggerUtils
-import com.cwsn.mobileapp.view.activity.FieldActivity
+import com.cwsn.mobileapp.view.adapter.ClusterAdapterlist
 import com.cwsn.mobileapp.view.base.BaseFragment
+import com.cwsn.mobileapp.view.callback.IActivityTypeItemClick
+import com.cwsn.mobileapp.view.callback.IClusterListItemClick
 import com.cwsn.mobileapp.view.callback.IMonitoringFragCallback
-import com.cwsn.mobileapp.view.callback.ITaskDialogCallback
-import com.cwsn.mobileapp.view.dialog.TaskFormListDialog
-import com.cwsn.mobileapp.view.dialog.VisitingMode
 import com.cwsn.mobileapp.viewmodel.home.HomeViewModel
 import com.cwsn.mobileapp.viewmodel.monitoring.MonitorViewModel
 import com.cwsn.mobileapp.viewmodel.task.TaskViewModel
-import com.google.gson.Gson
-import org.json.JSONArray
-import org.json.JSONObject
-import org.json.JSONTokener
 import org.koin.android.ext.android.inject
 
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -45,12 +39,18 @@ class MonitoringFragment :
     BaseFragment<FragmentMonitoringBinding>(FragmentMonitoringBinding::inflate) {
     private var param1: String? = null
     private var param2: String? = null
+    private var block_id: Int? = null
+    private var type_id: Int? = null
+    private var selected_clusterId: Int? = null
+    private var allClusters: List<ClusterData>? = null
+    private var allActlist: ArrayList<Actlist_data>? = null
+    private var cluster_id: Int? = null
     private var listener: IMonitoringFragCallback? = null
     private val monitorViewModel by inject<MonitorViewModel>()
     private val homeViewModel by inject<HomeViewModel>()
     private val taskViewModel by inject<TaskViewModel>()
     private lateinit var allact: List<Data>
-    private lateinit var allClusters: List<ClusterData>
+
     private val appPref by inject<AppPreferences>()
     private var clusterNames: MutableList<String> = mutableListOf()
 
@@ -60,6 +60,7 @@ class MonitoringFragment :
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
     }
 
     override fun onAttach(context: Context) {
@@ -78,143 +79,24 @@ class MonitoringFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.surveyToolbar.toolbarTitle.text="Monitoring"
+        val userLoginData = appPref.getUserLoginData()
 
-        binding.surveyToolbar.imgGoBack.setOnClickListener {
+        block_id = userLoginData[appPref.KEY_BLOCK_ID]?.toInt()
+        cluster_id = userLoginData[appPref.KEY_CLUSTER_ID]?.toInt()
+        binding.listBlockname.text="List of Cluster in : "+ userLoginData[appPref.KEY_BLOCK_NAME]  +  "  "  +"Block"
+
+        binding.tvBlockName.text = "Block Name:-" + userLoginData[appPref.KEY_BLOCK_NAME]
+        binding.monitor.toolbarTitle.text = "Monitoring"
+        binding.monitor.navigationBar.setOnClickListener {
             listener?.onUserBackPressed()
         }
-//        binding.Fieldvisit.setOnClickListener{
-//            val intent= Intent(context,FieldActivity::class.java)
-//            startActivity(intent)
-//        }
-//        binding.spnrCluster.setOnSpinnerItemSelectedListener(object :
-//            OnSpinnerItemSelectedListener<String> {
-//            override fun onItemSelected(
-//                oldIndex: Int,
-//                oldItem: String?,
-//                newIndex: Int,
-//                newItem: String
-//            ) {
-//                val clusterId = getSelectedClusterId(newItem)
-//                LoggerUtils.error("CLUSTER ID", "$clusterId")
-//                fetchSchoolList(clusterId)
-//            }
-//        })
-//        val userLoginData = appPref.getUserLoginData()
-//        binding.tvBlockName.text = "Block Name:-" + userLoginData[appPref.KEY_BLOCK_NAME]
-//    }
-//
-//    private fun getSelectedClusterId(clusterName: String): Int {
-//        var clusterId = 0
-//        allClusters.forEachIndexed { _, clusterData ->
-//            if (clusterName == clusterData.name) {
-//                clusterData.id?.let {
-//                    clusterId = it
-//                }
-//            }
-//        }
-//        return clusterId
     }
 
     override fun onResume() {
         super.onResume()
-
         fecthActivityType()
 
-
     }
-//        homeViewModel.fetchAllCluster().observe(viewLifecycleOwner, { response ->
-//            when (response.status) {
-//                Status.LOADING -> {
-//                    listener?.showProgress()
-//                }
-//                Status.SUCCESS -> {
-//                    listener?.hideProgress()
-//                    clusterNames = mutableListOf()
-//                    response.data?.body()?.data?.let {
-//                        allClusters = it
-//                        allClusters.forEachIndexed { _, clusterData ->
-//                            binding.rclySchoolList.visibility = View.VISIBLE
-////                            binding.tvNoResult.visibility = View.GONE
-//                            binding.rclyClusterlist.apply {
-//                                layoutManager = LinearLayoutManager(
-//                                    requireActivity(),
-//                                    RecyclerView.VERTICAL,
-//                                    false
-//                                )
-//                                adapter =
-//                                    ClusterAdapterlist(allClusters, object :IClusterListItemClick {
-//                                        override fun IClusterListItemClick(
-//
-//                                            name: String?
-//
-//                                        ) {
-//                                            showVisitingListDialog()
-//                                        }
-//                                    })
-//                            }
-//                        }
-//                    }
-//                }
-//                Status.ERROR -> {
-//                    listener?.hideProgress()
-//                    response.message?.let {
-//                        showAppAlert(requireActivity(), "Alert", it, null)
-//                    }
-//                }
-//            }
-//
-//        })
-//
-//    }
-
-//    private fun fetchSchoolList(clusterId: Int) {
-//        homeViewModel.getAllSchoolList(SchoolListInput(clusterId))
-//            .observe(viewLifecycleOwner, { response ->
-//                when (response.status) {
-//                    Status.LOADING -> {
-//                        listener?.showProgress()
-//                    }
-//                    Status.SUCCESS -> {
-//                        listener?.hideProgress()
-//                        response.data?.body()?.data?.let { schoolList ->
-//                            binding.rclySchoolList.visibility = View.VISIBLE
-//                            binding.tvNoResult.visibility = View.GONE
-//                            binding.rclySchoolList.apply {
-//                                layoutManager = LinearLayoutManager(
-//                                    requireActivity(),
-//                                    RecyclerView.VERTICAL,
-//                                    false
-//                                )
-//                                adapter =
-//                                    SchoolListAdapter(schoolList, object : ISchoolListItemClick {
-//                                        override fun onSchoolListItemClick(
-//                                            schoolId: Int?,
-//                                            name: String?,
-//                                            address: String?)
-//                                        {
-//                                            showTaskFormListDialog(schoolId,name,address)
-//                                        }
-//                                    })
-//                            }
-//                        }
-//                    }
-//                    Status.ERROR -> {
-//                        listener?.hideProgress()
-//                        response.message?.let {
-//                            showAppAlert(requireActivity(), "Alert", it, null)
-//                            binding.rclySchoolList.visibility = View.GONE
-//                            binding.tvNoResult.visibility = View.VISIBLE
-//                        }
-//                    }
-//                }
-//            })
- //   }
-//    private fun showVisitingListDialog(){
-//        val visitingMode= VisitingMode.newInstance()
-//        visitingMode.show(childFragmentManager, visitingMode.TAG)
-//
-//    }
     fun fecthActivityType() {
         homeViewModel.getActivityType().observe(this) { response ->
             when (response.status) {
@@ -225,7 +107,6 @@ class MonitoringFragment :
                 Status.SUCCESS -> {
                     listener?.hideProgress()
                     response.data?.body()?.data?.let {
-                        val ActvtyList = Gson().toJson(it)
                         binding.actList.apply {
                             layoutManager = LinearLayoutManager(
                                 requireActivity(),
@@ -233,7 +114,14 @@ class MonitoringFragment :
                                 false
                             )
                             adapter =
-                                ActlistAdapter(it)
+                                ActlistAdapter(this@MonitoringFragment,it,object:IActivityTypeItemClick{
+                                    override fun getActvityTypeId(typeid: Int) {
+                                        type_id=typeid
+                                        LoggerUtils.error("typeid",type_id.toString())
+                                    }
+
+
+                                })
 
 
                         }
@@ -253,35 +141,72 @@ class MonitoringFragment :
 
         }
     }
-    private fun showTaskFormListDialog(schoolId: Int?, name: String?, address: String?) {
-        taskViewModel.getAllTaskActList().observe(viewLifecycleOwner, { response ->
-            when (response.status) {
-                Status.LOADING -> {
-                    listener?.showProgress()
-                }
-                Status.SUCCESS -> {
-                    listener?.hideProgress()
-                    response.data?.body()?.let { activityList ->
-                        val taskActvtyList = Gson().toJson(activityList)
-                        val taskListDialog = TaskFormListDialog.newInstance(taskActvtyList)
-                        taskListDialog.registerTaskDialogCallback(object:ITaskDialogCallback{
-                            override fun gotoQuestionsScreen(id: Int) {
-                                listener?.gotoSurveyQuestionScreen(id,name,address)
-                            }
-                        })
-                        taskListDialog.show(requireActivity().supportFragmentManager,TaskFormListDialog.TAG)
-                    }
-                }
-                Status.ERROR -> {
-                    listener?.hideProgress()
-                    response.message?.let {
-                        showAppAlert(requireActivity(), "Alert", it, null)
+
+
+fun fecthcluster() {
+    homeViewModel.fetchAllCluster(block_id!!).observe(this) { response ->
+        when (response.status) {
+            Status.LOADING -> {
+                listener?.showProgress()
+            }
+            Status.SUCCESS -> {
+
+                listener?.hideProgress()
+                binding.listBlockname.visibility=View.VISIBLE
+                binding.view.visibility=View.VISIBLE
+                clusterNames = mutableListOf()
+                response.data?.body()?.data?.let {
+                    allClusters = it
+                    allClusters!!.forEachIndexed { _, clusterData ->
+                        binding.rclyClusterlist.apply {
+                            layoutManager = LinearLayoutManager(
+                                context,
+                                RecyclerView.VERTICAL,
+                                false
+                            )
+
+                            adapter =
+                                ClusterAdapterlist(
+                                    requireActivity(),
+                                    allClusters!!,
+                                    type_id,
+                                    object : IClusterListItemClick {
+                                        override fun IClusterListItemClick(
+                                            name: String?,
+                                            id: Int?
+                                        ) {
+                                            if (id != null) {
+                                                LoggerUtils.error("name", name)
+                                                LoggerUtils.error("name", id.toString())
+                                                selected_clusterId = id
+                                            }
+
+
+                                        }
+
+                                        override fun showDialog(id: Int?) {
+
+                                        }
+
+
+                                    })
+                        }
                     }
                 }
             }
-        })
+            Status.ERROR -> {
+                listener?.hideProgress()
+                response.message?.let {
+                    showAppAlert(requireActivity(), "Alert", it, null)
+                    // Toast.makeText(this,response.message.toString(),Toast.LENGTH_LONG).show()
+                }
+            }
+        }
 
     }
+}
+
+
 
     companion object {
         val TAG: String = "SummaryFragment"

@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cwsn.mobileapp.BuildConfig
 import com.cwsn.mobileapp.R
 import com.cwsn.mobileapp.databinding.AppDashboardLayoutBinding
+import com.cwsn.mobileapp.model.home.Actlist_data
 import com.cwsn.mobileapp.model.home.SlideModel
 import com.cwsn.mobileapp.network.APIService
 import com.cwsn.mobileapp.network.Status
@@ -29,6 +30,7 @@ import com.cwsn.mobileapp.view.adapter.SlidePanelAdapter
 import com.cwsn.mobileapp.view.base.BaseActivity
 import com.cwsn.mobileapp.view.callback.*
 import com.cwsn.mobileapp.view.service.GPSTracker
+import com.cwsn.mobileapp.viewmodel.home.HomeViewModel
 import com.cwsn.mobileapp.viewmodel.localdb.DbViewModel
 import com.cwsn.mobileapp.viewmodel.shared.SharedViewModel
 import com.gun0912.tedpermission.PermissionListener
@@ -43,6 +45,11 @@ class AppDashboard : BaseActivity<AppDashboardLayoutBinding>(), IHomeFragCallbac
 ISchoolListCallback,IResourceRoomCallback, IMonitoringFragCallback,
     ITaskActvtFragCallback,IQuestionListCallback,ISchoolVisitedFragCallback,
     ISchoolPendingFragCallback{
+    private var block_id: Int? = null
+    private var type_id: Int? = null
+    private var allActlist: ArrayList<Actlist_data>? = null
+    private var cluster_id: Int? = null
+
     private val appPref by inject<AppPreferences>()
     private val dbViewModel by viewModel<DbViewModel>()
     private lateinit var navController: NavController
@@ -51,6 +58,7 @@ ISchoolListCallback,IResourceRoomCallback, IMonitoringFragCallback,
     private lateinit var drawerAdapter: SlidePanelAdapter
     private var locManager: LocationManager? = null
     private var gpsEnabled = false
+    private val homeViewModel by inject<HomeViewModel>()
     private var locIntent: Intent? = null
     private val sharedViewModel by viewModel<SharedViewModel>()
 
@@ -88,6 +96,10 @@ ISchoolListCallback,IResourceRoomCallback, IMonitoringFragCallback,
         navController = Navigation.findNavController(this, R.id.app_nav_host_fragment)
         NavigationUI.setupWithNavController(binding.navTopView,navController)
         setUpNavigationDrawer()
+        val userLoginData = appPref.getUserLoginData()
+
+        block_id = userLoginData[appPref.KEY_BLOCK_ID]?.toInt()
+        cluster_id = userLoginData[appPref.KEY_CLUSTER_ID]?.toInt()
 
     }
 
@@ -126,7 +138,7 @@ ISchoolListCallback,IResourceRoomCallback, IMonitoringFragCallback,
         fragmentTransaction.replace(R.id.ll_fragContainer, summaryFragment, SurveyFragment.TAG)
         fragmentTransaction.commit()*/
     }
-    
+
     private fun gotoUserProfileScreen() {
         val profileIntent = Intent(getContext(), UserProfileActivity::class.java)
         startActivity(profileIntent)
@@ -352,6 +364,43 @@ ISchoolListCallback,IResourceRoomCallback, IMonitoringFragCallback,
             }
         })
     }
+//    fun fecthActivityType() {
+//        homeViewModel.getActivityType().observe(this) { response ->
+//            when (response.status) {
+//                Status.LOADING -> {
+//                    showProgress()
+//
+//                }
+//                Status.SUCCESS -> {
+//                   hideProgress()
+//                    response.data?.body()?.data?.let {
+//                        binding.actList.apply {
+//                            layoutManager = LinearLayoutManager(
+//                                context,
+//                                RecyclerView.HORIZONTAL,
+//                                false
+//                            )
+//                            adapter =
+//                                ActlistAdapter(it)
+//
+//
+//                        }
+//
+//                    }
+//                }
+//
+//
+//                Status.ERROR -> {
+//                  hideProgress()
+//                    response.message?.let {
+//                        showAppAlert(this, "Alert", it, null)
+//                        // Toast.makeText(this,response.message.toString(),Toast.LENGTH_LONG).show()
+//                    }
+//                }
+//            }
+//
+//        }
+  //  }
 
     override fun onUserBackPressed() {
         if (isHomeFragment()) {

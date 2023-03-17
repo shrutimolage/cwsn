@@ -3,6 +3,7 @@ package com.cwsn.mobileapp.view.adapter
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.cwsn.mobileapp.databinding.ClusterNamelistBinding
 import com.cwsn.mobileapp.model.home.ClusterData
@@ -10,9 +11,10 @@ import com.cwsn.mobileapp.utils.LoggerUtils
 import com.cwsn.mobileapp.view.activity.FieldActivity
 import com.cwsn.mobileapp.view.activity.VisitActivity
 import com.cwsn.mobileapp.view.callback.IClusterListItemClick
+import com.cwsn.mobileapp.view.fragment.MonitoringFragment
 
 class ClusterAdapterlist(
-    val activity: FieldActivity, var clusterlist: List<ClusterData>,
+    val activity: FragmentActivity, var clusterlist: List<ClusterData>,
     type_id: Int?,
     private val listener: IClusterListItemClick
 ) : RecyclerView.Adapter<ClusterAdapterlist.ViewHolder>() {

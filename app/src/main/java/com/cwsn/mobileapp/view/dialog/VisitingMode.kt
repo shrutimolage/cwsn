@@ -20,8 +20,6 @@ import com.google.gson.Gson
 import org.koin.android.ext.android.inject
 
 class VisitingMode : DialogFragment() {
-    val TAG: String =
-        VisitingMode::class.java.getSimpleName()
     private var clusterid: Int? = null
     private var _binding: com.cwsn.mobileapp.databinding.DialogVisitingmodeBinding? = null
     private val binding get() = _binding!!

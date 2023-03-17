@@ -57,7 +57,7 @@ class SchoolDetailsFragment : BaseFragment<FragmentSchoolDetailsBinding>(Fragmen
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.schoolToolbar.toolbarTitle.text="SCHOOL DETAILS"
+        binding.schoolToolbar.toolbarTitle.text="School Details"
         binding.schoolToolbar.navigationBar.setOnClickListener {
             listener?.onUserBackPressed()
         }
@@ -73,10 +73,10 @@ class SchoolDetailsFragment : BaseFragment<FragmentSchoolDetailsBinding>(Fragmen
                 Status.SUCCESS->{
                     listener?.hideProgress()
                     response.data?.body()?.data?.let {
-                        schoolCountList.add(SchoolCountData("Cwsn Enrollment",it.cwsn_enrollment, R.drawable.ic_visited_school_icon))
-                        schoolCountList.add(SchoolCountData("School Having Cwsn",it.schoolHavingCWSN,R.drawable.ic_school_icon))
-                        schoolCountList.add(SchoolCountData("School Having Ramps",it.schoolHavingRamps,R.drawable.school_having_ramps_icon))
-                        schoolCountList.add(SchoolCountData("School Having Cwsn Toilet",it.totalCwsnToilet,R.drawable.ic_cwsn_school_toilet))
+                        schoolCountList.add(SchoolCountData("CWSN Enrollment",it.cwsn_enrollment, R.drawable.ic_visited_school_icon))
+                        schoolCountList.add(SchoolCountData("Schools Having CWSN",it.schoolHavingCWSN,R.drawable.ic_school_icon))
+                        schoolCountList.add(SchoolCountData("Schools Having Ramps",it.schoolHavingRamps,R.drawable.school_having_ramps_icon))
+                        schoolCountList.add(SchoolCountData("Schools Having CWSN Toilet",it.totalCwsnToilet,R.drawable.ic_cwsn_school_toilet))
                         binding.rclySchoolDetails.apply {
                             layoutManager=LinearLayoutManager(requireActivity(),RecyclerView.VERTICAL, false)
                             adapter=SchoolAllDataAdapter(schoolCountList as ArrayList<SchoolCountData>)

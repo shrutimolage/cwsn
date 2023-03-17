@@ -68,7 +68,7 @@ class SchoolPendingFrag : BaseFragment<FragmentSchoolPendingBinding>(FragmentSch
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.toolbar.toolbarTitle.text="SCHOOL PENDING"
+        binding.toolbar.toolbarTitle.text="School Pending"
         binding.toolbar.navigationBar.setOnClickListener {
             listener?.onUserBackPressed()
         }

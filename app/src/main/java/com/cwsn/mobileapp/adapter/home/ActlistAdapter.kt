@@ -15,36 +15,50 @@ import com.cwsn.mobileapp.model.home.AllActData
 import com.cwsn.mobileapp.model.home.ItemCount
 import com.cwsn.mobileapp.view.activity.FieldActivity
 import com.cwsn.mobileapp.view.activity.QuestionActivity
+import com.cwsn.mobileapp.view.callback.IActivityTypeItemClick
+import com.cwsn.mobileapp.view.fragment.MonitoringFragment
 import com.gun0912.tedpermission.provider.TedPermissionProvider
 import kotlin.contracts.contract
 
-class ActlistAdapter(private val data: List<AllActData>) :
+class ActlistAdapter(private val activty:MonitoringFragment,private val data: List<AllActData>,private val listner: IActivityTypeItemClick) :
     RecyclerView.Adapter<ActlistAdapter.CourseViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
-    ): ActlistAdapter.CourseViewHolder {
+        viewType: Int): ActlistAdapter.CourseViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(
             R.layout.actlist_row,
             parent, false
         )
+
 
         return CourseViewHolder(itemView)
     }
 
 
     override fun onBindViewHolder(holder: ActlistAdapter.CourseViewHolder, position: Int) {
+
+        if(data.get(position).id == 2) {
+            holder.courseIV.setImageResource(R.drawable.field_visit)
+
+        }
+        else{
+            holder.courseIV.setImageResource(R.drawable.in_office)
+        }
         holder.courseNameTV.text = data.get(position).name
         holder.courseIV.setOnClickListener {
-            if (data.get(position).id == 2) {
-                val intent = Intent(TedPermissionProvider.context, FieldActivity::class.java)
-                intent.putExtra("typeid", 2)
+            if(data.get(position).id == 2) {
+                listner.getActvityTypeId(data.get(position).id)
+              activty.fecthcluster()
+
+              //  val intent = Intent(TedPermissionProvider.context, FieldActivity::class.java)
+              //  intent.putExtra("typeid", 2)
 //            intent.putExtra("schooladress",schoolList.address)
 //            intent.putExtra("id",schoolList.id)
 
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                TedPermissionProvider.context.startActivity(intent)
+              //  intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+              //  TedPermissionProvider.context.startActivity(intent)
             }
+
 
         }
 

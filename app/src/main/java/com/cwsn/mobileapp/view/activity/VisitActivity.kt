@@ -20,12 +20,11 @@ import com.cwsn.mobileapp.utils.LoggerUtils
 import com.cwsn.mobileapp.view.adapter.ActvityLitstAdapterList
 import com.cwsn.mobileapp.view.adapter.SchoolListAdapter
 import com.cwsn.mobileapp.view.base.BaseActivity
-import com.cwsn.mobileapp.view.callback.IActivityTypeCallback
-import com.cwsn.mobileapp.view.callback.IAppBaseCallback
-import com.cwsn.mobileapp.view.callback.IMonitoringFragCallback
-import com.cwsn.mobileapp.view.callback.ISchoolListItemClick
+import com.cwsn.mobileapp.view.callback.*
+import com.cwsn.mobileapp.view.dialog.TaskFormListDialog
 import com.cwsn.mobileapp.viewmodel.home.HomeViewModel
 import com.cwsn.mobileapp.viewmodel.monitoring.MonitorViewModel
+import com.google.gson.Gson
 import org.koin.android.ext.android.inject
 
 class VisitActivity : BaseActivity<ActivityVisitBinding>() , IAppBaseCallback {
@@ -112,6 +111,7 @@ class VisitActivity : BaseActivity<ActivityVisitBinding>() , IAppBaseCallback {
     }
 
     override fun onActResume() {
+        binding.toolbar.toolbarTitle.text="Activities"
 
         formactivties()
         binding.imgCloseDialog.setOnClickListener {
@@ -166,8 +166,20 @@ class VisitActivity : BaseActivity<ActivityVisitBinding>() , IAppBaseCallback {
                                             LoggerUtils.error("format_id", id.toString())
                                             format_id = id
                                             cluster_id?.let { fetchSchoolList(it) }
+//                                            val taskActvtyList = Gson().toJson(allActlist)
+//                                            val taskListDialog = TaskFormListDialog.newInstance(taskActvtyList)
+//                                            taskListDialog.registerTaskDialogCallback(object:
+//                                                ITaskDialogCallback {
+//                                                override fun gotoQuestionsScreen(id: Int) {
+//                                                 //   listener?.gotoSurveyQuestionScreen(id,name,address)
+//                                                }
+//                                            })
+//                                            taskListDialog.show(supportFragmentManager,
+//                                                TaskFormListDialog.TAG)
 
-                                        }
+                                    }
+
+
 
 
                                     }

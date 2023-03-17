@@ -67,7 +67,7 @@ class SchoolVisitedFrag : BaseFragment<FragmentSchoolVisitedBinding>(FragmentSch
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.toolbar.toolbarTitle.text="VISITED SCHOOL"
+        binding.toolbar.toolbarTitle.text="Visited School"
         binding.toolbar.navigationBar.setOnClickListener {
             listener?.onUserBackPressed()
         }

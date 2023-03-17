@@ -37,7 +37,8 @@ import org.koin.android.ext.android.inject
 import java.lang.Exception
 import java.lang.reflect.Array.getInt
 
-class QuestionActivity : BaseActivity<ActivityQuestionBinding>(), IQuestionListCallback {
+class QuestionActivity : BaseActivity<ActivityQuestionBinding>(), IQuestListInterface,
+    IQuestionListCallback {
     private var locationAddress: String? = null
     private var teacherId: String? = null
     private lateinit var questAdapter: QuestionListAdapter
@@ -45,14 +46,14 @@ class QuestionActivity : BaseActivity<ActivityQuestionBinding>(), IQuestionListC
     private var block_name: String? = null
     private var district_name: String? = null
     private var district_id: Int? = null
-    private var homeFragment:HomeFragment?=null
-    private var appDashboard:AppDashboard?=null
+    private var homeFragment: HomeFragment? = null
+    private var appDashboard: AppDashboard? = null
     private var school_id: Int? = null
     private var schoolName: String? = null
     private var block_id: Int? = null
     private var cluster_id: Int? = null
     private var blo: Int? = null
-    private var formId: Int? =null
+    private var formId: Int? = null
     private var formatId: Int? = 0
     private val viewModel by inject<SurveyViewModel>()
     private var listener: IQuestionListCallback? = null
@@ -88,17 +89,26 @@ class QuestionActivity : BaseActivity<ActivityQuestionBinding>(), IQuestionListC
         return findViewById(R.id.navigationBar)
     }
 
+
     override fun onUserBackPressed() {
         finish()
     }
 
     override fun showProgress() {
-        showProgressDialog()
+        TODO("Not yet implemented")
     }
 
     override fun hideProgress() {
-       hideProgressDialog()
+        TODO("Not yet implemented")
     }
+//
+//    override fun showProgress() {
+//        showProgressDialog()
+//    }
+//
+//    override fun hideProgress() {
+//       hideProgressDialog()
+//    }
 
     override fun onToolbarBackArrowPress() {
     }
@@ -108,18 +118,7 @@ class QuestionActivity : BaseActivity<ActivityQuestionBinding>(), IQuestionListC
     }
 
     override fun onActStart() {
-
-        try {
-            if (context is IQuestionListCallback) {
-                listener = this
-            }
-        } catch (ex: Exception) {
-            ex.printStackTrace()
-            throw ClassCastException(
-                context.toString()
-                        + " must implement IQuestionListCallback"
-            )
-        }
+        binding.surveyToolbar.toolbarTitle.text="School Survey"
 
         val callback: OnBackPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -132,7 +131,17 @@ class QuestionActivity : BaseActivity<ActivityQuestionBinding>(), IQuestionListC
 
     @SuppressLint("SetTextI18n")
     override fun onActCreate() {
-
+        try {
+            if (context is IQuestListInterface) {
+                listener = this
+            }
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+            throw ClassCastException(
+                context.toString()
+                        + " must implement IQuestListInterface"
+            )
+        }
         teacherId = appPref.getUserLoginData()[appPref.KEY_TEACHER_ID]
         block_id = appPref.getUserLoginData()[appPref.KEY_BLOCK_ID]?.toInt()
         cluster_id = appPref.getUserLoginData()[appPref.KEY_CLUSTER_ID]?.toInt()
@@ -146,9 +155,6 @@ class QuestionActivity : BaseActivity<ActivityQuestionBinding>(), IQuestionListC
             schoolName = extras.getString("schoolname")
             schoolAddress = extras.getString("schooladress")
             formatId = extras.getInt("formatid")
-
-
-            LoggerUtils.error("id", formId.toString())
             LoggerUtils.error("name", schoolName.toString())
             LoggerUtils.error("name", schoolAddress.toString())
             LoggerUtils.error("formatId", formatId.toString())
@@ -174,31 +180,27 @@ class QuestionActivity : BaseActivity<ActivityQuestionBinding>(), IQuestionListC
                 surveyRequest.add(surveyInput!!)
             }
 
-                    LoggerUtils.error("districtid", district_id.toString())
-                    LoggerUtils.error("name", "west")
-                    LoggerUtils.error("formatid", formatId.toString())
-                    viewModel.saveSurveyData(surveyRequest).observe(this) { response ->
-                        when (response.status) {
-                            Status.LOADING -> {
-                                showProgress()
-                            }
-                            Status.SUCCESS -> {
-                                hideProgressDialog()
-                                showCustomToast(context, "Survey Saved Successfully")
-                            //  finish()
-                                val intent= Intent(this,AppDashboard::class.java)
-                                startActivity(intent)
-                              //  appDashboard?.gotoHomeScreen()
-                               // listener?.gotoHomeScreen()
+            LoggerUtils.error("districtid", district_id.toString())
+            LoggerUtils.error("name", "west")
+            LoggerUtils.error("formatid", formatId.toString())
+            viewModel.saveSurveyData(surveyRequest).observe(this) { response ->
+                when (response.status) {
+                    Status.LOADING -> {
+                        showProgressDialog()
+                    }
+                    Status.SUCCESS -> {
+                        hideProgressDialog()
+                        showCustomToast(context, "Survey Saved Successfully")
+                        //  finish()
+                        gotoDashBoard()
 
-                            }
-                            Status.ERROR -> {
-                               hideProgress()
-                                response.message?.let {
-                                    showAppAlert(this, "Alert", it, null)
-                                }
-                            }
-
+                    }
+                    Status.ERROR -> {
+                        hideProgressDialog()
+                        response.message?.let {
+                            showAppAlert(this, "Alert", it, null)
+                        }
+                    }
 
 
                 }
@@ -206,10 +208,10 @@ class QuestionActivity : BaseActivity<ActivityQuestionBinding>(), IQuestionListC
         }
 
 
-
-
-
-
+    }
+    private fun gotoDashBoard(){
+        val intent = Intent(this, AppDashboard::class.java)
+        startActivity(intent)
     }
 
 
@@ -223,7 +225,7 @@ class QuestionActivity : BaseActivity<ActivityQuestionBinding>(), IQuestionListC
         ) { response ->
             when (response.status) {
                 Status.LOADING -> {
-             showProgress()
+                    showProgressDialog()
                 }
                 Status.SUCCESS -> {
                     hideProgressDialog()
@@ -263,21 +265,26 @@ class QuestionActivity : BaseActivity<ActivityQuestionBinding>(), IQuestionListC
                     }
                 }
                 Status.ERROR -> {
-                    listener?.hideProgress()
+                 hideProgressDialog()
                     response.message?.let {
                         showAppAlert(this, "Alert", it, null)
+
                     }
                 }
             }
         }
-binding.surveyToolbar.imgGoBack.setOnClickListener{
-    finish()
-}
+        binding.surveyToolbar.navigationBar.setOnClickListener {
+            finish()
+        }
     }
 
 
     override fun onActStop() {
 
+    }
+
+    override fun refreshListAtPos(position: Int) {
+        TODO("Not yet implemented")
     }
 
 

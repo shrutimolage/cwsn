@@ -23,10 +23,11 @@ class LoginViewModel(private val loginRepos:LoginRepository):ViewModel()
                 loginResponse.body()?.data?.let {loginData->
                     if(loginData.appLogin==1){
                         loginData.districtId?.let {
-                            loginRepos.savedUserSession(loginData.token!!,loginData.id!!,
-                                loginData.name!!,loginData.blockId!!,
-                                loginData.blockName!!, loginData.clusterId!!, it,loginData.district_name
-                            )
+                            loginData.clusterId?.let { it1 ->
+                                loginRepos.savedUserSession(loginData.token!!,loginData.id!!,
+                                    loginData.name!!,loginData.blockId!!,
+                                    loginData.blockName!!, it1, it,loginData.district_name)
+                            }
                         }
                         emit(Resource.success(data = loginResponse, message = Utils.API_SUCCESS))
                     }
