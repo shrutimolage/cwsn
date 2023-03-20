@@ -3,11 +3,10 @@ package com.cwsn.mobileapp.view.fragment
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.cwsn.mobileapp.adapter.home.ActlistAdapter
+import com.cwsn.mobileapp.adapter.home.MonitorActvityTypeAdapter
 import com.cwsn.mobileapp.databinding.FragmentMonitoringBinding
 import com.cwsn.mobileapp.model.home.Actlist_data
 import com.cwsn.mobileapp.model.home.ClusterData
@@ -21,8 +20,6 @@ import com.cwsn.mobileapp.view.callback.IActivityTypeItemClick
 import com.cwsn.mobileapp.view.callback.IClusterListItemClick
 import com.cwsn.mobileapp.view.callback.IMonitoringFragCallback
 import com.cwsn.mobileapp.viewmodel.home.HomeViewModel
-import com.cwsn.mobileapp.viewmodel.monitoring.MonitorViewModel
-import com.cwsn.mobileapp.viewmodel.task.TaskViewModel
 import org.koin.android.ext.android.inject
 
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -46,9 +43,7 @@ class MonitoringFragment :
     private var allActlist: ArrayList<Actlist_data>? = null
     private var cluster_id: Int? = null
     private var listener: IMonitoringFragCallback? = null
-    private val monitorViewModel by inject<MonitorViewModel>()
     private val homeViewModel by inject<HomeViewModel>()
-    private val taskViewModel by inject<TaskViewModel>()
     private lateinit var allact: List<Data>
 
     private val appPref by inject<AppPreferences>()
@@ -114,7 +109,7 @@ class MonitoringFragment :
                                 false
                             )
                             adapter =
-                                ActlistAdapter(this@MonitoringFragment,it,object:IActivityTypeItemClick{
+                                MonitorActvityTypeAdapter(this@MonitoringFragment,it,object:IActivityTypeItemClick{
                                     override fun getActvityTypeId(typeid: Int) {
                                         type_id=typeid
                                         LoggerUtils.error("typeid",type_id.toString())
@@ -204,8 +199,11 @@ fun fecthcluster() {
         }
 
     }
-}
 
+}
+    fun inoffice() {
+        showCustomToast(requireActivity(), "in-office")
+    }
 
 
     companion object {

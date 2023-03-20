@@ -166,16 +166,7 @@ class VisitActivity : BaseActivity<ActivityVisitBinding>() , IAppBaseCallback {
                                             LoggerUtils.error("format_id", id.toString())
                                             format_id = id
                                             cluster_id?.let { fetchSchoolList(it) }
-//                                            val taskActvtyList = Gson().toJson(allActlist)
-//                                            val taskListDialog = TaskFormListDialog.newInstance(taskActvtyList)
-//                                            taskListDialog.registerTaskDialogCallback(object:
-//                                                ITaskDialogCallback {
-//                                                override fun gotoQuestionsScreen(id: Int) {
-//                                                 //   listener?.gotoSurveyQuestionScreen(id,name,address)
-//                                                }
-//                                            })
-//                                            taskListDialog.show(supportFragmentManager,
-//                                                TaskFormListDialog.TAG)
+
 
                                     }
 

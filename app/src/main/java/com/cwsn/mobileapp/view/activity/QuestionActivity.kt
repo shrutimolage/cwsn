@@ -95,11 +95,11 @@ class QuestionActivity : BaseActivity<ActivityQuestionBinding>(), IQuestListInte
     }
 
     override fun showProgress() {
-        TODO("Not yet implemented")
+       showProgressDialog()
     }
 
     override fun hideProgress() {
-        TODO("Not yet implemented")
+        hideProgressDialog()
     }
 //
 //    override fun showProgress() {
@@ -225,7 +225,7 @@ class QuestionActivity : BaseActivity<ActivityQuestionBinding>(), IQuestListInte
         ) { response ->
             when (response.status) {
                 Status.LOADING -> {
-                    showProgressDialog()
+                    showProgress()
                 }
                 Status.SUCCESS -> {
                     hideProgressDialog()

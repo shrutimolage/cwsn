@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ll_activitytype"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="top|center"
         android:gravity="center"
+
         android:orientation="horizontal"
         android:visibility="visible"
         android:weightSum="1">
@@ -39,6 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="0.2"
+            android:id="@+id/linear"
             android:background="@drawable/card_drop_shadow_white_bg"
             android:orientation="vertical">
 
@@ -56,11 +58,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:fontFamily="@font/montserrat_medium"
-                android:padding="2dp"
                 android:layout_marginBottom="5dp"
                 android:text="Field-Visit"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_15" />
-        </LinearLayout>
-    </LinearLayout>
-</LinearLayout>
+        </LinearLayout></LinearLayout>
+    </androidx.cardview.widget.CardView>

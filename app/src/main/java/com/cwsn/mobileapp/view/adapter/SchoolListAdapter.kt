@@ -3,6 +3,7 @@ package com.cwsn.mobileapp.view.adapter
 import android.R
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat.startActivity
@@ -57,8 +58,15 @@ class SchoolListAdapter(private val schoolList:List<SchoolData>,
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bindItems(schoolList[position])
+//        holder.itemView.setOnClickListener {
+//            selectedItemPosition = position
+//            notifyDataSetChanged()
+//
+//        }
+//        if(selectedItemPosition == position) {
+//            holder.itemView.setBackgroundColor(Color.parseColor("#F2F2FF"))
+//    }
     }
-
     override fun getItemCount(): Int {
         return schoolList.size
     }

@@ -6,10 +6,12 @@
     android:weightSum="1"
     android:layout_margin="5dp"
     android:id="@+id/ll_resRoomListItem"
-    android:background="@drawable/card_drop_shadow_white_bg"
     android:layout_height="90dp">
-
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/card_drop_shadow_white_bg"
+    android:orientation="horizontal">
     <ImageView
         android:id="@+id/img_itemImage"
         android:layout_width="0dp"
@@ -51,7 +53,7 @@
             android:textColor="@color/green_btn_color"
             android:text="363" />
 
-
+    </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

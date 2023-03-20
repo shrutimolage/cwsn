@@ -108,25 +108,7 @@ class QuestionListFragment : BaseFragment<FragmentQuestionListBinding>(FragmentQ
                 surveyRequest.add(surveyInput)
             }
 
-//            viewModel.saveSurveyData(surveyRequest).observe(viewLifecycleOwner, { response->
-//                when(response.status){
-//                    Status.LOADING->{
-//                        listener?.showProgress()
-//                    }
-//                    Status.SUCCESS->{
-//                        listener?.hideProgress()
-//                        showCustomToast(requireActivity(),"Survey Saved Successfully")
-  //                     listener?.gotoHomeScreen()
-//                    }
-//                    Status.ERROR->{
-//                        listener?.hideProgress()
-//                        response.message?.let {
-//                            showAppAlert(requireActivity(),"Alert",it,null)
-//                        }
-//                    }
-//                }
-//            })
-//        }
+
         }
     }
     override fun onResume() {

@@ -23,6 +23,7 @@
     <color name="transparent_black">#12000000</color>
     <color name="colorPrimaryDark">#0262AF</color>
     <color name="app_light_color">#87C2F1</color>
+    <color name="selecteditem_color">#F2F2FF</color>
     <color name="white_cardview_bgcolor">#F1E3E2</color>
     <color name="transparent">#00000000</color>
 

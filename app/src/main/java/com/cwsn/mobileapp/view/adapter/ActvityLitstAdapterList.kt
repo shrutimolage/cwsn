@@ -1,8 +1,11 @@
 package com.cwsn.mobileapp.view.adapter
 
+import android.annotation.SuppressLint
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.cwsn.mobileapp.R
 import com.cwsn.mobileapp.databinding.RowTaskActivityLayoutBinding
 import com.cwsn.mobileapp.model.home.Actlist_data
 import com.cwsn.mobileapp.model.school.SchoolData
@@ -15,20 +18,31 @@ class ActvityLitstAdapterList(
     private val ActvityList: ArrayList<Actlist_data>,
     private val listener: IActivityTypeCallback
 ) : RecyclerView.Adapter<ActvityLitstAdapterList.ViewHolder>() {
-
+    private var selectedItemPosition: Int?=null
     inner class ViewHolder(private val binding: RowTaskActivityLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bindItems(acvityList: Actlist_data /* = java.util.ArrayList<com.cwsn.mobileapp.model.home.Actlist_data> */) {
             binding.tvFieldName.text = acvityList.name
+
+            if(position==0){
+                binding.imageView3.setImageResource(R.drawable.schoolactivity)
+            }
+            if(position==1){
+                binding.imageView3.setImageResource(R.drawable.kgbv)
+            }
+            if(position==2){
+                binding.imageView3.setImageResource(R.drawable.resource_activity)
+
+            }
+            if(position==3){
+                binding.imageView3.setImageResource(R.drawable.homebased_education)
+
+            }
+
+
+
             binding.tvFieldName.setOnClickListener {
                 listener.getTaskId(acvityList.id)
-//                val intent  = Intent (TedPermissionProvider.context, QuestionActivity::class.java)
-//                intent.putExtra("schoolname",schoolList.name)
-//                intent.putExtra("schooladress",schoolList.address)
-//                intent.putExtra("id",schoolList.id)
-//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                TedPermissionProvider.context.startActivity(intent)
-
 
             }
         }
@@ -45,8 +59,18 @@ class ActvityLitstAdapterList(
         return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, @SuppressLint("RecyclerView") position: Int) {
         holder.bindItems(ActvityList[position])
+        holder.itemView.setOnClickListener {
+            selectedItemPosition = position
+            notifyDataSetChanged()
+        }
+        if (selectedItemPosition == position) {
+            holder.itemView.setBackgroundColor(Color.parseColor("#F2F2FF"))
+        }
+        else{
+            holder.itemView.setBackgroundColor(Color.parseColor("#FFFFFF"))
+        }
     }
 
     override fun getItemCount(): Int {

@@ -1,5 +1,7 @@
 package com.cwsn.mobileapp.view.adapter
 
+import android.annotation.SuppressLint
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -11,6 +13,7 @@ import com.cwsn.mobileapp.view.callback.IResRoomListCallback
 class ResrceRoomAdapter(private val datalist:ArrayList<ResRoomDetails>,
 private val listener:IResRoomListCallback) :RecyclerView.Adapter<ResrceRoomAdapter.ViewHolder>()
 {
+    private var selectedItemPosition: Int?=null
     inner class ViewHolder(private val binding:RowSchoolListItemLayoutBinding):
         RecyclerView.ViewHolder(binding.root){
         fun bindItems(resRoomDetails: ResRoomDetails, listener: IResRoomListCallback, position: Int) {
@@ -35,8 +38,18 @@ private val listener:IResRoomListCallback) :RecyclerView.Adapter<ResrceRoomAdapt
         return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, @SuppressLint("RecyclerView") position: Int) {
         holder.bindItems(datalist[position],listener,position)
+        holder.itemView.setOnClickListener{
+            selectedItemPosition = position
+            notifyDataSetChanged()
+
+        }
+        if(selectedItemPosition == position) {
+            holder.itemView.setBackgroundColor(Color.parseColor("#F2F2FF"))
+        }else{
+            holder.itemView.setBackgroundColor(Color.parseColor("#FFFFFF"))
+        }
     }
 
     override fun getItemCount(): Int {
