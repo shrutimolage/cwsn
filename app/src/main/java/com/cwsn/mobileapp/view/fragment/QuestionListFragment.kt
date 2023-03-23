@@ -94,22 +94,34 @@ class QuestionListFragment : BaseFragment<FragmentQuestionListBinding>(FragmentQ
 //        binding.surveyToolbar.imgGoBack.setOnClickListener {
 //            listener?.onUserBackPressed()
 //        }
-        binding.txtSubmitAnswer.setOnClickListener {
-            updateQuestionList.forEachIndexed { index, questionData ->
-                LoggerUtils.error("TAG", questionData.userTextAnswer)
-
-
-                val surveyInput = SurveyInput(
-                    questionData.id,
-                    questionData.schoolId?.toInt(), teacherId?.toInt(),
-                    questionData.question, questionData.type, questionData.formatName,
-                    questionData.userTextAnswer, locationAddress, formId
-                )
-                surveyRequest.add(surveyInput)
-            }
-
-
-        }
+//        binding.txtSubmitAnswer.setOnClickListener {
+//            updateQuestionList.forEachIndexed { index, questionData ->
+//                LoggerUtils.error("TAG", questionData.userTextAnswer)
+//                val surveyInput=SurveyInput(questionData.id,
+//                    questionData.schoolId?.toInt(),teacherId?.toInt(),
+//                    questionData.question,questionData.type,questionData.formatName,
+//                    questionData.userTextAnswer,formId,locationAddress)
+//                surveyRequest.add(surveyInput)
+//            }
+//            viewModel.saveSurveyData(surveyRequest).observe(viewLifecycleOwner, { response->
+//                when(response.status){
+//                    Status.LOADING->{
+//                        listener?.showProgress()
+//                    }
+//                    Status.SUCCESS->{
+//                        listener?.hideProgress()
+//                        showCustomToast(requireActivity(),"Survey Saved Successfully")
+//                        listener?.gotoHomeScreen()
+//                    }
+//                    Status.ERROR->{
+//                        listener?.hideProgress()
+//                        response.message?.let {
+//                            showAppAlert(requireActivity(),"Alert",it,null)
+//                        }
+//                    }
+//                }
+//            })
+//        }
     }
     override fun onResume() {
         super.onResume()

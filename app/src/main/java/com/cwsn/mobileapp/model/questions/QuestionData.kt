@@ -7,6 +7,7 @@ data class QuestionData(@SerializedName("id"                    ) var id        
                         @SerializedName("format_id"             ) var formatId           : Int?              = null,
                         @SerializedName("format_name"           ) var formatName         : String?           = null,
                         @SerializedName("question"              ) var question           : String?           = null,
+                        @SerializedName("question_id"           ) var question_id           : Int?           = null,
                         @SerializedName("type"                  ) var type               : String?           = null,
                         @SerializedName("is_required"           ) var isRequired         : Int?              = null,
                         @SerializedName("option_type"           ) var optionType         : String?           = null,

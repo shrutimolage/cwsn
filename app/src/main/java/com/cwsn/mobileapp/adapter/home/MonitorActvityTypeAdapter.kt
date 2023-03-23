@@ -50,16 +50,22 @@ class MonitorActvityTypeAdapter(
         if(selectedItemPosition == position) {
             holder.itemView.setBackgroundColor(Color.parseColor("#F2F2FF"))
 
-            if (data.get(position).id == 2) {
+            if (selectedItemPosition == 1) {
                 //    holder.courseIV.setColorFilter(R.color.selecteditem_color)
 
                 listner.getActvityTypeId(data.get(position).id)
                 activty.fecthcluster()
+            //    activty.showCustomToast(activty.requireActivity(),data.get(position).id.toString())
 
             }
             else{
 //                holder.itemView.setBackgroundColor(Color.parseColor("#FFFFFF"))
-                activty.inoffice()
+//                activty.inoffice()
+                if (selectedItemPosition == 0)
+                if (data.get(position).id == 1)
+                 //   activty.showCustomToast(activty.requireActivity(),data.get(position).id.toString())
+                listner.getActvityTypeId(data.get(position).id)
+                activty.fecthcluster()
 
             }
 

@@ -7,8 +7,10 @@ import androidx.lifecycle.liveData
 import com.cwsn.mobileapp.model.questions.QuestListInput
 import com.cwsn.mobileapp.model.questions.QuestionData
 import com.cwsn.mobileapp.model.questions.QuestionList
+import com.cwsn.mobileapp.model.survey.SurveyIn
 import com.cwsn.mobileapp.model.survey.SurveyInput
 import com.cwsn.mobileapp.model.survey.SurveyResponse
+import com.cwsn.mobileapp.model.survey.surveyformat
 import com.cwsn.mobileapp.network.Resource
 import com.cwsn.mobileapp.repository.impl.SurveyRepository
 import com.cwsn.mobileapp.utils.LoggerUtils
@@ -84,7 +86,7 @@ class SurveyViewModel(private val repos:SurveyRepository):ViewModel()
         }
     }
 
-    fun saveSurveyData(input:List<SurveyInput>) = liveData(Dispatchers.IO){
+    fun saveSurveyData(input: MutableList<SurveyIn>) = liveData(Dispatchers.IO){
         emit(Resource.loading(data = null))
         try {
             val response = repos.saveSurveyData(input)

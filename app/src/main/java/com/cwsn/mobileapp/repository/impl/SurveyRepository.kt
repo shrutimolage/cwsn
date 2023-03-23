@@ -6,8 +6,10 @@ import com.cwsn.mobileapp.local.table.MCQOptions
 import com.cwsn.mobileapp.model.questions.QuestListInput
 import com.cwsn.mobileapp.model.questions.Questions
 import com.cwsn.mobileapp.model.questions.SurveyQuestList
+import com.cwsn.mobileapp.model.survey.SurveyIn
 import com.cwsn.mobileapp.model.survey.SurveyInput
 import com.cwsn.mobileapp.model.survey.SurveyResponse
+import com.cwsn.mobileapp.model.survey.surveyformat
 import com.cwsn.mobileapp.network.ApiHelper
 import retrofit2.Response
 import retrofit2.http.Body
@@ -30,7 +32,7 @@ class SurveyRepository(private val apiHelper: ApiHelper,private val questDao: Qu
         return apiHelper.getAllSurveyServerQuestion(input)
     }
 
-    suspend fun saveSurveyData(input:List<SurveyInput>):Response<SurveyResponse>{
+    suspend fun saveSurveyData(input:List<SurveyIn>):Response<SurveyResponse>{
         return apiHelper.saveSurveyData(input)
     }
 }

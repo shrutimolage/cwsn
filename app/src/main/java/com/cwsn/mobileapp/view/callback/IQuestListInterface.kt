@@ -17,4 +17,6 @@ interface IQuestListInterface
     fun updateRadioOptionAnswer(questData: QuestionData,value:String){
 
     }
+
+//    fun SendDatatoserver()
 }

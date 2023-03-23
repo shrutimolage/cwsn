@@ -1,11 +1,8 @@
 package com.cwsn.mobileapp.view.activity
 
 import android.annotation.SuppressLint
-import android.app.PendingIntent.getActivity
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.LayoutInflater
@@ -16,26 +13,23 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cwsn.mobileapp.R
 import com.cwsn.mobileapp.databinding.ActivityQuestionBinding
-import com.cwsn.mobileapp.databinding.ActivitySchoolTypeBinding
 import com.cwsn.mobileapp.model.questions.QuestListInput
 import com.cwsn.mobileapp.model.questions.QuestionData
+import com.cwsn.mobileapp.model.survey.Answer
+import com.cwsn.mobileapp.model.survey.SurveyIn
 import com.cwsn.mobileapp.model.survey.SurveyInput
 import com.cwsn.mobileapp.network.Status
 import com.cwsn.mobileapp.utils.AppPreferences
 import com.cwsn.mobileapp.utils.LoggerUtils
-import com.cwsn.mobileapp.utils.Utils
-import com.cwsn.mobileapp.utils.toast
 import com.cwsn.mobileapp.view.adapter.QuestionListAdapter
 import com.cwsn.mobileapp.view.base.BaseActivity
 import com.cwsn.mobileapp.view.callback.IQuestListInterface
 import com.cwsn.mobileapp.view.callback.IQuestionListCallback
-import com.cwsn.mobileapp.view.dialog.ResetPwdDialog
 import com.cwsn.mobileapp.view.fragment.HomeFragment
 import com.cwsn.mobileapp.viewmodel.survey.SurveyViewModel
 import com.gun0912.tedpermission.provider.TedPermissionProvider.context
 import org.koin.android.ext.android.inject
 import java.lang.Exception
-import java.lang.reflect.Array.getInt
 
 class QuestionActivity : BaseActivity<ActivityQuestionBinding>(), IQuestListInterface,
     IQuestionListCallback {
@@ -58,7 +52,8 @@ class QuestionActivity : BaseActivity<ActivityQuestionBinding>(), IQuestListInte
     private val viewModel by inject<SurveyViewModel>()
     private var listener: IQuestionListCallback? = null
     private var updateQuestionList: MutableList<QuestionData> = mutableListOf()
-    private var surveyRequest: MutableList<SurveyInput> = mutableListOf()
+    private var answerlist: MutableList<Answer> = mutableListOf()
+    private var surveyRequest: MutableList<SurveyIn> = mutableListOf()
     private val appPref by inject<AppPreferences>()
     override fun inflateLayout(layoutInflater: LayoutInflater): ActivityQuestionBinding {
         return ActivityQuestionBinding.inflate(layoutInflater)
@@ -95,7 +90,7 @@ class QuestionActivity : BaseActivity<ActivityQuestionBinding>(), IQuestListInte
     }
 
     override fun showProgress() {
-       showProgressDialog()
+        showProgressDialog()
     }
 
     override fun hideProgress() {
@@ -118,7 +113,7 @@ class QuestionActivity : BaseActivity<ActivityQuestionBinding>(), IQuestListInte
     }
 
     override fun onActStart() {
-        binding.surveyToolbar.toolbarTitle.text="School Survey"
+        binding.surveyToolbar.toolbarTitle.text = "School Survey"
 
         val callback: OnBackPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -169,20 +164,23 @@ class QuestionActivity : BaseActivity<ActivityQuestionBinding>(), IQuestListInte
 
             updateQuestionList.forEachIndexed { index, questionData ->
                 LoggerUtils.error("TAG", questionData.userTextAnswer)
-                val surveyInput = SurveyInput(
-                    questionData.id,
-                    school_id, teacherId?.toInt(),
-                    questionData.question, questionData.formatName, questionData.type,
-                    questionData.userTextAnswer, locationAddress,
+                val surveyInput = SurveyIn(
+                    school_id, teacherId?.toInt(), questionData.type, questionData.formatId,
+                    questionData.formatName,
                     district_id, district_name,
-                    block_id, block_name, questionData.id
+                    block_id, block_name, answerlist
                 )
+                answerlist.forEachIndexed{index,anser->
+            answerlist=
+                school_id?.let { it1 ->
+                    questionData.formatName?.let { it2 ->
+                        Answer(questionData.question_id,questionData.formId, it1 ,questionData.question,
+                            questionData.type,questionData.formatId, it2,questionData.userTextAnswer)
+                    }
+                }!!
+                }
                 surveyRequest.add(surveyInput!!)
             }
-
-            LoggerUtils.error("districtid", district_id.toString())
-            LoggerUtils.error("name", "west")
-            LoggerUtils.error("formatid", formatId.toString())
             viewModel.saveSurveyData(surveyRequest).observe(this) { response ->
                 when (response.status) {
                     Status.LOADING -> {
@@ -205,11 +203,19 @@ class QuestionActivity : BaseActivity<ActivityQuestionBinding>(), IQuestListInte
 
                 }
             }
+
+
+
         }
 
 
+        LoggerUtils.error("districtid", district_id.toString())
+        LoggerUtils.error("name", "west")
+        LoggerUtils.error("formatid", formatId.toString())
+
+
     }
-    private fun gotoDashBoard(){
+    private fun gotoDashBoard() {
         val intent = Intent(this, AppDashboard::class.java)
         startActivity(intent)
     }
@@ -265,7 +271,7 @@ class QuestionActivity : BaseActivity<ActivityQuestionBinding>(), IQuestListInte
                     }
                 }
                 Status.ERROR -> {
-                 hideProgressDialog()
+                    hideProgressDialog()
                     response.message?.let {
                         showAppAlert(this, "Alert", it, null)
 
@@ -286,6 +292,7 @@ class QuestionActivity : BaseActivity<ActivityQuestionBinding>(), IQuestListInte
     override fun refreshListAtPos(position: Int) {
         TODO("Not yet implemented")
     }
-
-
 }
+
+
+
