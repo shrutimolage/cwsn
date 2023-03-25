@@ -6,16 +6,13 @@ import com.cwsn.mobileapp.model.login.*
 import com.cwsn.mobileapp.model.profile.ChangePwdInput
 import com.cwsn.mobileapp.model.profile.UserProfile
 import com.cwsn.mobileapp.model.questions.QuestListInput
-import com.cwsn.mobileapp.model.questions.Questions
 import com.cwsn.mobileapp.model.questions.SurveyQuestList
 import com.cwsn.mobileapp.model.school.PendingSchoolResp
 import com.cwsn.mobileapp.model.school.SchoolList
 import com.cwsn.mobileapp.model.school.SchoolListInput
 import com.cwsn.mobileapp.model.school.VisitedSchoolResp
 import com.cwsn.mobileapp.model.survey.SurveyIn
-import com.cwsn.mobileapp.model.survey.SurveyInput
 import com.cwsn.mobileapp.model.survey.SurveyResponse
-import com.cwsn.mobileapp.model.survey.surveyformat
 import com.cwsn.mobileapp.model.task.AllTaskList
 import retrofit2.Response
 
@@ -80,7 +77,7 @@ override  suspend fun changeUserPassword(token: String,password:String,confom_pa
         return apiService.getAllVisitedSchool()
     }
 
-    override suspend fun saveSurveyData(input: List<SurveyIn>): Response<SurveyResponse> {
+    override suspend fun saveSurveyData(input: SurveyIn): Response<SurveyResponse> {
         return apiService.saveSurveyData(input)
     }
 

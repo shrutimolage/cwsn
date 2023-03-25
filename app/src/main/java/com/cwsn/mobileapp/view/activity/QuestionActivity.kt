@@ -17,7 +17,6 @@ import com.cwsn.mobileapp.model.questions.QuestListInput
 import com.cwsn.mobileapp.model.questions.QuestionData
 import com.cwsn.mobileapp.model.survey.Answer
 import com.cwsn.mobileapp.model.survey.SurveyIn
-import com.cwsn.mobileapp.model.survey.SurveyInput
 import com.cwsn.mobileapp.network.Status
 import com.cwsn.mobileapp.utils.AppPreferences
 import com.cwsn.mobileapp.utils.LoggerUtils
@@ -29,7 +28,6 @@ import com.cwsn.mobileapp.view.fragment.HomeFragment
 import com.cwsn.mobileapp.viewmodel.survey.SurveyViewModel
 import com.gun0912.tedpermission.provider.TedPermissionProvider.context
 import org.koin.android.ext.android.inject
-import java.lang.Exception
 
 class QuestionActivity : BaseActivity<ActivityQuestionBinding>(), IQuestListInterface,
     IQuestionListCallback {
@@ -49,11 +47,16 @@ class QuestionActivity : BaseActivity<ActivityQuestionBinding>(), IQuestListInte
     private var blo: Int? = null
     private var formId: Int? = null
     private var formatId: Int? = 0
+
     private val viewModel by inject<SurveyViewModel>()
     private var listener: IQuestionListCallback? = null
+    var list: MutableList<SurveyIn> ?=null
+    private var ansrlist: MutableList<Answer> = mutableListOf()
     private var updateQuestionList: MutableList<QuestionData> = mutableListOf()
-    private var answerlist: MutableList<Answer> = mutableListOf()
-    private var surveyRequest: MutableList<SurveyIn> = mutableListOf()
+    private var answerlist:MutableList<Answer>?= mutableListOf()
+//    private var surveyRequest: SurveyIn?=null
+    private var surveyInput:SurveyIn?=null
+    private var survey: MutableList<SurveyIn> = mutableListOf()
     private val appPref by inject<AppPreferences>()
     override fun inflateLayout(layoutInflater: LayoutInflater): ActivityQuestionBinding {
         return ActivityQuestionBinding.inflate(layoutInflater)
@@ -162,59 +165,111 @@ class QuestionActivity : BaseActivity<ActivityQuestionBinding>(), IQuestListInte
 //        }
         binding.txtSubmitAnswer.setOnClickListener {
 
-            updateQuestionList.forEachIndexed { index, questionData ->
-                LoggerUtils.error("TAG", questionData.userTextAnswer)
-                val surveyInput = SurveyIn(
-                    school_id, teacherId?.toInt(), questionData.type, questionData.formatId,
-                    questionData.formatName,
-                    district_id, district_name,
-                    block_id, block_name, answerlist
-                )
-                answerlist.forEachIndexed{index,anser->
-            answerlist=
-                school_id?.let { it1 ->
-                    questionData.formatName?.let { it2 ->
-                        Answer(questionData.question_id,questionData.formId, it1 ,questionData.question,
-                            questionData.type,questionData.formatId, it2,questionData.userTextAnswer)
-                    }
-                }!!
-                }
-                surveyRequest.add(surveyInput!!)
-            }
-            viewModel.saveSurveyData(surveyRequest).observe(this) { response ->
-                when (response.status) {
-                    Status.LOADING -> {
-                        showProgressDialog()
-                    }
-                    Status.SUCCESS -> {
-                        hideProgressDialog()
-                        showCustomToast(context, "Survey Saved Successfully")
-                        //  finish()
-                        gotoDashBoard()
+            updateQuestionList.forEachIndexed { index: Int, questionData: QuestionData ->
+//                val list = arrayListOf("1", "11", "111")
+//                for ((index, value) in list.withIndex()) {
+//                    println("$index: $value")
+//                }
 
-                    }
-                    Status.ERROR -> {
-                        hideProgressDialog()
-                        response.message?.let {
-                            showAppAlert(this, "Alert", it, null)
+
+                    answerlist = mutableListOf(
+                        Answer(
+                            questionData.id,
+                            formatId,
+                            questionData.type,
+                            questionData.question_id,
+                            questionData.question,
+                            questionData.formatName,
+                            school_id,
+                            questionData.userTextAnswer
+                        )
+
+                    )
+                ansrlist.addAll(answerlist!!)
+
+
+
+//
+//                val answer = Answer(
+//                    questionData.question_id,
+//                    questionData.formId,
+//                    questionData.formatName,
+//                    questionData.question_id,
+//                    questionData.question,
+//                    questionData.type,
+//                    school_id,
+//                    questionData.userTextAnswer
+//                )
+   //            answerlist?.forEachIndexed { index: Int, answer ->
+//                    answer.question_id
+//                    answer.form_id
+//                    answer.question_name
+//                    answer.question_format
+//                    answer.question_type
+//                    school_id
+//                    answer.user_answer
+//                }
+
+ //               answerlist?.get(index)
+                surveyInput =
+                    SurveyIn(
+                        school_id, teacherId?.toInt(),
+                        questionData.formatName, formatId, questionData.type,
+                        district_id, district_name, block_id, block_name,
+                        ansrlist
+                    )
+
+
+
+            }
+
+            surveyInput?.let { it1 ->
+                viewModel.saveSurveyData(it1).observe(this) { response ->
+                    when (response.status) {
+                        Status.LOADING -> {
+                            showProgressDialog()
                         }
+                        Status.SUCCESS -> {
+                            hideProgressDialog()
+                            showCustomToast(context, "Survey Saved Successfully")
+                            //  finish()
+                            gotoDashBoard()
+
+                        }
+                        Status.ERROR -> {
+                            hideProgressDialog()
+                            response.message?.let {
+                                showAppAlert(this, "Alert", it, null)
+                            }
+                        }
+
+
                     }
-
-
                 }
+            }
+            }
+            }
+
+
+        fun addsurveyinput(schoolid:Int?,blockname:String?,distrcitid:Int?,disname:String?,formatid:Int?
+                  ,questionformat:String?,type:String?,blockid:Int?,teacherid:Int?,surveyIn: SurveyIn,questionData: QuestionData,answerlist:List<Answer>){
+            updateQuestionList.forEachIndexed { index: Int, questionData: QuestionData ->
+                val answerList: MutableList<Answer> = ArrayList()
+
             }
 
 
 
-        }
 
 
         LoggerUtils.error("districtid", district_id.toString())
         LoggerUtils.error("name", "west")
         LoggerUtils.error("formatid", formatId.toString())
 
-
     }
+
+
+
     private fun gotoDashBoard() {
         val intent = Intent(this, AppDashboard::class.java)
         startActivity(intent)
@@ -292,7 +347,18 @@ class QuestionActivity : BaseActivity<ActivityQuestionBinding>(), IQuestListInte
     override fun refreshListAtPos(position: Int) {
         TODO("Not yet implemented")
     }
+//    SurveyIn(
+//    school_id, teacherId?.toInt(),
+//    questionData.type, formatId, questionData.formatName,
+//    district_id, district_name, block_id, block_name,
+//    answerlist!!,
+//    )
+
 }
+
+
+
+
 
 
 
