@@ -19,7 +19,7 @@ private val listener:IDashboardListCallback):RecyclerView.Adapter<DashboardItemA
             binding.imgGridItemImage.setImageResource(dashboardItem.itemImage)
             binding.tvGridItemName.text = dashboardItem.itemName
             binding.llDashboardItem.setOnClickListener {
-                binding.llDashboardItem.setBackgroundColor(Color.parseColor("#F2F2FF"))
+           //     binding.llDashboardItem.setBackgroundColor(Color.parseColor("#F2F2FF"))
              listener.onItemClicked(dashboardItem.itemName)
 
             }
