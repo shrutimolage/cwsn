@@ -166,20 +166,16 @@ class QuestionActivity : BaseActivity<ActivityQuestionBinding>(), IQuestListInte
         binding.txtSubmitAnswer.setOnClickListener {
 
             updateQuestionList.forEachIndexed { index: Int, questionData: QuestionData ->
-//                val list = arrayListOf("1", "11", "111")
-//                for ((index, value) in list.withIndex()) {
-//                    println("$index: $value")
-//                }
 
 
                     answerlist = mutableListOf(
                         Answer(
                             questionData.id,
                             formatId,
-                            questionData.type,
+                            questionData.formatName,
                             questionData.question_id,
                             questionData.question,
-                            questionData.formatName,
+                            questionData.type,
                             school_id,
                             questionData.userTextAnswer
                         )
@@ -187,34 +183,10 @@ class QuestionActivity : BaseActivity<ActivityQuestionBinding>(), IQuestListInte
                     )
                 ansrlist.addAll(answerlist!!)
 
-
-
-//
-//                val answer = Answer(
-//                    questionData.question_id,
-//                    questionData.formId,
-//                    questionData.formatName,
-//                    questionData.question_id,
-//                    questionData.question,
-//                    questionData.type,
-//                    school_id,
-//                    questionData.userTextAnswer
-//                )
-   //            answerlist?.forEachIndexed { index: Int, answer ->
-//                    answer.question_id
-//                    answer.form_id
-//                    answer.question_name
-//                    answer.question_format
-//                    answer.question_type
-//                    school_id
-//                    answer.user_answer
-//                }
-
- //               answerlist?.get(index)
                 surveyInput =
                     SurveyIn(
                         school_id, teacherId?.toInt(),
-                        questionData.formatName, formatId, questionData.type,
+                        questionData.type, formatId, questionData.formatName,
                         district_id, district_name, block_id, block_name,
                         ansrlist
                     )
@@ -248,6 +220,8 @@ class QuestionActivity : BaseActivity<ActivityQuestionBinding>(), IQuestListInte
                 }
             }
             }
+
+        fecthQuestion()
             }
 
 
@@ -281,6 +255,17 @@ class QuestionActivity : BaseActivity<ActivityQuestionBinding>(), IQuestListInte
     }
 
     override fun onActResume() {
+    //  fecthQuestion()
+        binding.surveyToolbar.navigationBar.setOnClickListener {
+            finish()
+        }
+    }
+
+
+    override fun onActStop() {
+
+    }
+    fun fecthQuestion(){
         viewModel.getAllQuestionByFormId(QuestListInput(formatId)).observe(
             this
         ) { response ->
@@ -334,25 +319,11 @@ class QuestionActivity : BaseActivity<ActivityQuestionBinding>(), IQuestListInte
                 }
             }
         }
-        binding.surveyToolbar.navigationBar.setOnClickListener {
-            finish()
-        }
-    }
-
-
-    override fun onActStop() {
-
     }
 
     override fun refreshListAtPos(position: Int) {
         TODO("Not yet implemented")
     }
-//    SurveyIn(
-//    school_id, teacherId?.toInt(),
-//    questionData.type, formatId, questionData.formatName,
-//    district_id, district_name, block_id, block_name,
-//    answerlist!!,
-//    )
 
 }
 
