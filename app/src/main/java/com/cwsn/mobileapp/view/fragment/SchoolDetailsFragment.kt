@@ -61,10 +61,39 @@ class SchoolDetailsFragment : BaseFragment<FragmentSchoolDetailsBinding>(Fragmen
         binding.schoolToolbar.navigationBar.setOnClickListener {
             listener?.onUserBackPressed()
         }
+        schollCount()
     }
 
     override fun onResume() {
         super.onResume()
+
+       /* homeViewModel.getSchoolData(requireActivity(),R.raw.school_api).observe(viewLifecycleOwner,
+            { response->
+                when(response.status){
+                    Status.LOADING->{
+                        listener?.showProgress()
+                    }
+                    Status.SUCCESS->{
+                        listener?.hideProgress()
+                        response.data?.details?.let { dataList->
+                            if(dataList.size>0){
+                                binding.rclySchoolDetails.apply {
+                                    layoutManager=LinearLayoutManager(requireActivity(),RecyclerView.VERTICAL, false)
+                                    adapter=SchoolAllDataAdapter(dataList)
+                                }
+                            }
+                        }
+                    }
+                    Status.ERROR->{
+                        listener?.hideProgress()
+                        response.message?.let {
+                            showAppAlert(requireActivity(),"Alert",it,null)
+                        }
+                    }
+                }
+            })*/
+    }
+    fun schollCount(){
         homeViewModel.getAllSchoolDetailCount().observe(viewLifecycleOwner, { response->
             when(response.status){
                 Status.LOADING->{
@@ -91,31 +120,6 @@ class SchoolDetailsFragment : BaseFragment<FragmentSchoolDetailsBinding>(Fragmen
                 }
             }
         })
-       /* homeViewModel.getSchoolData(requireActivity(),R.raw.school_api).observe(viewLifecycleOwner,
-            { response->
-                when(response.status){
-                    Status.LOADING->{
-                        listener?.showProgress()
-                    }
-                    Status.SUCCESS->{
-                        listener?.hideProgress()
-                        response.data?.details?.let { dataList->
-                            if(dataList.size>0){
-                                binding.rclySchoolDetails.apply {
-                                    layoutManager=LinearLayoutManager(requireActivity(),RecyclerView.VERTICAL, false)
-                                    adapter=SchoolAllDataAdapter(dataList)
-                                }
-                            }
-                        }
-                    }
-                    Status.ERROR->{
-                        listener?.hideProgress()
-                        response.message?.let {
-                            showAppAlert(requireActivity(),"Alert",it,null)
-                        }
-                    }
-                }
-            })*/
     }
 
     companion object {
